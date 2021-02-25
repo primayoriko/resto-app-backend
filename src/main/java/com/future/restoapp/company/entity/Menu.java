@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 //import com.future.restoapp.company.entity.*;
 
-@Table(name = com.future.restoapp.company.entity.Chair.TABLE_NAME)
+@Table(name = com.future.restoapp.company.entity.Menu.TABLE_NAME)
 @Entity
 @Data
 @Builder

@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 
 //import com.future.restoapp.company.entity.*;
 
-@Table(name = com.future.restoapp.company.entity.Chair.TABLE_NAME)
+@Table(name = com.future.restoapp.company.entity.User.TABLE_NAME)
 @Entity
 @Data
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor  
 @AllArgsConstructor
 public class User extends BaseEntity {
     public static final String TABLE_NAME = "user";
