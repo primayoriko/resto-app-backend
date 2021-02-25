@@ -1,10 +1,10 @@
-package com.demo.company.service;
+package com.future.restoapp.company.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.demo.company.entity.Department;
-import com.demo.company.entity.Employee;
+import com.future.restoapp.company.entity.Department;
+import com.future.restoapp.company.entity.Employee;
 
 public interface EmployeeService {
 

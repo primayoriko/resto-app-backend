@@ -1,4 +1,4 @@
-package com.demo.config.data;
+package com.future.restoapp.config.data;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

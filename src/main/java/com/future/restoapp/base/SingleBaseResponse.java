@@ -1,4 +1,4 @@
-package com.demo.base;
+package com.future.restoapp.base;
 
 public class SingleBaseResponse<T> extends BaseResponse {
 

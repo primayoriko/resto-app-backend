@@ -1,4 +1,4 @@
-package com.demo.config.data;
+package com.future.restoapp.config.data;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
