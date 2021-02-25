@@ -1,5 +1,7 @@
 package com.future.restoapp.company.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItem {
+public class OrderItem implements Serializable {
     public static final String TABLE_NAME = "order_items";
 
     public static final String COLUMN_MENU_ID = "menu_id";

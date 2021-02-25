@@ -13,43 +13,43 @@ public final class Credential {
 	private Credential() {
 	}
 
-	public static String getStoreId() {
-		return MDC.get(Credential.CREDENTIAL_STORE_ID);
-	}
-
-	public static void setStoreId(String storeId) {
-		MDC.put(Credential.CREDENTIAL_STORE_ID, storeId);
-	}
-
-	public static String getChannelId() {
-		return MDC.get(Credential.CREDENTIAL_CHANNEL_ID);
-	}
-
-	public static void setChannelId(String channelId) {
-		MDC.put(Credential.CREDENTIAL_CHANNEL_ID, channelId);
-	}
-
-	public static String getClientId() {
-		return MDC.get(Credential.CREDENTIAL_CLIENT_ID);
-	}
-
-	public static void setClientId(String clientId) {
-		MDC.put(Credential.CREDENTIAL_CLIENT_ID, clientId);
-	}
-
-	public static String getRequestId() {
-		return MDC.get(Credential.CREDENTIAL_REQUEST_ID);
-	}
-
-	public static void setRequestId(String requestId) {
-		MDC.put(Credential.CREDENTIAL_REQUEST_ID);
-	}
-
-	public static String getUsername() {
-		return MDC.get(Credential.CREDENTIAL_USERNAME);
-	}
-
-	public static void setUsername(String username) {
-		MDC.put(Credential.CREDENTIAL_USERNAME, username);
-	}
+//	public static String getStoreId() {
+//		return MDC.get(Credential.CREDENTIAL_STORE_ID);
+//	}
+//
+//	public static void setStoreId(String storeId) {
+//		MDC.put(Credential.CREDENTIAL_STORE_ID, storeId);
+//	}
+//
+//	public static String getChannelId() {
+//		return MDC.get(Credential.CREDENTIAL_CHANNEL_ID);
+//	}
+//
+//	public static void setChannelId(String channelId) {
+//		MDC.put(Credential.CREDENTIAL_CHANNEL_ID, channelId);
+//	}
+//
+//	public static String getClientId() {
+//		return MDC.get(Credential.CREDENTIAL_CLIENT_ID);
+//	}
+//
+//	public static void setClientId(String clientId) {
+//		MDC.put(Credential.CREDENTIAL_CLIENT_ID, clientId);
+//	}
+//
+//	public static String getRequestId() {
+//		return MDC.get(Credential.CREDENTIAL_REQUEST_ID);
+//	}
+//
+//	public static void setRequestId(String requestId) {
+//		MDC.put(Credential.CREDENTIAL_REQUEST_ID);
+//	}
+//
+//	public static String getUsername() {
+//		return MDC.get(Credential.CREDENTIAL_USERNAME);
+//	}
+//
+//	public static void setUsername(String username) {
+//		MDC.put(Credential.CREDENTIAL_USERNAME, username);
+//	}
 }

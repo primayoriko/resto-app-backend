@@ -6,6 +6,6 @@ import com.future.restoapp.company.entity.Department;
 
 public interface DepartementRepository extends JpaRepository<Department, String> {
 
-	Department findFirstByDeptNoAndMarkForDeleteFalse(Integer deptNo);
+//	Department findFirstByDeptNoAndMarkForDeleteFalse(Integer deptNo);
 
 }

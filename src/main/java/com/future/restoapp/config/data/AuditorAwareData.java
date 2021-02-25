@@ -11,6 +11,7 @@ public class AuditorAwareData implements AuditorAware<String> {
 
 	@Override
 	public Optional<String> getCurrentAuditor() {
-		return Optional.of(StringUtils.isEmpty(Credential.getUsername()) ? INITIATOR : Credential.getUsername());
+//		return Optional.of(StringUtils.isEmpty(Credential.getUsername()) ? INITIATOR : Credential.getUsername());
+		return null;
 	}
 }

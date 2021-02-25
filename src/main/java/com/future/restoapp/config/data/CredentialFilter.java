@@ -13,11 +13,11 @@ public class CredentialFilter extends OncePerRequestFilter {
 
 	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			FilterChain filterChain) throws ServletException, IOException {
-		Credential.setStoreId(httpServletRequest.getParameter("storeId"));
-		Credential.setChannelId(httpServletRequest.getParameter("channelId"));
-		Credential.setClientId(httpServletRequest.getParameter("clientId"));
-		Credential.setRequestId(httpServletRequest.getParameter("requestId"));
-		Credential.setUsername(httpServletRequest.getParameter("username"));
-		filterChain.doFilter(httpServletRequest, httpServletResponse);
+//		Credential.setStoreId(httpServletRequest.getParameter("storeId"));
+//		Credential.setChannelId(httpServletRequest.getParameter("channelId"));
+//		Credential.setClientId(httpServletRequest.getParameter("clientId"));
+//		Credential.setRequestId(httpServletRequest.getParameter("requestId"));
+//		Credential.setUsername(httpServletRequest.getParameter("username"));
+//		filterChain.doFilter(httpServletRequest, httpServletResponse);
 	}
 }

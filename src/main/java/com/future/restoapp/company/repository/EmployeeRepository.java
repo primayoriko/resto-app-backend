@@ -8,9 +8,9 @@ import com.future.restoapp.company.entity.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
-	Employee findFirstByEmpNoAndMarkForDeleteFalse(Integer empNo);
-
-	Page<Employee> findByMarkForDeleteFalse(Pageable pageable);
-
-	void deleteByEmpNo(Integer empNo);
+//	Employee findFirstByEmpNoAndMarkForDeleteFalse(Integer empNo);
+//
+//	Page<Employee> findByMarkForDeleteFalse(Pageable pageable);
+//
+//	void deleteByEmpNo(Integer empNo);
 }
