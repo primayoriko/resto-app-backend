@@ -32,50 +32,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BaseEntity implements Serializable {
 
-  public static final String COLUMN_ID = "ID";
-  public static final String COLUMN_MARK_FOR_DELETE = "MARK_FOR_DELETE";
+//  public static final String COLUMN_ID = "ID";
   public static final String COLUMN_VERSION = "OPTLOCK";
-  public static final String COLUMN_CREATED_BY = "CREATED_BY";
   public static final String COLUMN_CREATED_DATE = "CREATED_DATE";
-  public static final String COLUMN_UPDATED_BY = "UPDATED_BY";
   public static final String COLUMN_UPDATED_DATE = "UPDATED_DATE";
-  public static final String COLUMN_STORE_ID = "STORE_ID";
 
-  @Id
-  @Column(name = BaseEntity.COLUMN_ID)
-  @GeneratedValue(generator = "system-uuid")
-  @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-  @org.springframework.data.annotation.Id
-  private String id;
-
-  @Column(name = BaseEntity.COLUMN_MARK_FOR_DELETE)
-  @Builder.Default
-  private boolean markForDelete = false;
+//  @Id
+//  @Column(name = BaseEntity.COLUMN_ID)
+//  @GeneratedValue(generator = "system-uuid")
+//  @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+//  @org.springframework.data.annotation.Id
+//  private String id;
 
   @Version
   @Column(name = BaseEntity.COLUMN_VERSION)
   @Builder.Default
   private Long version = 0L;
 
-  @CreatedBy
-  @Column(name = BaseEntity.COLUMN_CREATED_BY, nullable = false)
-  private String createdBy;
-
   @CreatedDate
   @Temporal(value = TemporalType.TIMESTAMP)
   @Column(name = BaseEntity.COLUMN_CREATED_DATE, nullable = false)
   private Date createdDate;
 
-  @LastModifiedBy
-  @Column(name = BaseEntity.COLUMN_UPDATED_BY, nullable = false)
-  private String updatedBy;
-
   @LastModifiedDate
   @Temporal(value = TemporalType.TIMESTAMP)
   @Column(name = BaseEntity.COLUMN_UPDATED_DATE, nullable = false)
   private Date updatedDate;
-
-  @Column(name = BaseEntity.COLUMN_STORE_ID, nullable = false)
-  private String storeId;
 
 }
