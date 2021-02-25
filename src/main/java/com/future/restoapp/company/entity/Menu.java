@@ -22,15 +22,11 @@ import lombok.NoArgsConstructor;
 public class Menu extends BaseEntity {
     public static final String TABLE_NAME = "menus";
 
-    public static final String COLUMN_ID = "id";
     public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_STOCK = "stock";
     public static final String COLUMN_PRICE = "price";
     public static final String COLUMN_DESCRIPTION = "description";
-
-    @Column(name = Menu.COLUMN_ID)
-    private Integer id;
 
     @Column(name = Menu.COLUMN_CATEGORY)
     private String category;
