@@ -29,6 +29,7 @@ public class User extends BaseEntity {
     public static final String COLUMN_HP_NUMBER = "hp_number";
     public static final String COLUMN_IS_ADMIN = "is_admin";
 
+    @id
     @Column(name = User.COLUMN_ID)
     private Integer id;
 

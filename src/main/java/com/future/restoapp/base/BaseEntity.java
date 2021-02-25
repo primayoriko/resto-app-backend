@@ -32,17 +32,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BaseEntity implements Serializable {
 
-//  public static final String COLUMN_ID = "ID";
+  public static final String COLUMN_ID = "ID";
   public static final String COLUMN_VERSION = "OPTLOCK";
   public static final String COLUMN_CREATED_DATE = "CREATED_DATE";
   public static final String COLUMN_UPDATED_DATE = "UPDATED_DATE";
 
-//  @Id
-//  @Column(name = BaseEntity.COLUMN_ID)
-//  @GeneratedValue(generator = "system-uuid")
-//  @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-//  @org.springframework.data.annotation.Id
-//  private String id;
+  @Id
+  @Column(name = BaseEntity.COLUMN_ID)
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+  @org.springframework.data.annotation.Id
+  private String id;
 
   @Version
   @Column(name = BaseEntity.COLUMN_VERSION)
