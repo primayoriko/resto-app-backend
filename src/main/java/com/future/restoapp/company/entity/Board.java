@@ -26,7 +26,6 @@ public class Board extends BaseEntity{
     public static final String COLUMN_Y = "y";
     public static final String COLUMN_WIDTH = "width";
     public static final String COLUMN_HEIGHT = "height";
-    public static final String COLUMN_ID = "id";
 
     @Column(name = Board.COLUMN_X)
     private Integer x;
@@ -39,8 +38,5 @@ public class Board extends BaseEntity{
 
     @Column(name = Board.COLUMN_HEIGHT)
     private Integer height;
-
-    @Column(name = Board.COLUMN_ID)
-    private Integer id;
 
 }

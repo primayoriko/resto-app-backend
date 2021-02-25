@@ -22,16 +22,11 @@ import lombok.NoArgsConstructor;
 public class User extends BaseEntity {
     public static final String TABLE_NAME = "users";
 
-    public static final String COLUMN_ID = "id";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_HP_NUMBER = "hp_number";
     public static final String COLUMN_IS_ADMIN = "is_admin";
-
-    @id
-    @Column(name = User.COLUMN_ID)
-    private Integer id;
 
     @Column(name = User.COLUMN_USERNAME)
     private String username;
