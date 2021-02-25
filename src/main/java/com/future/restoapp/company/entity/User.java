@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor  
 @AllArgsConstructor
 public class User extends BaseEntity {
-    public static final String TABLE_NAME = "user";
+    public static final String TABLE_NAME = "users";
 
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_USERNAME = "username";
@@ -42,8 +42,8 @@ public class User extends BaseEntity {
     private String password;
 
     @Column(name = User.COLUMN_HP_NUMBER)
-    private String hp_number;
+    private String hpNumber;
 
     @Column(name = User.COLUMN_IS_ADMIN)
-    private Boolean is_admin;
+    private Boolean isAdmin;
 }

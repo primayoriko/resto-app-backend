@@ -20,19 +20,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItem extends BaseEntity {
-    public static final String TABLE_NAME = "order_item";
+    public static final String TABLE_NAME = "order_items";
 
-    public static final String COLUMN_ID_MENU = "id_menu";
+    public static final String COLUMN_MENU_ID = "menu_id";
     public static final String COLUMN_QUANTITY = "quantity";
-    public static final String COLUMN_ID_RESERVATION = "id_reservation";
+    public static final String COLUMN_RESERVATION_ID = "reservation_id";
 
-    @Column(name = OrderItem.COLUMN_ID_MENU)
-    private Integer id_menu;
+    @Column(name = OrderItem.COLUMN_MENU_ID)
+    private Integer menuID;
 
     @Column(name = OrderItem.COLUMN_QUANTITY)
     private Integer quantity;
 
-    @Column(name = OrderItem.COLUMN_ID_RESERVATION)
-    private Integer id_reservation;
+    @Column(name = OrderItem.COLUMN_RESERVATION_ID)
+    private Integer reservationID;
 
 }

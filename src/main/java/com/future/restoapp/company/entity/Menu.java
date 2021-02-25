@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Menu extends BaseEntity {
-    public static final String TABLE_NAME = "menu";
+    public static final String TABLE_NAME = "menus";
 
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_CATEGORY = "category";
