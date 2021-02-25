@@ -42,7 +42,7 @@ public class EmployeeController {
 			@RequestParam String clientId, @RequestParam String requestId, @RequestParam String username,
 			@RequestBody EmployeeCreateRequest request) throws Exception {
 		this.employeeService.create(toEmployee(request));
-		return new BaseResponse(null, null, true, requestId);
+		return new BaseResponse(null, null, true);
 	}
 
 	@RequestMapping(value = EmployeeControllerPath.UPDATE_BY_CODE, method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,7 +50,7 @@ public class EmployeeController {
 			@RequestParam String clientId, @RequestParam String requestId, @RequestParam String username, @PathVariable Integer code,
 			@RequestBody EmployeeUpdateRequest request) throws Exception {
 		this.employeeService.update(code, toEmployee(request));
-		return new BaseResponse(null, null, true, requestId);
+		return new BaseResponse(null, null, true);
 	}
 	
 
@@ -61,7 +61,7 @@ public class EmployeeController {
 		Employee employee = Employee.builder().build();
 		BeanUtils.copyProperties(request, employee);
 		this.employeeService.updateName(code, employee);
-		return new BaseResponse(null, null, true, requestId);
+		return new BaseResponse(null, null, true);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -72,7 +72,7 @@ public class EmployeeController {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Employee> employees = this.employeeService.find(pageable);
 		List<EmployeeResponse> employeeResponses = employees.getContent().stream().map(this::toEmployeeResponse).collect(Collectors.toList());
-		return new ListBaseResponse<>(null, null, true, requestId, employeeResponses,
+		return new ListBaseResponse<>(null, null, true, employeeResponses,
 				new Metadata(page, size, employees.getTotalElements()));
 	}
 
@@ -82,7 +82,7 @@ public class EmployeeController {
 			@RequestParam String username, @PathVariable Integer code) throws Exception {
 		Employee employee = this.employeeService.findByCode(code);
 		EmployeeResponse employeeResponse = Optional.ofNullable(employee).map(this::toEmployeeResponse).orElse(null);
-		return new SingleBaseResponse<>(null, null, true, requestId, employeeResponse);
+		return new SingleBaseResponse<>(null, null, true, employeeResponse);
 	}
 
 	
@@ -91,7 +91,7 @@ public class EmployeeController {
 			@RequestParam String clientId, @RequestParam String requestId, @RequestParam String username,
 			@RequestParam Integer code) throws Exception {
 		this.employeeService.deleteByEmpNo(code);
-		return new BaseResponse(null, null, true, requestId);
+		return new BaseResponse(null, null, true);
 	}
 	
 	private EmployeeResponse toEmployeeResponse(Employee employee) {

@@ -7,8 +7,8 @@ public class SingleBaseResponse<T> extends BaseResponse {
 	public SingleBaseResponse() {
 	}
 
-	public SingleBaseResponse(String errorMessage, String errorCode, boolean success, String requestId, T value) {
-		super(errorMessage, errorCode, success, requestId);
+	public SingleBaseResponse(String errorMessage, String errorCode, boolean success, T value) {
+		super(errorMessage, errorCode, success);
 		this.value = value;
 	}
 

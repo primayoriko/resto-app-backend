@@ -42,7 +42,7 @@ public final class Credential {
 	}
 
 	public static void setRequestId(String requestId) {
-		MDC.put(Credential.CREDENTIAL_REQUEST_ID, requestId);
+		MDC.put(Credential.CREDENTIAL_REQUEST_ID);
 	}
 
 	public static String getUsername() {

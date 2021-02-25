@@ -7,16 +7,14 @@ public class BaseResponse implements Serializable {
 	private String errorMessage;
 	private String errorCode;
 	private boolean success = false;
-	private String requestId;
 
 	public BaseResponse() {
 	}
 
-	public BaseResponse(String errorMessage, String errorCode, boolean success, String requestId) {
+	public BaseResponse(String errorMessage, String errorCode, boolean success) {
 		this.errorMessage = errorMessage;
 		this.errorCode = errorCode;
 		this.success = success;
-		this.requestId = requestId;
 	}
 
 	public String getErrorMessage() {
@@ -43,17 +41,11 @@ public class BaseResponse implements Serializable {
 		this.success = success;
 	}
 
-	public String getRequestId() {
-		return requestId;
-	}
 
-	public void setRequestId(String requestId) {
-		this.requestId = requestId;
-	}
 
 	@Override
 	public String toString() {
 		return "BaseResponse{" + "errorMessage='" + errorMessage + '\'' + ", errorCode='" + errorCode + '\''
-				+ ", success=" + success + ", requestId='" + requestId + '\'' + '}';
+				+ ", success=" + success + '\'' + '}';
 	}
 }
