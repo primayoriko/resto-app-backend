@@ -1,4 +1,49 @@
 package com.future.restoapp.company.entity;
 
-public class User {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import com.demo.base.BaseEntity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+//import com.future.restoapp.company.entity.*;
+
+@Table(name = com.future.restoapp.company.entity.Chair.TABLE_NAME)
+@Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class User extends BaseEntity {
+    public static final String TABLE_NAME = "user";
+
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_USERNAME = "username";
+    public static final String COLUMN_EMAIL = "email";
+    public static final String COLUMN_PASSWORD = "password";
+    public static final String COLUMN_HP_NUMBER = "hp_number";
+    public static final String COLUMN_IS_ADMIN = "is_admin";
+
+    @Column(name = User.COLUMN_ID)
+    private Integer id;
+
+    @Column(name = User.COLUMN_USERNAME)
+    private String username;
+
+    @Column(name = User.COLUMN_EMAIL)
+    private String email;
+
+    @Column(name = User.COLUMN_PASSWORD)
+    private String password;
+
+    @Column(name = User.COLUMN_HP_NUMBER)
+    private String hp_number;
+
+    @Column(name = User.COLUMN_IS_ADMIN)
+    private Boolean is_admin;
 }
