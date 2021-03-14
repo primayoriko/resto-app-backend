@@ -1,34 +1,7 @@
-package com.future.restoapp.company.controller;
+package com.future.restoapp.controller;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.future.restoapp.base.BaseResponse;
-import com.future.restoapp.base.ListBaseResponse;
-import com.future.restoapp.base.Metadata;
-import com.future.restoapp.base.SingleBaseResponse;
-import com.future.restoapp.company.entity.Department;
-import com.future.restoapp.company.entity.Employee;
-import com.future.restoapp.company.service.EmployeeService;
-import com.future.restoapp.dto.DepartmentResponse;
-import com.future.restoapp.dto.EmployeeCreateRequest;
-import com.future.restoapp.dto.EmployeeResponse;
-import com.future.restoapp.dto.EmployeeUpdateNameRequest;
-import com.future.restoapp.dto.EmployeeUpdateRequest;
 
 @RestController
 @RequestMapping(value = EmployeeControllerPath.BASE_PATH)

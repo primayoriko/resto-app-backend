@@ -1,7 +1,6 @@
-package com.future.restoapp.company.entity;
+package com.future.restoapp.entity;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -12,9 +11,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//import com.future.restoapp.company.entity.*;
+//import com.future.restoapp.entity.*;
 
-@Table(name = com.future.restoapp.company.entity.User.TABLE_NAME)
+@Table(name = com.future.restoapp.entity.User.TABLE_NAME)
 @Entity
 @Data
 @Builder

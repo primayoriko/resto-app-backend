@@ -1,4 +1,4 @@
-package com.future.restoapp.company.entity;
+package com.future.restoapp.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

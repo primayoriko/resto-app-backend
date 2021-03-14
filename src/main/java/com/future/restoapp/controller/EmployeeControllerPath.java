@@ -1,4 +1,4 @@
-package com.future.restoapp.company.controller;
+package com.future.restoapp.controller;
 
 public interface EmployeeControllerPath {
 

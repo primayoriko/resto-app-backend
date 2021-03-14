@@ -1,10 +1,8 @@
-package com.future.restoapp.company.repository;
+package com.future.restoapp.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.future.restoapp.company.entity.Employee;
+import com.future.restoapp.entity.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
 

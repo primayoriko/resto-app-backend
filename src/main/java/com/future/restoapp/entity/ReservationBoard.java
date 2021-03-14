@@ -1,4 +1,4 @@
-package com.future.restoapp.company.entity;
+package com.future.restoapp.entity;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//import com.future.restoapp.company.entity.*;
+//import com.future.restoapp.entity.*;
 
 @Table(name = ReservationBoard.TABLE_NAME)
 @Entity

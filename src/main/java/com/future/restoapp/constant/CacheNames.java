@@ -1,4 +1,4 @@
-package com.future.restoapp.company.constant;
+package com.future.restoapp.constant;
 
 public interface CacheNames {
 

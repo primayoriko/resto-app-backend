@@ -1,4 +1,4 @@
-package com.future.restoapp.company.entity;
+package com.future.restoapp.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-//import com.future.restoapp.company.entity.*;
+//import com.future.restoapp.entity.*;
 
 @Table(name = Reservation.TABLE_NAME)
 @Entity

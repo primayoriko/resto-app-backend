@@ -1,17 +1,6 @@
-package com.future.restoapp.company.service;
+package com.future.restoapp.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import com.future.restoapp.company.entity.Department;
-import com.future.restoapp.company.entity.Employee;
-import com.future.restoapp.company.repository.DepartementRepository;
-import com.future.restoapp.company.repository.EmployeeRepository;
 //import com.future.restoapp.config.data.Credential;
 
 @Service

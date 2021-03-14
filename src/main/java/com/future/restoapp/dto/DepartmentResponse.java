@@ -3,9 +3,6 @@ package com.future.restoapp.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-
-import com.future.restoapp.company.entity.Department;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
