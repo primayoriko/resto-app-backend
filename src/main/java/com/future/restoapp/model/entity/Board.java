@@ -1,4 +1,4 @@
-package com.future.restoapp.entity;
+package com.future.restoapp.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//import com.future.restoapp.entity.*;
+//import com.future.restoapp.model.entity.*;
 
 @Table(name = Board.TABLE_NAME)
 @Entity

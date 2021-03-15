@@ -32,3 +32,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 //            new ParameterBuilder().name("requestId").parameterType("header").modelRef(new ModelRef("string")).required(true).defaultValue("RANDOM").description("unique id per request").build()));
 //  }
 //}
+
+public class SwaggerConfiguration {
+
+}

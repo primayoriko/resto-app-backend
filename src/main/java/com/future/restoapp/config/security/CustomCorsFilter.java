@@ -1,4 +1,4 @@
-package com.future.restoapp.config;
+package com.future.restoapp.config.security;
 
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;

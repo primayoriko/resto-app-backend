@@ -1,4 +1,4 @@
-package com.future.restoapp.dto;
+package com.future.restoapp.model.dto;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,15 +17,26 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeUpdateRequest implements Serializable {
+public class EmployeeResponse implements Serializable {
 
+	private Integer empNo;
 	private String empName;
 	private String job;
 	private Integer mgr;
 	private Double sal;
 	private Double comm;
-	private Integer deptNo;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date hireDate;
+	
+	private DepartmentResponse department;
+
+	private String id;
+	private boolean markForDelete = false;
+	private Long version = 0L;
+	private String createdBy;
+	private Date createdDate;
+	private String updatedBy;
+	private Date updatedDate;
+	private String storeId;
 }

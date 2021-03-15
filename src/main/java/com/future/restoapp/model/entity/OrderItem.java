@@ -1,4 +1,4 @@
-package com.future.restoapp.entity;
+package com.future.restoapp.model.entity;
 
 import java.io.Serializable;
 
@@ -12,9 +12,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//import com.future.restoapp.entity.*;
+//import com.future.restoapp.model.entity.*;
 
-@Table(name = com.future.restoapp.entity.OrderItem.TABLE_NAME)
+@Table(name = com.future.restoapp.model.entity.OrderItem.TABLE_NAME)
 @Entity
 @Data
 @Builder

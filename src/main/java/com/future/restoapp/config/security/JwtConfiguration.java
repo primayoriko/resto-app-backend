@@ -1,4 +1,4 @@
-package com.future.restoapp.config;
+package com.future.restoapp.config.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

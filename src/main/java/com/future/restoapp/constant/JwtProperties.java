@@ -1,4 +1,4 @@
-package com.future.restoapp.security;
+package com.future.restoapp.constant;
 
 public interface JwtProperties {
     String SECRET = "SomeSecretForJWTGeneration";

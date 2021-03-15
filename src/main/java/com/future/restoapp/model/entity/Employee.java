@@ -1,4 +1,4 @@
-package com.future.restoapp.entity;
+package com.future.restoapp.model.entity;
 
 import java.util.Date;
 

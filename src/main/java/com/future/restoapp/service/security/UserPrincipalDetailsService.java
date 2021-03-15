@@ -1,11 +1,12 @@
-package com.future.restoapp.security;
+package com.future.restoapp.service.security;
 
+import com.future.restoapp.model.security.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.future.restoapp.entity.User;
+import com.future.restoapp.model.entity.User;
 import com.future.restoapp.repository.UserRepository;
 
 @Service

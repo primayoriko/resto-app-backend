@@ -1,5 +1,6 @@
-package com.future.restoapp.security;
+package com.future.restoapp.model.security;
 
+import com.future.restoapp.model.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import com.future.restoapp.entity.User;
 
 public class UserPrincipal implements UserDetails {
     private User user;

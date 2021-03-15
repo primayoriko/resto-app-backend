@@ -1,19 +1,18 @@
-package com.future.restoapp.entity;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+package com.future.restoapp.model.entity;
 
 import com.future.restoapp.base.BaseEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//import com.future.restoapp.entity.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@Table(name = com.future.restoapp.entity.User.TABLE_NAME)
+//import com.future.restoapp.model.entity.*;
+
+@Table(name = User.TABLE_NAME)
 @Entity
 @Data
 @Builder
