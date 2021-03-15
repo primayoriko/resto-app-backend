@@ -1,8 +1,6 @@
 package com.future.restoapp.config.security;
 
 import com.auth0.jwt.JWT;
-import com.future.restoapp.constant.JwtProperties;
-import com.future.restoapp.model.security.UserPrincipal;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -14,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+
+import com.future.restoapp.constant.JwtProperties;
+import com.future.restoapp.model.security.UserPrincipal;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 

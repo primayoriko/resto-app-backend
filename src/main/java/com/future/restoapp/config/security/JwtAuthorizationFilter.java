@@ -1,6 +1,5 @@
 package com.future.restoapp.config.security;
 
-import com.future.restoapp.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -10,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import com.future.restoapp.repository.UserRepository;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private UserRepository userRepository;
