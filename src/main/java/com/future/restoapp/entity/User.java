@@ -42,4 +42,5 @@ public class User extends BaseEntity {
 
     @Column(name = User.COLUMN_IS_ADMIN)
     private Boolean isAdmin = false;
+
 }
