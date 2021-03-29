@@ -1,5 +1,7 @@
 package com.future.restoapp.config.security;
 
+import com.future.restoapp.constant.UrlBasePath;
+import com.future.restoapp.controller.UserControllerPath;
 import com.future.restoapp.repository.UserRepository;
 import com.future.restoapp.service.security.UserPrincipalDetailsService;
 import org.springframework.context.annotation.Bean;
@@ -42,8 +44,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
                 .authorizeRequests()
                 // configure access rules
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers("/api/v1/admin/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, JwtAuthenticationFilter.LOGIN_PATH).permitAll()
+                .antMatchers(HttpMethod.POST, UserControllerPath.REGISTER).permitAll()
+                .antMatchers(UrlBasePath.CURRENT_ADMIN + "/*").hasRole("ADMIN")
+                .antMatchers(UrlBasePath.CURRENT_CLIENT + "/*").hasRole("CLIENT")
                 .anyRequest().authenticated();
     }
 
