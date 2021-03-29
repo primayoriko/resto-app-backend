@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
-@RequestMapping(value = UserControllerPath.BASE_PATH)
+@RequestMapping(value = UserControllerPath.BASE)
 @CrossOrigin
 public class UserController {
     
