@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-//import com.future.restoapp.config.data.Credential;
 
 @Service
 public class UserServiceBean implements UserService {
@@ -19,17 +18,22 @@ public class UserServiceBean implements UserService {
 
 	@Override
     public void create(User user) throws Exception{
-
+        this.userRepository.save(user);
     }
 
     @Override
     public void update(String username, User user) throws Exception {
+        User oldUser = this.userRepository.findByUsername(username);
+        if(oldUser != null){
+            // TODO: Checking field that gonna updated in user and update it to oldUser
 
+            this.userRepository.save(oldUser);
+        }
     }
 
     @Override
     public User findByUsername(String username) throws Exception{
-	    return null;
+	    return this.userRepository.findByUsername(username);
     }
 
     @Override
@@ -39,7 +43,7 @@ public class UserServiceBean implements UserService {
 
     @Override
     public void deleteByUsername(String username) throws Exception{
-
+        this.userRepository.deleteByUsername(username);
     }
 
 //	@Override
