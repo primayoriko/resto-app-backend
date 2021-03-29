@@ -1,11 +1,13 @@
 package com.future.restoapp.controller;
 
+import com.future.restoapp.constant.UrlBasePath;
+
 public interface UserControllerPath {
 
-    String BASE_PATH = "/api/users";
-    String FIND_BY_CODE = "/{code}";
-    String UPDATE_BY_CODE = "/{code}";
-    String DELETE_BY_CODE = "/{code}";
-    String UPDATE_NAME_BY_CODE = "/{code}/name";
+    String USER = UrlBasePath.CLIENT_CURRENT_URL + "/users";
+    String REGISTER = USER + "/register";
+    String UPDATE = USER;
+//    String DELETE_BY_CODE = "/{code}";
+//    String UPDATE_NAME_BY_CODE = "/{code}/name";
 
 }

@@ -2,6 +2,7 @@ package com.future.restoapp.config.security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.future.restoapp.constant.UrlBasePath;
 import com.future.restoapp.model.security.Credentials;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,8 +26,12 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
 
+    public static String LOGIN_PATH = UrlBasePath.CURRENT_BASE + "/login";
+
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+
+        setFilterProcessesUrl(LOGIN_PATH);
     }
 
     /* Trigger when we issue POST request to /login
