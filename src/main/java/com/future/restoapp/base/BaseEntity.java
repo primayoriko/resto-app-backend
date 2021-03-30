@@ -44,11 +44,11 @@ public class BaseEntity implements Serializable {
   @CreatedDate
   @Temporal(value = TemporalType.TIMESTAMP)
   @Column(name = BaseEntity.COLUMN_CREATED_DATE, nullable = false)
-  private Date createdDate;
+  private Date createdDate = new Date();
 
   @LastModifiedDate
   @Temporal(value = TemporalType.TIMESTAMP)
   @Column(name = BaseEntity.COLUMN_UPDATED_DATE, nullable = false)
-  private Date updatedDate;
+  private Date updatedDate = new Date();
 
 }
