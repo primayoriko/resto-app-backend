@@ -5,6 +5,8 @@ import com.future.restoapp.model.dto.RegisterRequest;
 import com.future.restoapp.model.entity.User;
 import com.future.restoapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +20,7 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = UserControllerPath.REGISTER, method = RequestMethod.POST)
-    public BaseResponse register(@RequestBody RegisterRequest request) throws Exception{
+    public ResponseEntity register(@RequestBody RegisterRequest request) throws Exception{
         System.out.println(request);
 
         User user = request.convertToUser();
@@ -29,7 +31,7 @@ public class UserController {
 
         this.userService.create(user);
 
-        return new BaseResponse(null, null, true);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }
