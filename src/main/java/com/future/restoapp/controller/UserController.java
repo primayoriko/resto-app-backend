@@ -1,6 +1,7 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.model.dto.RegisterRequest;
+import com.future.restoapp.model.dto.UserResponse;
 import com.future.restoapp.model.entity.User;
 import com.future.restoapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class UserController extends BaseController {
         if(user == null)
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(UserResponse.buildFromUser(user));
     }
 
 }
