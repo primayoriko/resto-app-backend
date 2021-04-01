@@ -23,17 +23,24 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = UserControllerPath.REGISTER, method = RequestMethod.POST)
     public ResponseEntity register(@Valid @RequestBody RegisterRequest request) throws Exception{
-        System.out.println(request);
 
         User user = request.convertToUser();
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        System.out.println(user);
-
         this.userService.create(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @RequestMapping(value = UserControllerPath.FETCH_ONE, method = RequestMethod.GET)
+    public ResponseEntity fetchOne(@PathVariable String username) throws Exception{
+        User user = this.userService.findByUsername(username);
+
+        if(user == null)
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok().body(user);
     }
 
 }
