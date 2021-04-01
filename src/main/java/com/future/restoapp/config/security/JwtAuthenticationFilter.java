@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         setFilterProcessesUrl(LOGIN_PATH);
     }
 
-    /* Trigger when we issue POST request to /login
+    /* Trigger when we issue POST request
     We also need to pass in {"username":"dan", "password":"dan123"} in the request body
      */
     @Override
@@ -46,6 +46,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if(credentials == null) credentials = new Credentials();
 
         // Create login token
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
