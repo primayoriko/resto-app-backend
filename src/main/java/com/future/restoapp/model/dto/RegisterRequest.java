@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
@@ -22,12 +23,16 @@ import javax.persistence.Column;
 @AllArgsConstructor
 public class RegisterRequest {
 
+    @NotBlank(message = "username must be specified")
     private String username;
 
+    @NotBlank(message = "email must be specified")
     private String email;
 
+    @NotBlank(message = "password must be specified")
     private String password;
 
+    @NotBlank(message = "hpNumber must be specified")
     private String hpNumber;
 
     public User convertToUser(){
