@@ -44,11 +44,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
                 .authorizeRequests()
                 // configure access rules
+                .antMatchers(HttpMethod.GET, "/docs*/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
                 .antMatchers(HttpMethod.POST, JwtAuthenticationFilter.LOGIN_PATH).permitAll()
                 .antMatchers(HttpMethod.POST, UserControllerPath.REGISTER_CLIENT).permitAll()
                 .antMatchers(HttpMethod.POST, UserControllerPath.REGISTER_ADMIN).permitAll() // OPENED FOR TESTING PURPOSE
-                .antMatchers(UrlBasePath.CURRENT_ADMIN + "/*").hasRole("ADMIN")
-                .antMatchers(UrlBasePath.CURRENT_CLIENT + "/*").hasRole("CLIENT")
+                .antMatchers(UrlBasePath.CURRENT_ADMIN + "/**").hasRole("ADMIN")
+                .antMatchers(UrlBasePath.CURRENT_CLIENT + "/**").hasRole("CLIENT")
                 .anyRequest().authenticated();
     }
 
