@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController extends BaseController {
     @Autowired
     private UserService userService;
@@ -23,11 +23,25 @@ public class UserController extends BaseController {
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = UserControllerPath.REGISTER_CLIENT, method = RequestMethod.POST)
-    public ResponseEntity register(@Valid @RequestBody RegisterRequest request) throws Exception{
+    public ResponseEntity registerClient(@Valid @RequestBody RegisterRequest request) throws Exception{
 
         User user = request.convertToUser();
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        this.userService.create(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @RequestMapping(value = UserControllerPath.REGISTER_ADMIN, method = RequestMethod.POST)
+    public ResponseEntity registerAdmin(@Valid @RequestBody RegisterRequest request) throws Exception{
+
+        User user = request.convertToUser();
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        user.setIsAdmin(true);
 
         this.userService.create(user);
 
