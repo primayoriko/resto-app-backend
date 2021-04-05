@@ -4,15 +4,16 @@ import com.future.restoapp.model.dto.RegisterRequest;
 import com.future.restoapp.model.dto.UserResponse;
 import com.future.restoapp.model.entity.User;
 import com.future.restoapp.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Tag(name = "User")
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController extends BaseController {
