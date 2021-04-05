@@ -22,7 +22,7 @@ public class UserController extends BaseController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(value = UserControllerPath.REGISTER, method = RequestMethod.POST)
+    @RequestMapping(value = UserControllerPath.REGISTER_CLIENT, method = RequestMethod.POST)
     public ResponseEntity register(@Valid @RequestBody RegisterRequest request) throws Exception{
 
         User user = request.convertToUser();
