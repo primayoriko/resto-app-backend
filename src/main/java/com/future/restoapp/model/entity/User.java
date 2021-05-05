@@ -1,6 +1,5 @@
 package com.future.restoapp.model.entity;
 
-import com.future.restoapp.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

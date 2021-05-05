@@ -1,4 +1,6 @@
-package com.future.restoapp.base;
+package com.future.restoapp.model.dto;
+
+import com.future.restoapp.model.dto.BaseResponse;
 
 public class SingleBaseResponse<T> extends BaseResponse {
 

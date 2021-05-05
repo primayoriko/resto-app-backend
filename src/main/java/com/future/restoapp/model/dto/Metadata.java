@@ -1,4 +1,4 @@
-package com.future.restoapp.base;
+package com.future.restoapp.model.dto;
 
 import java.io.Serializable;
 
