@@ -1,13 +1,14 @@
 package com.future.restoapp.controller;
 
+import com.future.restoapp.model.dto.MenuCreateRequest;
+import com.future.restoapp.model.dto.MenuUpdateRequest;
 import com.future.restoapp.service.MenuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Tag(name = "Menu")
 @RestController
@@ -16,17 +17,17 @@ public class MenuController extends BaseController {
     private MenuService menuService;
 
     @RequestMapping(value = MenuControllerPath.CREATE, method = RequestMethod.POST)
-    public ResponseEntity create(){
+    public ResponseEntity create(@Valid @RequestBody MenuCreateRequest menuReq){
         return null;
     }
 
     @RequestMapping(value = MenuControllerPath.UPDATE, method = RequestMethod.PATCH)
-    public ResponseEntity update(){
+    public ResponseEntity update(@Valid @RequestBody MenuUpdateRequest menuReq){
         return null;
     }
 
     @RequestMapping(value = MenuControllerPath.DELETE, method = RequestMethod.DELETE)
-    public ResponseEntity delete(@PathVariable String id){
+    public ResponseEntity delete(@Valid @PathVariable String id){
         return null;
     }
 
@@ -37,7 +38,7 @@ public class MenuController extends BaseController {
             },
             method = RequestMethod.GET
     )
-    public ResponseEntity fetchOne(@PathVariable String id){
+    public ResponseEntity fetchOne(@Valid @PathVariable String id){
         return null;
     }
 
