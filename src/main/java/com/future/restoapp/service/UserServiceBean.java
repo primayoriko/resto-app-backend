@@ -22,7 +22,7 @@ public class UserServiceBean implements UserService {
     }
 
     @Override
-    public void update(String username, User user) throws Exception {
+    public void updateByUsername(String username, User user) throws Exception {
         User oldUser = this.userRepository.findByUsername(username);
         if(oldUser != null){
             // TODO: Checking field that gonna updated in user and update it to oldUser

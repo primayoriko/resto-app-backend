@@ -1,19 +1,12 @@
 package com.future.restoapp.model.dto;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import com.future.restoapp.model.entity.User;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.future.restoapp.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -35,7 +28,7 @@ public class RegisterRequest {
     @NotBlank(message = "hpNumber must be specified")
     private String hpNumber;
 
-    public User convertToUser(){
+    public User toUser(){
         User user = new User();
 
         user.setEmail(email);

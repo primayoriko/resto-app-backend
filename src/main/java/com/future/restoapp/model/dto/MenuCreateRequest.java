@@ -36,7 +36,7 @@ public class MenuCreateRequest {
     @PositiveOrZero(message = "stock can't be negative value")
     private Integer stock;
 
-    public Menu convertToMenu(){
+    public Menu toMenu(){
         Menu menu = new Menu();
 
         menu.setName(name);

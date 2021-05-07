@@ -22,33 +22,33 @@ public class MenuUpdateRequest {
     @NotBlank(message = "id must be specified")
     private String id;
 
-    @NotBlank(message = "category must be specified")
+//    @NotBlank(message = "category must be specified")
     private String category;
 
-    @NotBlank(message = "name must be specified")
+//    @NotBlank(message = "name must be specified")
     private String name;
 
-    @NotBlank(message = "price must be specified")
+//    @NotBlank(message = "price must be specified")
     @Positive(message = "price must be positive value")
     private Float price;
 
-    @NotBlank(message = "description must be specified")
+//    @NotBlank(message = "description must be specified")
     private String description;
 
-    @NotBlank(message = "stock must be specified")
+//    @NotBlank(message = "stock must be specified")
     @PositiveOrZero(message = "stock can't be negative value")
     private Integer stock;
 
-    public Menu convertToMenu(){
-        Menu menu = new Menu();
+    public Menu injectToMenu(Menu target){
+        target.setId(id);
 
-        menu.setName(name);
-        menu.setCategory(category);
-        menu.setPrice(price);
-        menu.setDescription(description);
-        menu.setStock(stock);
+        if(target.getName() != null) target.setName(name);
+        if(target.getCategory() != null) target.setCategory(category);
+        if(target.getPrice() != null) target.setPrice(price);
+        if(target.getDescription() != null) target.setDescription(description);
+        if(target.getStock() != null) target.setStock(stock);
 
-        return menu;
+        return target;
     }
 
 }

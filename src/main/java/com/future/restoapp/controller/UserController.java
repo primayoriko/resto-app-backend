@@ -26,7 +26,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = UserControllerPath.REGISTER_CLIENT, method = RequestMethod.POST)
     public ResponseEntity registerClient(@Valid @RequestBody RegisterRequest request) throws Exception{
 
-        User user = request.convertToUser();
+        User user = request.toUser();
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -38,7 +38,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = UserControllerPath.REGISTER_ADMIN, method = RequestMethod.POST)
     public ResponseEntity registerAdmin(@Valid @RequestBody RegisterRequest request) throws Exception{
 
-        User user = request.convertToUser();
+        User user = request.toUser();
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
