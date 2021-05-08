@@ -17,6 +17,7 @@ import javax.validation.Valid;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController extends BaseController {
+
     @Autowired
     private UserService userService;
 

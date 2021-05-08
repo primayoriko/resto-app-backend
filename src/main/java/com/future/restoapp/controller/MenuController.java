@@ -16,6 +16,7 @@ import javax.validation.Valid;
 @Tag(name = "Menu")
 @RestController
 public class MenuController extends BaseController {
+
     @Autowired
     private MenuService menuService;
 
@@ -70,4 +71,5 @@ public class MenuController extends BaseController {
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
+
 }

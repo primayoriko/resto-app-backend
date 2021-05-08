@@ -18,7 +18,7 @@ public class MenuServiceBean implements MenuService {
 
     @Override
     public void create(Menu menu) throws Exception {
-        menuRepository.create(menu);
+        menuRepository.save(menu);
     }
 
     @Override

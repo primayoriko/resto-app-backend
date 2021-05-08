@@ -8,8 +8,10 @@ public interface MenuControllerPath {
     String ADMIN_BASE = UrlBasePath.CURRENT_ADMIN + "/menus";
 
     String CREATE = ADMIN_BASE;
-    String UPDATE = ADMIN_BASE;
+
     String DELETE = ADMIN_BASE + "/{id}";
+
+    String UPDATE = ADMIN_BASE;
 
     String FETCH_CLIENT = CLIENT_BASE;
     String FETCH_ADMIN = ADMIN_BASE;

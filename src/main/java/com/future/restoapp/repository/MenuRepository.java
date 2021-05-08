@@ -7,12 +7,8 @@ import java.util.List;
 
 public interface MenuRepository extends JpaRepository<Menu, String> {
 
-    void create(Menu menu) throws Exception;
-
     void deleteByName(String name) throws Exception;
 
     List<Menu> findByNameContainingOrderByNameAsc(String name) throws Exception;
-
-    //    void updateById(String id, Menu menu) throws Exception;
 
 }

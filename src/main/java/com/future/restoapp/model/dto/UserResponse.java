@@ -1,15 +1,14 @@
 package com.future.restoapp.model.dto;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import com.future.restoapp.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
@@ -39,4 +38,5 @@ public class UserResponse implements Serializable {
 
         return ur;
     }
+
 }
