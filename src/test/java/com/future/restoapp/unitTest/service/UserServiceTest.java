@@ -65,7 +65,7 @@ public class UserServiceTest {
         userList = null;
     }
 
-    @DisplayName("Successfully add new and complete user data")
+    @DisplayName("Successfully create a new and complete user data")
     @Test
     public void successfulRegister() throws Exception {
         when(userRepository.save(any())).thenReturn(null);
@@ -82,7 +82,7 @@ public class UserServiceTest {
         verify(userRepository, times(1)).save(user);
     }
 
-    @DisplayName("Fail to add existing data")
+    @DisplayName("Fail to create an existing data")
     @Test
     public void failRegisterAlreadyExist() throws Exception {
         when(userRepository.save(any())).thenReturn(null);
