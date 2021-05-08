@@ -14,10 +14,12 @@ public interface MenuService {
 
     Menu findOneById(String id) throws Exception;
 
-    Page<Menu> findAll(Pageable pageable) throws Exception;
+    Page<Menu> findAllByNameAndCategory(String name, String category, Pageable pageable) throws Exception;
 
-    Page<Menu> findAllByNameQuery(String name, Pageable pageable) throws Exception;
+    Page<Menu> findAllByName(String name, Pageable pageable) throws Exception;
 
     Page<Menu> findAllByCategory(String category, Pageable pageable) throws Exception;
+
+    Page<Menu> findAll(Pageable pageable) throws Exception;
 
 }

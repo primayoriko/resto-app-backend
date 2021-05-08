@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
@@ -29,14 +31,16 @@ public class RegisterRequest {
     private String hpNumber;
 
     public User toUser(){
-        User user = new User();
+//        user.setEmail(email);
+//        user.setPassword(password);
+//        user.setHpNumber(hpNumber);
+//        user.setUsername(username);
+        return Optional.of(this).map(e -> {
+            User user = User.builder().build();
+            BeanUtils.copyProperties(e, user);
 
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setHpNumber(hpNumber);
-        user.setUsername(username);
-
-        return user;
+            return user;
+        }).orElse(null);
     }
 
 }

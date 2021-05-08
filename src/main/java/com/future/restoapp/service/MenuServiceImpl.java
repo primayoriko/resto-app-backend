@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class MenuServiceBean implements MenuService {
+public class MenuServiceImpl implements MenuService {
 
     @Autowired
     MenuRepository menuRepository;
@@ -51,18 +51,35 @@ public class MenuServiceBean implements MenuService {
     }
 
     @Override
-    public Page<Menu> findAll(Pageable pageable) throws Exception {
-        return menuRepository.findAllByOrderByNameAsc(pageable);
+    public Page<Menu> findAllByNameAndCategory(String name, String category, Pageable pageable) throws Exception{
+        Page<Menu> result = null;
+
+        if(name != null && category != null) {
+            result = menuRepository.findAllByNameContainingAndCategoryLikeOrderByCategoryAscNameAsc(name, category, pageable);
+        } else if(name != null) {
+            result = menuRepository.findAllByNameContainingOrderByCategoryAscNameAsc(name, pageable);
+        } else if(category != null) {
+            result = menuRepository.findAllByCategoryLikeOrderByCategoryAscNameAsc(category, pageable);
+        } else {
+            result = menuRepository.findAllByOrderByNameAsc(pageable);
+        }
+
+        return result;
     }
 
     @Override
-    public Page<Menu> findAllByNameQuery(String name, Pageable pageable) throws Exception {
-        return menuRepository.findAllByNameContainingOrderByNameAsc(name, pageable);
+    public Page<Menu> findAllByName(String name, Pageable pageable) throws Exception {
+        return findAllByNameAndCategory(name, null, pageable);
     }
 
     @Override
     public Page<Menu> findAllByCategory(String category, Pageable pageable) throws Exception {
-        return menuRepository.findAllByCategoryLikeOrderByNameAsc(category, pageable);
+        return findAllByNameAndCategory(null, category, pageable);
+    }
+
+    @Override
+    public Page<Menu> findAll(Pageable pageable) throws Exception {
+        return findAllByNameAndCategory(null, null, pageable);
     }
 
 }

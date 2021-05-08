@@ -7,11 +7,15 @@ import com.future.restoapp.service.MenuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.NoSuchElementException;
 
 @Tag(name = "Menu")
 @RestController
@@ -57,6 +61,8 @@ public class MenuController extends BaseController {
     public ResponseEntity fetchOne(@Valid @PathVariable String id) throws Exception {
         Menu menu = menuService.findOneById(id);
 
+        if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
+
         return ResponseEntity.status(HttpStatus.OK).body(menu);
     }
 
@@ -67,9 +73,18 @@ public class MenuController extends BaseController {
             },
             method = RequestMethod.GET
     )
-    public ResponseEntity fetch() throws Exception {
+    public ResponseEntity fetch(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "0") Integer pageSize,
+            @RequestParam String name,
+            @RequestParam String category
+    ) throws Exception {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Menu> result = menuService.findAllByNameAndCategory(name, category, pageable);
 
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        if(result == null) throw new NoSuchElementException("Menus with specified criterion not found");
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
 }

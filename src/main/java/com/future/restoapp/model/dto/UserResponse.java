@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
@@ -27,16 +29,18 @@ public class UserResponse implements Serializable {
 
     private Date CreatedDate;
 
-    public static UserResponse buildFromUser(User user){
-        UserResponse ur = new UserResponse();
+    public static UserResponse build(User user){
+//        ur.setUsername(user.getUsername());
+//        ur.setEmail(user.getEmail());
+//        ur.setHpNumber(user.getHpNumber());
+//        ur.setIsAdmin(user.getIsAdmin());
+//        ur.setCreatedDate(user.getCreatedDate());
+        return Optional.ofNullable(user).map(e -> {
+            UserResponse userResponse = UserResponse.builder().build();
+            BeanUtils.copyProperties(user, userResponse);
 
-        ur.setUsername(user.getUsername());
-        ur.setEmail(user.getEmail());
-        ur.setHpNumber(user.getHpNumber());
-        ur.setIsAdmin(user.getIsAdmin());
-        ur.setCreatedDate(user.getCreatedDate());
-
-        return ur;
+            return userResponse;
+        }).orElse(null);
     }
 
 }

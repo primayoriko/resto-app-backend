@@ -57,7 +57,7 @@ public class UserController extends BaseController {
         if(user == null)
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok().body(UserResponse.buildFromUser(user));
+        return ResponseEntity.ok().body(UserResponse.build(user));
     }
 
 }

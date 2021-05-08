@@ -7,11 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
@@ -38,15 +40,17 @@ public class MenuCreateRequest {
     private Integer stock;
 
     public Menu toMenu(){
-        Menu menu = new Menu();
+//        menu.setName(name);
+//        menu.setCategory(category);
+//        menu.setPrice(price);
+//        menu.setDescription(description);
+//        menu.setStock(stock);
+		return Optional.of(this).map(e -> {
+            Menu menu = Menu.builder().build();
+			BeanUtils.copyProperties(e, menu);
 
-        menu.setName(name);
-        menu.setCategory(category);
-        menu.setPrice(price);
-        menu.setDescription(description);
-        menu.setStock(stock);
-
-        return menu;
+			return menu;
+		}).orElse(null);
     }
 
 }
