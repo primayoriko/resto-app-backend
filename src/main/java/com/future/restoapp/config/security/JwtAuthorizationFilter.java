@@ -1,10 +1,10 @@
 package com.future.restoapp.config.security;
 
 import com.auth0.jwt.JWT;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.future.restoapp.constant.JwtProperties;
 import com.future.restoapp.model.entity.User;
 import com.future.restoapp.model.security.UserPrincipal;
+import com.future.restoapp.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,11 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import com.future.restoapp.repository.UserRepository;
-
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+
     private UserRepository userRepository;
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
@@ -72,4 +71,5 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         return null;
     }
+
 }
