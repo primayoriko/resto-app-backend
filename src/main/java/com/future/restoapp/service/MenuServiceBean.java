@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @Service
 public class MenuServiceBean implements MenuService {
 
@@ -19,24 +22,37 @@ public class MenuServiceBean implements MenuService {
     }
 
     @Override
-    public void updateById(String id, Menu menu) throws Exception {
-
+    public void deleteById(String id) throws Exception {
+        menuRepository.deleteById(id);
     }
 
     @Override
-    public void deleteById(String id) throws Exception {
+    public void updateById(String id, Menu menu) throws Exception {
+        Optional<Menu> menuDb = menuRepository.findById(id);
 
+        if(!menuDb.isPresent()) throw new NoSuchElementException("Menu with specified ID not found");
+
+        Menu savedMenu = menuDb.get();
+
+        if(savedMenu.getName() != null) savedMenu.setName(menu.getName());
+        if(savedMenu.getCategory() != null) savedMenu.setCategory(menu.getCategory());
+        if(savedMenu.getPrice() != null) savedMenu.setPrice(menu.getPrice());
+        if(savedMenu.getDescription() != null) savedMenu.setDescription(menu.getDescription());
+        if(savedMenu.getStock() != null) savedMenu.setStock(menu.getStock());
+
+        menuRepository.save(savedMenu);
     }
 
     @Override
     public Menu findById(String id) throws Exception {
-        return null;
+        Optional<Menu> menu = menuRepository.findById(id);
+
+        return menu.orElse(null);
     }
 
     @Override
     public Page<Menu> find(Pageable pageable) throws Exception {
         return null;
     }
-
 
 }
