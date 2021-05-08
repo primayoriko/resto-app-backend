@@ -9,8 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-//import com.future.restoapp.model.entity.*;
-
 @Table(name = com.future.restoapp.model.entity.Menu.TABLE_NAME)
 @Entity
 @Data

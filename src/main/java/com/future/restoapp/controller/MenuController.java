@@ -55,7 +55,7 @@ public class MenuController extends BaseController {
             method = RequestMethod.GET
     )
     public ResponseEntity fetchOne(@Valid @PathVariable String id) throws Exception {
-        Menu menu = menuService.findById(id);
+        Menu menu = menuService.findOneById(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(menu);
     }

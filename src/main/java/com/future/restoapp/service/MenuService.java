@@ -12,8 +12,12 @@ public interface MenuService {
 
     void deleteById(String id) throws Exception;
 
-    Menu findById(String id) throws Exception;
+    Menu findOneById(String id) throws Exception;
 
-    Page<Menu> find(Pageable pageable) throws Exception;
+    Page<Menu> findAll(Pageable pageable) throws Exception;
+
+    Page<Menu> findAllByNameQuery(String name, Pageable pageable) throws Exception;
+
+    Page<Menu> findAllByCategory(String category, Pageable pageable) throws Exception;
 
 }

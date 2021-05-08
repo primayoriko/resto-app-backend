@@ -19,27 +19,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
         super();
     }
 
-//    @Override
-//    @ExceptionHandler(value = { MethodArgumentNotValidException.class })
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-//            MethodArgumentNotValidException ex,
-//            HttpHeaders headers,
-//            HttpStatus status,
-//            WebRequest request
-//    ){
-//        ErrorResponse message = new ErrorResponse(
-//                status.value(),
-//                status.getReasonPhrase(),
-//                "Argument(s) passed is/are not valid",
-//                ""
-//        );
-//
-//        return ResponseEntity.badRequest().body(message);
-//    }
-
     @Override
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex,
             HttpHeaders headers,
@@ -57,9 +37,38 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return super.handleHttpRequestMethodNotSupported(ex, headers, status, request);
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex,
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request
+    ){
+        ErrorResponse message = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                "Specified request method not supported",
+                ""
+        );
+
+        return ResponseEntity.badRequest().body(message);
     }
+
+//    @Override
+//    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+//            MethodArgumentNotValidException ex,
+//            HttpHeaders headers,
+//            HttpStatus status,
+//            WebRequest request
+//    ){
+//        ErrorResponse message = new ErrorResponse(
+//                status.value(),
+//                status.getReasonPhrase(),
+//                "Argument(s) passed is/are not valid",
+//                ""
+//        );
+//
+//        return ResponseEntity.badRequest().body(message);
+//    }
 
 //    @ExceptionHandler(Exception.class)
 //    @Order(Ordered.LOWEST_PRECEDENCE)

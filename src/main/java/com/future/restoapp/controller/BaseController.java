@@ -17,20 +17,18 @@ import java.util.*;
 @CrossOrigin
 public class BaseController {
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity handleValidationExceptions(
             MethodArgumentNotValidException ex) {
-        Map<String, Object> body = new HashMap<>();
+        HttpStatus status = HttpStatus.BAD_REQUEST;
         List<String> errors = new ArrayList<>();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
 //                String fieldName = ((FieldError) error).getField();
             errors.add(error.getDefaultMessage());
         });
-
-        HttpStatus status = HttpStatus.BAD_REQUEST;
 
         ErrorResponse message = new ErrorResponse(
                 status.value(),

@@ -44,15 +44,25 @@ public class MenuServiceBean implements MenuService {
     }
 
     @Override
-    public Menu findById(String id) throws Exception {
+    public Menu findOneById(String id) throws Exception {
         Optional<Menu> menu = menuRepository.findById(id);
 
         return menu.orElse(null);
     }
 
     @Override
-    public Page<Menu> find(Pageable pageable) throws Exception {
-        return null;
+    public Page<Menu> findAll(Pageable pageable) throws Exception {
+        return menuRepository.findAllByOrderByNameAsc(pageable);
+    }
+
+    @Override
+    public Page<Menu> findAllByNameQuery(String name, Pageable pageable) throws Exception {
+        return menuRepository.findAllByNameContainingOrderByNameAsc(name, pageable);
+    }
+
+    @Override
+    public Page<Menu> findAllByCategory(String category, Pageable pageable) throws Exception {
+        return menuRepository.findAllByCategoryLikeOrderByNameAsc(category, pageable);
     }
 
 }
