@@ -2,8 +2,10 @@ package com.future.restoapp.config.security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.future.restoapp.constant.JwtProperties;
 import com.future.restoapp.constant.UrlBasePath;
 import com.future.restoapp.model.security.Credentials;
+import com.future.restoapp.model.security.UserPrincipal;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,9 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.future.restoapp.constant.JwtProperties;
-import com.future.restoapp.model.security.UserPrincipal;
-
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -34,7 +33,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         setFilterProcessesUrl(LOGIN_PATH);
     }
 
-    /* Trigger when we issue POST request
+    /*
+    Trigger when we issue POST request
     We also need to pass in {"username":"dan", "password":"dan123"} in the request body
      */
     @Override
@@ -70,6 +70,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Create JWT Token
         String token = JWT.create()
                 .withSubject(principal.getUsername())
+                .withClaim("isAdmin", principal.isAdmin())
+                .withClaim("role", principal.isAdmin()? "admin" : "client")
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .sign(HMAC512(JwtProperties.SECRET.getBytes()));
 

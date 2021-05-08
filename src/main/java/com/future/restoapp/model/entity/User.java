@@ -32,13 +32,13 @@ public class User extends BaseEntity {
     @Column(name = User.COLUMN_EMAIL, unique = true, nullable = false)
     private String email;
 
-    @Column(name = User.COLUMN_PASSWORD)
+    @Column(name = User.COLUMN_PASSWORD, nullable = false)
     private String password;
 
     @Column(name = User.COLUMN_HP_NUMBER, nullable = false)
     private String hpNumber;
 
-    @Column(name = User.COLUMN_IS_ADMIN)
+    @Column(name = User.COLUMN_IS_ADMIN, nullable = false)
     private Boolean isAdmin = false;
 
 }

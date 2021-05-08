@@ -23,4 +23,5 @@ public class CustomCorsFilter extends CorsFilter {
         source.registerCorsConfiguration("/api/**", config);
         return source;
     }
+
 }
