@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -62,22 +61,23 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleHttpRequestMethodNotSupported(ex, headers, status, request);
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<Object> handleAllUncaughtException(
-            RuntimeException exception,
-            WebRequest request
-    ){
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-
-        ErrorResponse message = new ErrorResponse(
-                status.value(),
-                status.getReasonPhrase(),
-                "Unknown unhandled error, please contact the developer",
-                ""
-        );
-
-        return ResponseEntity.badRequest().body(message);
-    }
+//    @ExceptionHandler(Exception.class)
+//    @Order(Ordered.LOWEST_PRECEDENCE)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    public ResponseEntity<Object> handleAllUncaughtException(
+//            RuntimeException exception,
+//            WebRequest request
+//    ){
+//        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+//
+//        ErrorResponse message = new ErrorResponse(
+//                status.value(),
+//                status.getReasonPhrase(),
+//                "Unknown unhandled error, please contact the developer",
+//                ""
+//        );
+//
+//        return ResponseEntity.badRequest().body(message);
+//    }
 
 }

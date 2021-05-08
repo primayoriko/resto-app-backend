@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
@@ -25,15 +26,15 @@ public class MenuCreateRequest {
     @NotBlank(message = "name must be specified")
     private String name;
 
-    @NotBlank(message = "price must be specified")
-    @Positive(message = "price must be positive value")
+    @NotNull(message = "price must be specified")
+    @Positive(message = "price value must be positive")
     private Float price;
 
     @NotBlank(message = "description must be specified")
     private String description;
 
-    @NotBlank(message = "stock must be specified")
-    @PositiveOrZero(message = "stock can't be negative value")
+    @NotNull(message = "stock must be specified")
+    @PositiveOrZero(message = "stock value must equals or more than zero")
     private Integer stock;
 
     public Menu toMenu(){
