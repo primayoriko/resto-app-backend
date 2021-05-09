@@ -27,6 +27,7 @@ public class UserServiceTest {
 
     private User user1;
     private User user2;
+    private User user3;
 
     private List<User> userList;
 
@@ -55,6 +56,14 @@ public class UserServiceTest {
                 .isAdmin(true)
                 .build();
 
+        user3 = User.builder()
+                .username("newbee")
+                .email("nb@g.com")
+                .password("12345")
+                .hpNumber("082116235723")
+                .isAdmin(false)
+                .build();
+
         userList.add(user1);
         userList.add(user2);
     }
@@ -68,37 +77,44 @@ public class UserServiceTest {
     @DisplayName("Successfully create a new and complete user data")
     @Test
     public void successfulRegister() throws Exception {
-        when(userRepository.save(any())).thenReturn(null);
+        doAnswer(invocation -> {
+            User user = invocation.getArgument(0);
 
-        User user = User.builder()
-                .username("newbee")
-                .email("nb@g.com")
-                .password("12345")
-                .hpNumber("082116235723")
-                .isAdmin(false)
-                .build();
+            if(userList.contains(user)){
+                throw new RuntimeException();
+            } else {
+                userList.add(user);
+            }
 
-        userService.create(user);
-        verify(userRepository, times(1)).save(user);
+            return null;
+        }).when(userRepository).save(any());
+
+        userService.create(user3);
+        verify(userRepository, times(1)).save(user3);
     }
 
     @DisplayName("Fail to create an existing data")
     @Test
     public void failRegisterAlreadyExist() throws Exception {
-        // TODO: do answer in save method
-        when(userRepository.save(any())).thenReturn(null);
-        when(userRepository.save(user1)).thenThrow(new RuntimeException());
+        doAnswer(invocation -> {
+            User user = invocation.getArgument(0);
 
-        userService.create(user2);
-        verify(userRepository, times(1)).save(user2);
+            if(userList.contains(user)){
+                throw new RuntimeException();
+            } else {
+                userList.add(user);
+            }
+
+            return null;
+        }).when(userRepository).save(any());
 
         try {
-            userService.create(user1);
-            verify(userRepository, times(1)).save(user1);
+            userService.create(user3);
+            userService.create(user3);
+            verify(userRepository, times(2)).save(user3);
         } catch (Exception ex) {
             return;
         }
-
         assert false;
     }
 

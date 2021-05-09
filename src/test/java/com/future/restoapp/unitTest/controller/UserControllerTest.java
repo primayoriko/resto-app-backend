@@ -53,7 +53,9 @@ class UserControllerTest {
     @BeforeEach
     public void init(){
         userList = new ArrayList<>();
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(userController)
+                .build();
 
         request = RegisterRequest.builder()
                 .username("newbee")
