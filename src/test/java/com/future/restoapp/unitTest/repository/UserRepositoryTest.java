@@ -45,14 +45,14 @@ public class UserRepositoryTest {
 
     @DisplayName("Successfully create a new and complete user data")
     @Test
-    public void successfulRegister() throws Exception {
+    public void saveSuccess() throws Exception {
         User addedUser = userRepository.save(user);
         assertThat(addedUser).isEqualTo(user);
     }
 
     @DisplayName("Failed to create an existing data")
     @Test
-    public void failRegisterAlreadyExist() throws Exception {
+    public void saveFailAlreadyExist() throws Exception {
         User addedUser = userRepository.save(user);
         assertThat(addedUser).isEqualTo(user);
 
