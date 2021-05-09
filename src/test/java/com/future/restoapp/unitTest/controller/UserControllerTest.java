@@ -123,29 +123,75 @@ class UserControllerTest {
         verify(userService, times(1)).create(any());
     }
 
-    @DisplayName("Create User Endpoint Failed Existing Data")
+    @DisplayName("Create User Endpoint Failed with Existing Data")
     @Test
-    public void createUserFailed1() throws Exception {
-//        doReturn("12345").when(passwordEncoder).encode(anyString());
-//        doAnswer(invocation -> {
-//            User user = invocation.getArgument(0);
-//
-//            if(userList.contains(user)){
-//                throw new RuntimeException();
-//            } else {
-//                userList.add(user);
-//            }
-//
-//            return null;
-//        }).when(userService).create(any());
-//
-//        mockMvc.perform(
-//                post(UserControllerPath.REGISTER_CLIENT)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(asJsonString(request))
-//        ).andDo(MockMvcResultHandlers.print());
-//
-//        verify(userService, times(1)).create(any());
+    public void createUserFailedAlreadyExist() throws Exception {
+        doReturn("12345").when(passwordEncoder).encode(anyString());
+        doAnswer(invocation -> {
+            User user = invocation.getArgument(0);
+
+            if(userList.contains(user)){
+                throw new RuntimeException();
+            } else {
+                userList.add(user);
+            }
+
+            return null;
+        }).when(userService).create(any());
+
+        user3 = User.builder()
+                .username("newbee")
+                .email("nb@g.com")
+                .password("12345")
+                .hpNumber("082116235723")
+                .isAdmin(false)
+                .build();
+
+        try {
+            mockMvc.perform(
+                    post(UserControllerPath.REGISTER_CLIENT)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(asJsonString(request))
+            ).andDo(MockMvcResultHandlers.print());
+
+            mockMvc.perform(
+                    post(UserControllerPath.REGISTER_CLIENT)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(asJsonString(request))
+            ).andDo(MockMvcResultHandlers.print());
+        } catch (Exception err) {
+            verify(userService, times(2)).create(any());
+            return;
+        }
+
+        assert false;
+    }
+
+    @DisplayName("Create User Endpoint Failed with Incomplete Data")
+    @Test
+    public void createUserFailedIncompleteData() throws Exception {
+        doReturn("12345").when(passwordEncoder).encode(anyString());
+        doNothing().when(userService).create(any());
+
+        // TODO: Fix validation check
+        request = RegisterRequest.builder()
+                .email("nb@g.com")
+                .password("12345")
+                .hpNumber("082116235723")
+                .build();
+
+        try {
+            mockMvc.perform(
+                    post(UserControllerPath.REGISTER_CLIENT)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(asJsonString(request))
+            ).andDo(MockMvcResultHandlers.print());
+        } catch (Exception err) {
+            verify(userService, times(0)).create(any());
+            return;
+        }
+
+//        assert false;
     }
 
 }

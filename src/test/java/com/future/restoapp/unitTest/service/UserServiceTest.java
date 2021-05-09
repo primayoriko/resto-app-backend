@@ -85,6 +85,7 @@ public class UserServiceTest {
     @DisplayName("Fail to create an existing data")
     @Test
     public void failRegisterAlreadyExist() throws Exception {
+        // TODO: do answer in save method
         when(userRepository.save(any())).thenReturn(null);
         when(userRepository.save(user1)).thenThrow(new RuntimeException());
 
