@@ -54,10 +54,11 @@ public class UserController extends BaseController {
     public ResponseEntity fetchOne(@PathVariable String username) throws Exception{
         User user = this.userService.findByUsername(username);
 
-        if(user == null)
-            return ResponseEntity.notFound().build();
+        if(user == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        return ResponseEntity.ok().body(UserResponse.build(user));
+        return ResponseEntity.status(HttpStatus.OK).body(UserResponse.build(user));
     }
+
+    // TODO: Add fetch list of user
 
 }

@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Override
-    public void create(User user) throws Exception{
+    public void create(User user) throws Exception {
         this.userRepository.save(user);
     }
 
@@ -33,17 +33,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) throws Exception{
+    public User findByUsername(String username) throws Exception {
 	    return this.userRepository.findByUsername(username);
     }
 
     @Override
-    public Page<User> find(Pageable pageable) throws Exception{
+    public Page<User> find(Pageable pageable) throws Exception {
 	    return null;
     }
 
     @Override
-    public void deleteByUsername(String username) throws Exception{
+    public void deleteByUsername(String username) throws Exception {
         this.userRepository.deleteByUsername(username);
     }
 
