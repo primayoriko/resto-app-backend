@@ -76,10 +76,13 @@ public class MenuController extends BaseController {
     )
     public ResponseEntity fetch(
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(name = "size", defaultValue = "0") Integer pageSize,
-            @RequestParam String name,
-            @RequestParam String category
+            @RequestParam(name = "size", defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "#$#") String name,
+            @RequestParam(defaultValue = "#$#") String category
     ) throws Exception {
+        if(name.equals("#$#")) name = null;
+        if(category.equals("#$#")) category = null;
+
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<Menu> result = menuService.findAllByNameAndCategory(name, category, pageable);
 
