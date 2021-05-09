@@ -12,7 +12,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
 @DisplayName("Menu Service Unit Tests")
@@ -47,6 +49,7 @@ public class MenuServiceTest {
                 .stock(12)
                 .description("so good")
                 .build();
+        menu1.setId("1");
 
         menu2 = Menu.builder()
                 .name("superjoss")
@@ -55,6 +58,7 @@ public class MenuServiceTest {
                 .stock(1200)
                 .description("so nice")
                 .build();
+        menu2.setId("2");
 
         menu3 = Menu.builder()
                 .name("bipang")
@@ -63,6 +67,7 @@ public class MenuServiceTest {
                 .stock(8)
                 .description("extreme meal")
                 .build();
+        menu3.setId("3");
 
         menuList.add(menu1);
         menuList.add(menu2);
@@ -118,16 +123,66 @@ public class MenuServiceTest {
         assert false;
     }
 
-    @DisplayName("Successfully delete existing entry")
+    @DisplayName("Successfully delete entry from existent ID")
     @Test
-    public void deleteSuccess(){
+    public void deleteByIdSuccess() throws Exception {
+        doAnswer(invocation -> {
+            String id = invocation.getArgument(0);
+            return menuList.stream()
+                    .filter(e -> e.getId().equals(id))
+                    .findFirst();
+        }).when(menuRepository).findById(anyString());
 
+        doAnswer(invocation -> {
+            String id = invocation.getArgument(0);
+
+            boolean exist = false;
+            Menu menu = menu1;
+
+            for(Menu m: menuList){
+                exist = m.getId().equals(id);
+
+                if(exist) {
+                    menu = m;
+                    break;
+                }
+            }
+
+            if(!exist) throw new RuntimeException();
+
+            return Optional.of(menu);
+        }).when(menuRepository).deleteById(anyString());
+
+        Menu menu = menuService.deleteById(menu1.getId());
+
+        assertThat(menu).isEqualTo(menu1);
+        verify(menuRepository, times(1)).findById(menu1.getId());
+        verify(menuRepository, times(1)).deleteById(menu1.getId());
     }
 
-    @DisplayName("Failed to delete inexist entry")
+    @DisplayName("Failed to delete entry from inexistent ID")
     @Test
-    public void deleteFailNoRecord(){
+    public void deleteFailNoRecord() throws Exception {
+        doAnswer(invocation -> {
+            String id = invocation.getArgument(0);
+            return menuList.stream()
+                    .filter(e -> e.getId().equals(id))
+                    .findFirst();
+        }).when(menuRepository).findById(anyString());
 
+        String id = "456";
+
+        try {
+            menuService.deleteById(id);
+
+        } catch(Exception ex) {
+            verify(menuRepository, times(1)).findById(id);
+            verify(menuRepository, times(0)).deleteById(id);
+
+            return;
+        }
+
+        assert false;
     }
 
 }
