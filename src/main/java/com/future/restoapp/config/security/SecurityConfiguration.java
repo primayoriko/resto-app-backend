@@ -23,8 +23,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private UserPrincipalDetailsService userPrincipalDetailsService;
-    private UserRepository userRepository;
+    private final UserPrincipalDetailsService userPrincipalDetailsService;
+    private final UserRepository userRepository;
 
     public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService, UserRepository userRepository) {
         this.userPrincipalDetailsService = userPrincipalDetailsService;
@@ -39,25 +39,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                // remove csrf and state in session because in jwt we do not need them
-                .csrf().disable()
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                // add jwt filters (1. authentication, 2. authorization)
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
-                .authorizeRequests()
-                // configure access rules
-                .antMatchers(HttpMethod.GET, "/docs*/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
-                .antMatchers(HttpMethod.POST, JwtAuthenticationFilter.LOGIN_PATH).permitAll()
-                .antMatchers(HttpMethod.POST, UserControllerPath.REGISTER_CLIENT).permitAll()
-                .antMatchers(HttpMethod.POST, UserControllerPath.REGISTER_ADMIN).permitAll() // OPENED FOR TESTING PURPOSE
-                .antMatchers(UrlBasePath.CURRENT_ADMIN + "/**").hasRole("ADMIN")
-                .antMatchers(UrlBasePath.CURRENT_CLIENT + "/**").hasRole("CLIENT")
-                .anyRequest().authenticated();
+            // remove csrf and state in session because in jwt we do not need them
+            .csrf().disable()
+            .cors().configurationSource(corsConfigurationSource())
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            // add jwt filters (1. authentication, 2. authorization)
+            .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+            .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
+            .authorizeRequests()
+            // configure access rules
+            .antMatchers(HttpMethod.GET, "/docs*/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
+            .antMatchers(HttpMethod.POST, JwtAuthenticationFilter.LOGIN_PATH).permitAll()
+            .antMatchers(HttpMethod.POST, UserControllerPath.REGISTER_CLIENT).permitAll()
+            .antMatchers(HttpMethod.POST, UserControllerPath.REGISTER_ADMIN).permitAll() // OPENED FOR TESTING PURPOSE
+            .antMatchers(UrlBasePath.CURRENT_ADMIN + "/**").hasRole("ADMIN")
+            .antMatchers(UrlBasePath.CURRENT_CLIENT + "/**").hasRole("CLIENT")
+            .anyRequest().authenticated();
     }
 
     @Bean
