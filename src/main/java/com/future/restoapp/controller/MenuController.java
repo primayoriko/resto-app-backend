@@ -19,6 +19,7 @@ import java.util.NoSuchElementException;
 
 @Tag(name = "Menu")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MenuController extends BaseController {
 
     @Autowired

@@ -23,7 +23,7 @@ import java.util.Date;
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     public static String LOGIN_PATH = UrlBasePath.CURRENT_BASE + "/login";
 
@@ -56,9 +56,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 new ArrayList<>());
 
         // Authenticate user
-        Authentication auth = authenticationManager.authenticate(authenticationToken);
 
-        return auth;
+        return authenticationManager.authenticate(authenticationToken);
 //        return null;
     }
 
