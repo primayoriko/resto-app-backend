@@ -47,9 +47,9 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = MenuControllerPath.DELETE, method = RequestMethod.DELETE)
     public ResponseEntity delete(@Valid @PathVariable String id) throws Exception {
-        menuService.deleteById(id);
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        Menu menu = menuService.deleteById(id);
+        
+        return ResponseEntity.status(HttpStatus.OK).body(menu);
     }
 
     @RequestMapping(
