@@ -26,8 +26,14 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void deleteById(String id) throws Exception {
+    public Menu deleteById(String id) throws Exception {
+        Menu menu = menuRepository.findById(id).orElse(null);
+
+        if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
+
         menuRepository.deleteById(id);
+
+        return menu;
     }
 
     @Override

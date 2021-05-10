@@ -70,13 +70,13 @@ public class UserServiceTest {
 
     @AfterEach
     public void tearDown(){
-        user1 = user2 = null;
+        user1 = user2 = user3 = null;
         userList = null;
     }
 
     @DisplayName("Successfully create a new and complete user data")
     @Test
-    public void successfulRegister() throws Exception {
+    public void registerSuccess() throws Exception {
         doAnswer(invocation -> {
             User user = invocation.getArgument(0);
 
@@ -95,7 +95,7 @@ public class UserServiceTest {
 
     @DisplayName("Fail to create an existing data")
     @Test
-    public void failRegisterAlreadyExist() throws Exception {
+    public void registerFailAlreadyExist() throws Exception {
         doAnswer(invocation -> {
             User user = invocation.getArgument(0);
 
