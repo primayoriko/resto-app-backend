@@ -13,10 +13,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
@@ -25,6 +25,8 @@ import java.util.List;
 import static com.future.restoapp.unitTest.controller.AbstractControllerTest.asJsonString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("User Controller Unit Tests")
 @ExtendWith(MockitoExtension.class)
@@ -102,13 +104,12 @@ class UserControllerTest {
     @DisplayName("Create User Endpoint Success")
     @Test
     public void createUserSuccess() throws Exception {
-//        when(passwordEncoder.encode(anyString())).thenReturn("12345");
         doReturn("12345").when(passwordEncoder).encode(anyString());
         doAnswer(invocation -> {
             User user = invocation.getArgument(0);
 
             if(userList.contains(user)){
-                throw new RuntimeException();
+                throw new DataIntegrityViolationException("");
             } else {
                 userList.add(user);
             }
@@ -117,10 +118,11 @@ class UserControllerTest {
         }).when(userService).create(any());
 
         mockMvc.perform(
-                post(UserControllerPath.REGISTER_CLIENT)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(request))
-        ).andDo(MockMvcResultHandlers.print());
+                    post(UserControllerPath.REGISTER_CLIENT)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(asJsonString(request))
+                ).andExpect(status().isCreated())
+                .andDo(print());
 
         verify(userService, times(1)).create(any());
     }
@@ -133,7 +135,7 @@ class UserControllerTest {
             User user = invocation.getArgument(0);
 
             if(userList.contains(user)){
-                throw new RuntimeException();
+                throw new DataIntegrityViolationException("");
             } else {
                 userList.add(user);
             }
@@ -141,28 +143,23 @@ class UserControllerTest {
             return null;
         }).when(userService).create(any());
 
-        user3 = User.builder()
-                .username("newbee")
-                .email("nb@g.com")
-                .password("12345")
-                .hpNumber("082116235723")
-                .isAdmin(false)
-                .build();
+        userList.add(user3);
 
         try {
+//            mockMvc.perform(
+//                    post(UserControllerPath.REGISTER_CLIENT)
+//                            .contentType(MediaType.APPLICATION_JSON)
+//                            .content(asJsonString(request))
+//            ).andExpect(status().isConflict());
             mockMvc.perform(
-                    post(UserControllerPath.REGISTER_CLIENT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(asJsonString(request))
-            ).andDo(MockMvcResultHandlers.print());
+                        post(UserControllerPath.REGISTER_CLIENT)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(asJsonString(request))
+                    ).andExpect(status().isConflict())
+                    .andDo(print());
 
-            mockMvc.perform(
-                    post(UserControllerPath.REGISTER_CLIENT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(asJsonString(request))
-            ).andDo(MockMvcResultHandlers.print());
         } catch (Exception err) {
-            verify(userService, times(2)).create(any());
+            verify(userService, times(1)).create(any());
             return;
         }
 
@@ -187,7 +184,7 @@ class UserControllerTest {
                     post(UserControllerPath.REGISTER_CLIENT)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(asJsonString(request))
-            ).andDo(MockMvcResultHandlers.print());
+            ).andDo(print());
         } catch (Exception err) {
             verify(userService, times(0)).create(any());
             return;
