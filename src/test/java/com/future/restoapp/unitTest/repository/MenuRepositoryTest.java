@@ -72,8 +72,9 @@ public class MenuRepositoryTest {
     @Test
     public void deleteByIdFailUnknownID() throws Exception {
         try {
-            menuRepository.deleteById("qw77e213r12345qwe");
+            menuRepository.deleteById("12342132");
         } catch (Exception ex) {
+//            System.out.println(ex.getClass());
             return;
         }
 

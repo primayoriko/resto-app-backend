@@ -69,6 +69,7 @@ public class UserRepositoryTest {
             assertThat(addedUser).isEqualTo(user2);
         } catch (Exception ex) {
 //            user = user2 = null;
+//            System.out.println(ex.getClass());
             return;
         }
 
