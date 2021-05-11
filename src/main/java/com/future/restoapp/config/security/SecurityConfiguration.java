@@ -1,7 +1,7 @@
 package com.future.restoapp.config.security;
 
 import com.future.restoapp.constant.UrlBasePath;
-import com.future.restoapp.controller.UserControllerPath;
+import com.future.restoapp.controller.path.UserControllerPath;
 import com.future.restoapp.repository.UserRepository;
 import com.future.restoapp.service.security.UserPrincipalDetailsService;
 import org.springframework.context.annotation.Bean;
@@ -52,6 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             // configure access rules
             .antMatchers(HttpMethod.GET, "/docs*/**").permitAll()
             .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
+            .antMatchers(HttpMethod.GET, UrlBasePath.CURRENT_PUBLIC + "/**").permitAll()
             .antMatchers(HttpMethod.POST, JwtAuthenticationFilter.LOGIN_PATH).permitAll()
             .antMatchers(HttpMethod.POST, UserControllerPath.REGISTER_CLIENT).permitAll()
             .antMatchers(HttpMethod.POST, UserControllerPath.REGISTER_ADMIN).permitAll() // OPENED FOR TESTING PURPOSE
