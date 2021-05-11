@@ -1,5 +1,6 @@
 package com.future.restoapp.controller;
 
+import com.future.restoapp.controller.path.MenuControllerPath;
 import com.future.restoapp.model.dto.MenuCreateRequest;
 import com.future.restoapp.model.dto.MenuUpdateRequest;
 import com.future.restoapp.model.entity.Menu;

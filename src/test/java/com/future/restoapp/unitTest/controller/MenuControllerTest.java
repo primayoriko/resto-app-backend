@@ -1,7 +1,7 @@
 package com.future.restoapp.unitTest.controller;
 
 import com.future.restoapp.controller.MenuController;
-import com.future.restoapp.controller.MenuControllerPath;
+import com.future.restoapp.controller.path.MenuControllerPath;
 import com.future.restoapp.model.dto.MenuCreateRequest;
 import com.future.restoapp.model.entity.Menu;
 import com.future.restoapp.service.MenuService;

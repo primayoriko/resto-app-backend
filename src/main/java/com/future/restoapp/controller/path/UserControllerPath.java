@@ -1,4 +1,4 @@
-package com.future.restoapp.controller;
+package com.future.restoapp.controller.path;
 
 import com.future.restoapp.constant.UrlBasePath;
 

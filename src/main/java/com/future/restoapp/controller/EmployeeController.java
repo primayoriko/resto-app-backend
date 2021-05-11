@@ -1,5 +1,6 @@
 package com.future.restoapp.controller;
 
+import com.future.restoapp.controller.path.EmployeeControllerPath;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

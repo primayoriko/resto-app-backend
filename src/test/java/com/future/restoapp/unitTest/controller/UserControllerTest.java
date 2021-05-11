@@ -1,7 +1,7 @@
 package com.future.restoapp.unitTest.controller;
 
 import com.future.restoapp.controller.UserController;
-import com.future.restoapp.controller.UserControllerPath;
+import com.future.restoapp.controller.path.UserControllerPath;
 import com.future.restoapp.model.dto.RegisterRequest;
 import com.future.restoapp.model.entity.User;
 import com.future.restoapp.service.UserService;
