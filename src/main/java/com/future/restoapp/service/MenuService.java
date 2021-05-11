@@ -10,7 +10,7 @@ public interface MenuService {
 
     void updateById(String id, Menu menu) throws Exception;
 
-    void deleteById(String id) throws Exception;
+    Menu deleteById(String id) throws Exception;
 
     Menu findOneById(String id) throws Exception;
 

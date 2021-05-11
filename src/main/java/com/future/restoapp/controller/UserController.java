@@ -1,5 +1,6 @@
 package com.future.restoapp.controller;
 
+import com.future.restoapp.controller.path.UserControllerPath;
 import com.future.restoapp.model.dto.RegisterRequest;
 import com.future.restoapp.model.dto.UserResponse;
 import com.future.restoapp.model.entity.User;
@@ -54,10 +55,11 @@ public class UserController extends BaseController {
     public ResponseEntity fetchOne(@PathVariable String username) throws Exception{
         User user = this.userService.findByUsername(username);
 
-        if(user == null)
-            return ResponseEntity.notFound().build();
+        if(user == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        return ResponseEntity.ok().body(UserResponse.build(user));
+        return ResponseEntity.status(HttpStatus.OK).body(UserResponse.build(user));
     }
+
+    // TODO: Add fetch list of user
 
 }

@@ -1,5 +1,6 @@
 package com.future.restoapp.controller;
 
+import com.future.restoapp.controller.path.MenuControllerPath;
 import com.future.restoapp.model.dto.MenuCreateRequest;
 import com.future.restoapp.model.dto.MenuUpdateRequest;
 import com.future.restoapp.model.entity.Menu;
@@ -19,6 +20,7 @@ import java.util.NoSuchElementException;
 
 @Tag(name = "Menu")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MenuController extends BaseController {
 
     @Autowired
@@ -46,9 +48,9 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = MenuControllerPath.DELETE, method = RequestMethod.DELETE)
     public ResponseEntity delete(@Valid @PathVariable String id) throws Exception {
-        menuService.deleteById(id);
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        Menu menu = menuService.deleteById(id);
+        
+        return ResponseEntity.status(HttpStatus.OK).body(menu);
     }
 
     @RequestMapping(
@@ -75,10 +77,13 @@ public class MenuController extends BaseController {
     )
     public ResponseEntity fetch(
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(name = "size", defaultValue = "0") Integer pageSize,
-            @RequestParam String name,
-            @RequestParam String category
+            @RequestParam(name = "size", defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "#$#") String name,
+            @RequestParam(defaultValue = "#$#") String category
     ) throws Exception {
+        if(name.equals("#$#")) name = null;
+        if(category.equals("#$#")) category = null;
+
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<Menu> result = menuService.findAllByNameAndCategory(name, category, pageable);
 

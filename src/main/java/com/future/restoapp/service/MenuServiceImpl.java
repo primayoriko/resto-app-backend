@@ -2,6 +2,8 @@ package com.future.restoapp.service;
 
 import com.future.restoapp.model.entity.Menu;
 import com.future.restoapp.repository.MenuRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +15,8 @@ import java.util.Optional;
 @Service
 public class MenuServiceImpl implements MenuService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceBean.class);
+
     @Autowired
     MenuRepository menuRepository;
 
@@ -22,8 +26,14 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void deleteById(String id) throws Exception {
+    public Menu deleteById(String id) throws Exception {
+        Menu menu = menuRepository.findById(id).orElse(null);
+
+        if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
+
         menuRepository.deleteById(id);
+
+        return menu;
     }
 
     @Override
