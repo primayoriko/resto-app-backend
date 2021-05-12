@@ -17,18 +17,20 @@ public class AssetServiceImpl implements AssetService {
     @Override
     public byte[] getImageBytes(String filename) throws Exception {
         String path = new File(".").getCanonicalPath() + IMAGE_MENU_DIRECTORY + "/" + filename;
-
-        System.out.println(path);
-
         byte[] fileContent = FileUtils.readFileToByteArray(new File(path));
+//        System.out.println(path);
 //        InputStream in = context.getResourceAsStream(path);
 //        InputStream in = getClass().getClassLoader().getResourceAsStream(path);
-//
-//        String path2 = new File(".").getCanonicalPath();
-//        String path3 = getClass().getResource(".").getPath();
-//        String path4 = getClass().getClassLoader().getResource(".").getPath();
-//        String path5 = getClass().getClassLoader().getResource("../..").getPath();
-
+//        System.out.println(context.getContextPath());
+//        System.out.println(context.getResource(".").getFile());
+//        System.out.println(context.getResource(".").getPath());
+//        System.out.println(context.getRealPath("."));
+//        System.out.println("sadasd");
+//        System.out.println(context.getClass().getResource(".").getFile());
+//        System.out.println(context.getClass().getResource(".").getPath());
+//        System.out.println("1234sadasd");
+//        System.out.println(context.getClassLoader().getResource(".").getFile());
+//        System.out.println(context.getClassLoader().getResource(".").getPath());
 //        ApplicationContext ctx = new FileSystemXmlApplicationContext
         return fileContent;
     }
