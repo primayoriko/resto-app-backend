@@ -14,8 +14,8 @@ public interface AssetService {
 
     String getImageBase64(String filename) throws Exception;
 
-//    byte[] getImage(String path, String outputPath) throws Exception;
+    String addImage(String filename, String base64Content) throws Exception;
 
-    void addImage(String path, String content) throws Exception;
+    boolean deleteImage(String filename) throws Exception;
 
 }
