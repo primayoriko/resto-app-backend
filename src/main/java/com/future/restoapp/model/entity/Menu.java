@@ -23,7 +23,7 @@ public class Menu extends BaseEntity {
     public static final String COLUMN_STOCK = "stock";
     public static final String COLUMN_PRICE = "price";
     public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_IMAGE_PATH = "path";
+    public static final String COLUMN_IMAGE_FILENAME = "image_filename";
 
     @Column(name = Menu.COLUMN_NAME, unique = true, nullable = false)
     private String name;
@@ -40,7 +40,7 @@ public class Menu extends BaseEntity {
     @Column(name = Menu.COLUMN_DESCRIPTION)
     private String description;
 
-    @Column(name = Menu.COLUMN_IMAGE_PATH)
-    private String imagePath;
+    @Column(name = Menu.COLUMN_IMAGE_FILENAME)
+    private String imageFilename;
 
 }

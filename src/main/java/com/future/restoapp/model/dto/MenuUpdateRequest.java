@@ -36,6 +36,8 @@ public class MenuUpdateRequest {
 
     private String image;
 
+    private String fileExtension;
+
     public Menu inject(Menu target){
         target.setId(id);
 

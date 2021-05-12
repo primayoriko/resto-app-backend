@@ -41,6 +41,8 @@ public class MenuCreateRequest {
 
     private String image;
 
+    private String fileExtension;
+
     public Menu toMenu(){
 //        menu.setName(name);
 //        menu.setCategory(category);
