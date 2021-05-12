@@ -34,6 +34,8 @@ public class MenuUpdateRequest {
     @PositiveOrZero(message = "stock can't be negative value")
     private Integer stock;
 
+    private String image;
+
     public Menu inject(Menu target){
         target.setId(id);
 

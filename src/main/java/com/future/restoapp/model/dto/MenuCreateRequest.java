@@ -39,6 +39,8 @@ public class MenuCreateRequest {
     @PositiveOrZero(message = "stock value must equals or more than zero")
     private Integer stock;
 
+    private String image;
+
     public Menu toMenu(){
 //        menu.setName(name);
 //        menu.setCategory(category);
