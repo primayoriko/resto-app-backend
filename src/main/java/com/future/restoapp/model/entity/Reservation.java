@@ -1,15 +1,17 @@
 package com.future.restoapp.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 //import com.future.restoapp.model.entity.*;
 
@@ -34,5 +36,8 @@ public class Reservation extends BaseEntity {
 
     @Column(name = Reservation.COLUMN_DURATION)
     private Float duration;
+
+    @OneToMany(mappedBy = TABLE_NAME)
+    private Set<Menu> orders = new HashSet<>();
 
 }
