@@ -1,41 +1,49 @@
 package com.future.restoapp.model.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+@Embeddable
+class OrderItemKey implements Serializable {
+    public static final String COLUMN_RESERVATION_ID = "reservation_id";
+    public static final String COLUMN_MENU_ID = "menu_id";
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+    @Column(name = COLUMN_RESERVATION_ID)
+    String reservationId;
 
-//import com.future.restoapp.model.entity.*;
+    @Column(name = COLUMN_MENU_ID)
+    String menuId;
 
-@Table(name = com.future.restoapp.model.entity.OrderItem.TABLE_NAME)
+//    public boolean equals(@NotNull OrderItemKey other){
+//        return reservationId.equals(other.reservationId)
+//                && menuId.equals(other.menuId);
+//    }
+
+}
+
 @Entity
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = OrderItem.TABLE_NAME)
 public class OrderItem implements Serializable {
     public static final String TABLE_NAME = "order_items";
-
-    public static final String COLUMN_MENU_ID = "menu_id";
     public static final String COLUMN_QUANTITY = "quantity";
-    public static final String COLUMN_RESERVATION_ID = "reservation_id";
 
-    @Id
-    @Column(name = OrderItem.COLUMN_MENU_ID)
-    private Integer menuID;
+    public static final String COLUMN_RESERVATION_ID = "reservationId";
+    public static final String COLUMN_MENU_ID = "menuId";
 
-    @Id
-    @Column(name = OrderItem.COLUMN_RESERVATION_ID)
-    private Integer reservationID;
+    @EmbeddedId
+    OrderItemKey id;
+
+    @ManyToOne
+    @MapsId(COLUMN_RESERVATION_ID)
+    @JoinColumn(name = OrderItemKey.COLUMN_RESERVATION_ID)
+    Reservation reservation;
+
+    @ManyToOne
+    @MapsId(COLUMN_MENU_ID)
+    @JoinColumn(name = OrderItemKey.COLUMN_MENU_ID)
+    Menu menu;
 
     @Column(name = OrderItem.COLUMN_QUANTITY)
-    private Integer quantity;
+    Integer quantity;
 
 }

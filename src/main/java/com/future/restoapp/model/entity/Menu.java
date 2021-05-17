@@ -43,4 +43,7 @@ public class Menu extends BaseEntity {
     @Column(name = Menu.COLUMN_IMAGE_FILENAME)
     private String imageFilename;
 
+//    @OneToMany(mappedBy = TABLE_NAME)
+//    private Set<OrderItem> orders = new HashSet<>();
+
 }

@@ -38,6 +38,6 @@ public class Reservation extends BaseEntity {
     private Float duration;
 
     @OneToMany(mappedBy = TABLE_NAME)
-    private Set<Menu> orders = new HashSet<>();
+    private Set<OrderItem> orders = new HashSet<>();
 
 }
