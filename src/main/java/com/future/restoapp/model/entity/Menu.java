@@ -44,6 +44,6 @@ public class Menu extends BaseEntity {
     private String imageFilename;
 
 //    @OneToMany(mappedBy = TABLE_NAME)
-//    private Set<OrderItem> orders = new HashSet<>();
+//    private Collection<OrderItem> orders = new HashSet<>();
 
 }

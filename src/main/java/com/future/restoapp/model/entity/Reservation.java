@@ -5,13 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 
 //import com.future.restoapp.model.entity.*;
 
@@ -28,8 +25,9 @@ public class Reservation extends BaseEntity {
     public static final String COLUMN_DURATION = "duration";
     public static final String COLUMN_START_TIME = "start_time";
 
-    @Column(name = Reservation.COLUMN_USER_ID)
-    private Integer userID;
+    @ManyToOne
+    @JoinColumn(name = COLUMN_USER_ID, nullable = false, updatable = false)
+    private User user;
 
     @Column(name = Reservation.COLUMN_START_TIME)
     private Date startTime;
@@ -37,7 +35,7 @@ public class Reservation extends BaseEntity {
     @Column(name = Reservation.COLUMN_DURATION)
     private Float duration;
 
-    @OneToMany(mappedBy = TABLE_NAME)
-    private Set<OrderItem> orders = new HashSet<>();
+    @OneToMany(mappedBy = TABLE_NAME, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Collection<OrderItem> orders = new HashSet<>();
 
 }
