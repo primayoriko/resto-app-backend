@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -33,7 +32,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
                 ""
         );
 
-        return ResponseEntity.badRequest().body(message);
+        return ResponseEntity.status(status).body(message);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
                 ""
         );
 
-        return ResponseEntity.badRequest().body(message);
+        return ResponseEntity.status(status).body(message);
     }
 
 //    @Override

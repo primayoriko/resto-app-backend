@@ -45,7 +45,7 @@ public class BaseController {
                 ""
         );
 
-        return ResponseEntity.badRequest().body(message);
+        return ResponseEntity.unprocessableEntity().body(message);
     }
 
     @ExceptionHandler(value = {
@@ -66,7 +66,7 @@ public class BaseController {
                 ""
         );
 
-        return ResponseEntity.badRequest().body(message);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
     @ExceptionHandler(value = {
@@ -85,7 +85,7 @@ public class BaseController {
                 ""
         );
 
-        return ResponseEntity.badRequest().body(message);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
     }
 
     @ExceptionHandler(value = {
@@ -95,7 +95,7 @@ public class BaseController {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity handleSQLDataAndGrammarExceptions(SQLException ex){
-        HttpStatus status = HttpStatus.CONFLICT;
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
 
         ErrorResponse message = new ErrorResponse(
                 status.value(),
@@ -111,7 +111,7 @@ public class BaseController {
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity handleSQLExceptions(SQLException ex){
-        HttpStatus status = HttpStatus.CONFLICT;
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
 
         ErrorResponse message = new ErrorResponse(
                 status.value(),
