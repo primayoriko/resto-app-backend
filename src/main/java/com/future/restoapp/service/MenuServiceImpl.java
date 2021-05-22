@@ -26,7 +26,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu deleteById(String id) throws Exception {
+    public Menu deleteById(Long id) throws Exception {
         Menu menu = menuRepository.findById(id).orElse(null);
 
         if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
@@ -37,7 +37,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void updateById(String id, Menu menu) throws Exception {
+    public void updateById(Long id, Menu menu) throws Exception {
         Optional<Menu> menuDb = menuRepository.findById(id);
 
         if(!menuDb.isPresent()) throw new NoSuchElementException("Menu with specified ID not found");
@@ -54,7 +54,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu findOneById(String id) throws Exception {
+    public Menu findOneById(Long id) throws Exception {
         Optional<Menu> menu = menuRepository.findById(id);
 
         return menu.orElse(null);

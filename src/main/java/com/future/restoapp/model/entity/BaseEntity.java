@@ -28,8 +28,10 @@ public class BaseEntity implements Serializable {
   @Id
   @Column(name = BaseEntity.COLUMN_ID)
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  @org.springframework.data.annotation.Id
-  private String id;
+//  @org.springframework.data.annotation.Id
+//  @GeneratedValue(generator = "uuid")
+//  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  private Long id;
 
 //  @Version
 //  @Column(name = BaseEntity.COLUMN_VERSION)

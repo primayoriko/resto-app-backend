@@ -30,7 +30,7 @@ public class UserRepositoryTest {
         user = User.builder()
                 .username("hello")
                 .email("hello@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(false)
                 .build();
@@ -59,7 +59,7 @@ public class UserRepositoryTest {
         User user2 = User.builder()
                 .username("hello")
                 .email("hello@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(false)
                 .build();

@@ -73,7 +73,7 @@ class MenuControllerTest {
                 .stock(8)
                 .description("extreme meal")
                 .build();
-        menu3.setId("3");
+        menu3.setId(3L);
 
         menu1 = Menu.builder()
                 .name("kiranti")
@@ -82,7 +82,7 @@ class MenuControllerTest {
                 .stock(12)
                 .description("so good")
                 .build();
-        menu1.setId("1");
+        menu1.setId(1L);
 
         menu2 = Menu.builder()
                 .name("superjoss")
@@ -91,7 +91,7 @@ class MenuControllerTest {
                 .stock(1200)
                 .description("so nice")
                 .build();
-        menu2.setId("2");
+        menu2.setId(2L);
 
         menuList.add(menu1);
         menuList.add(menu2);
@@ -133,7 +133,7 @@ class MenuControllerTest {
     @Test
     public void deleteMenuSuccess() throws Exception {
         doAnswer(invocation -> {
-            String id = invocation.getArgument(0);
+            Long id = invocation.getArgument(0);
             Menu menu = null;
             boolean exist = false;
 
@@ -151,9 +151,9 @@ class MenuControllerTest {
             }
 
             return menu;
-        }).when(menuService).deleteById(anyString());
+        }).when(menuService).deleteById(anyLong());
 
-        String id = "1";
+        Long id = 1L;
 
         mockMvc.perform(
                 delete(MenuControllerPath.DELETE, id)
@@ -171,7 +171,7 @@ class MenuControllerTest {
     @Test
     public void deleteMenuFailNotExistID() throws Exception {
         doAnswer(invocation -> {
-            String id = invocation.getArgument(0);
+            Long id = invocation.getArgument(0);
             Menu menu = null;
             boolean exist = false;
 
@@ -190,9 +190,9 @@ class MenuControllerTest {
             }
 
             return menu;
-        }).when(menuService).deleteById(anyString());
+        }).when(menuService).deleteById(anyLong());
 
-        String id = "12345";
+        Long id = 12345L;
 
         // TODO: Fix error handler not catch error
         mockMvc.perform(

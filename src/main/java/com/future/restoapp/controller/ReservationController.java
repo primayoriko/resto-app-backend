@@ -21,6 +21,7 @@ public class ReservationController extends BaseController {
     @RequestMapping(value = ReservationControllerPath.CREATE, method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Reservation reservation) throws Exception {
 
+//        System.out.println(reservation);
         Reservation newReservation = reservationService.create(reservation);
 
         return ResponseEntity.created(new URI("/reservation/1")).build();

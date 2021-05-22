@@ -8,11 +8,11 @@ public interface MenuService {
 
     void create(Menu menu) throws Exception;
 
-    void updateById(String id, Menu menu) throws Exception;
+    void updateById(Long id, Menu menu) throws Exception;
 
-    Menu deleteById(String id) throws Exception;
+    Menu deleteById(Long id) throws Exception;
 
-    Menu findOneById(String id) throws Exception;
+    Menu findOneById(Long id) throws Exception;
 
     Page<Menu> findAllByNameAndCategory(String name, String category, Pageable pageable) throws Exception;
 

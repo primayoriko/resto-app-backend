@@ -20,7 +20,8 @@ import javax.validation.constraints.PositiveOrZero;
 public class MenuUpdateRequest {
 
     @NotBlank(message = "id must be specified")
-    private String id;
+    @Positive(message = "price must be positive value")
+    private Long id;
 
     private String category;
 
