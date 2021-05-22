@@ -44,15 +44,9 @@ public class MenuCreateRequest {
     private String fileExtension;
 
     public Menu toMenu(){
-//        menu.setName(name);
-//        menu.setCategory(category);
-//        menu.setPrice(price);
-//        menu.setDescription(description);
-//        menu.setStock(stock);
 		return Optional.of(this).map(e -> {
-            Menu menu = Menu.builder().build();
+            Menu menu = new Menu();
 			BeanUtils.copyProperties(e, menu);
-
 			return menu;
 		}).orElse(null);
     }

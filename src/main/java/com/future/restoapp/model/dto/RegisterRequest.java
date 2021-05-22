@@ -31,14 +31,9 @@ public class RegisterRequest {
     private String hpNumber;
 
     public User toUser(){
-//        user.setEmail(email);
-//        user.setPassword(password);
-//        user.setHpNumber(hpNumber);
-//        user.setUsername(username);
         return Optional.of(this).map(e -> {
-            User user = User.builder().build();
+            User user = new User();
             BeanUtils.copyProperties(e, user);
-
             return user;
         }).orElse(null);
     }
