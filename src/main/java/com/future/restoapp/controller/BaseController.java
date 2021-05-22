@@ -27,10 +27,10 @@ public class BaseController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity handleValidationExceptions(
             MethodArgumentNotValidException ex){
-        HttpStatus status = HttpStatus.BAD_REQUEST;
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
         List<String> errors = new ArrayList<>();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
@@ -48,10 +48,14 @@ public class BaseController {
         return ResponseEntity.badRequest().body(message);
     }
 
-    @ExceptionHandler(NoSuchElementException.class)
+    @ExceptionHandler(value = {
+//            ResourceNotFoundException.class,
+            NoSuchElementException.class,
+            FileNotFoundException.class,
+    })
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity handleNoSuchElementExceptions(
+    public ResponseEntity handleNotFoundItemExceptions(
             NoSuchElementException ex){
         HttpStatus status = HttpStatus.NOT_FOUND;
 
@@ -65,30 +69,13 @@ public class BaseController {
         return ResponseEntity.badRequest().body(message);
     }
 
-    @ExceptionHandler(FileNotFoundException.class)
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity handleFileNotFoundExceptions(
-            FileNotFoundException ex){
-        HttpStatus status = HttpStatus.NOT_FOUND;
-
-        ErrorResponse message = new ErrorResponse(
-                status.value(),
-                status.getReasonPhrase(),
-                "File requested was not found",
-                ""
-        );
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-    }
-
     @ExceptionHandler(value = {
             DataIntegrityViolationException.class,
             SQLIntegrityConstraintViolationException.class
     })
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity handleIntegrityViolationExceptions(Exception ex){
+    public ResponseEntity handleSQLIntegrityViolationExceptions(Exception ex){
         HttpStatus status = HttpStatus.CONFLICT;
 
         ErrorResponse message = new ErrorResponse(
@@ -107,7 +94,7 @@ public class BaseController {
     })
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity handleDataAndGrammarExceptions(SQLException ex){
+    public ResponseEntity handleSQLDataAndGrammarExceptions(SQLException ex){
         HttpStatus status = HttpStatus.CONFLICT;
 
         ErrorResponse message = new ErrorResponse(
