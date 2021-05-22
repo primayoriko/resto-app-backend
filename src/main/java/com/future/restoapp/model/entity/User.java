@@ -43,7 +43,7 @@ public class User extends BaseEntity {
 
     @OneToMany(
             targetEntity = Reservation.class,
-            mappedBy = Reservation.COLUMN_USER_ID,
+            mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             orphanRemoval = false

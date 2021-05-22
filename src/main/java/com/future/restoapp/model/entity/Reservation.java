@@ -29,13 +29,13 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = COLUMN_USER_ID, nullable = false, updatable = false)
     private User user;
 
-    @Column(name = Reservation.COLUMN_START_TIME)
+    @Column(name = COLUMN_START_TIME)
     private Date startTime;
 
-    @Column(name = Reservation.COLUMN_DURATION)
+    @Column(name = COLUMN_DURATION)
     private Float duration;
 
-    @OneToMany(mappedBy = TABLE_NAME, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Collection<OrderItem> orders = new HashSet<>();
 
 }
