@@ -1,5 +1,6 @@
 package com.future.restoapp.controller;
 
+import com.future.restoapp.controller.path.UserControllerPath;
 import com.future.restoapp.model.dto.RegisterRequest;
 import com.future.restoapp.model.dto.UserResponse;
 import com.future.restoapp.model.entity.User;

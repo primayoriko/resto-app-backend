@@ -1,8 +1,10 @@
 package com.future.restoapp.controller;
 
+import com.future.restoapp.controller.path.MenuControllerPath;
 import com.future.restoapp.model.dto.MenuCreateRequest;
 import com.future.restoapp.model.dto.MenuUpdateRequest;
 import com.future.restoapp.model.entity.Menu;
+import com.future.restoapp.service.AssetService;
 import com.future.restoapp.service.MenuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.BeanUtils;
@@ -25,9 +27,17 @@ public class MenuController extends BaseController {
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private AssetService assetService;
+
     @RequestMapping(value = MenuControllerPath.CREATE, method = RequestMethod.POST)
     public ResponseEntity create(@Valid @RequestBody MenuCreateRequest menuReq) throws Exception {
         Menu menu = menuReq.toMenu();
+
+        if(menuReq.getImage() != null){
+            String filename = addImage(menuReq.getName(), menuReq.getFileExtension(), menuReq.getImage(), false);
+            menu.setImageFilename(filename);
+        }
 
         menuService.create(menu);
 
@@ -40,14 +50,27 @@ public class MenuController extends BaseController {
 
         BeanUtils.copyProperties(menuReq, menu);
 
+        if(menuReq.getImage() != null){
+            String filename = addImage(menuReq.getName(), menuReq.getFileExtension(), menuReq.getImage(), true);
+            menu.setImageFilename(filename);
+        }
+
         menuService.updateById(menu.getId(), menu);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     @RequestMapping(value = MenuControllerPath.DELETE, method = RequestMethod.DELETE)
-    public ResponseEntity delete(@Valid @PathVariable String id) throws Exception {
+    public ResponseEntity delete(@Valid @PathVariable Long id) throws Exception {
         Menu menu = menuService.deleteById(id);
+        String path = menu.getImageFilename();
+
+        if(path != null){
+            String[] splittedPath = path.split("/");
+            String filename = splittedPath[splittedPath.length - 1];
+
+            assetService.deleteImage(filename);
+        }
         
         return ResponseEntity.status(HttpStatus.OK).body(menu);
     }
@@ -59,7 +82,7 @@ public class MenuController extends BaseController {
             },
             method = RequestMethod.GET
     )
-    public ResponseEntity fetchOne(@Valid @PathVariable String id) throws Exception {
+    public ResponseEntity fetchOne(@Valid @PathVariable Long id) throws Exception {
         Menu menu = menuService.findOneById(id);
 
         if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
@@ -89,6 +112,19 @@ public class MenuController extends BaseController {
         if(result == null) throw new NoSuchElementException("Menus with specified criterion not found");
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    private String addImage(String rawMenuName, String fileExtension,
+                            String base64Content, boolean deleteExisting) throws Exception {
+        String filename = rawMenuName.replace(" ", "_") + "." + fileExtension;
+
+        if(deleteExisting){
+            assetService.deleteImage(filename);
+        }
+
+        assetService.addImage(filename, base64Content);
+
+        return filename;
     }
 
 }

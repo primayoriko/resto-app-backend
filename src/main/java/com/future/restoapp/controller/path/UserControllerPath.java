@@ -1,4 +1,4 @@
-package com.future.restoapp.controller;
+package com.future.restoapp.controller.path;
 
 import com.future.restoapp.constant.UrlBasePath;
 
@@ -15,6 +15,6 @@ public interface UserControllerPath {
 
     String FETCH_ONE = BASE + "/{username}";
 
-    String FETCH_QUERY = BASE;
+    String FETCH = BASE;
 
 }
