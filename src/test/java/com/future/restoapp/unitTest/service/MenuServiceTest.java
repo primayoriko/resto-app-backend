@@ -44,27 +44,24 @@ public class MenuServiceTest {
 
         menu1 = Menu.builder()
                 .name("kiranti")
-                .category("drink")
+                .category(Menu.MenuCategory.DRINK)
                 .price(12345F)
-                .stock(12)
                 .description("so good")
                 .build();
         menu1.setId(1L);
 
         menu2 = Menu.builder()
                 .name("superjoss")
-                .category("drink")
+                .category(Menu.MenuCategory.DRINK)
                 .price(1345F)
-                .stock(1200)
                 .description("so nice")
                 .build();
         menu2.setId(2L);
 
         menu3 = Menu.builder()
                 .name("bipang")
-                .category("food")
+                .category(Menu.MenuCategory.FOOD)
                 .price(20333F)
-                .stock(8)
                 .description("extreme meal")
                 .build();
         menu3.setId(3L);
