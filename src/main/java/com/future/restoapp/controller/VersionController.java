@@ -1,4 +1,4 @@
-package com.future.restoapp.config;
+package com.future.restoapp.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;

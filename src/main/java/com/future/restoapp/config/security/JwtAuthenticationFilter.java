@@ -69,6 +69,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Create JWT Token
         String token = JWT.create()
                 .withSubject(principal.getUsername())
+                .withClaim("username", principal.getUsername())
+                .withClaim("email", principal.getUser().getEmail())
                 .withClaim("isAdmin", principal.isAdmin())
                 .withClaim("role", principal.isAdmin()? "admin" : "client")
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
