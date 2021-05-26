@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
 
-@Table(name = com.future.restoapp.model.entity.Menu.TABLE_NAME)
+@Table(name = Menu.TABLE_NAME)
 @Entity
 @Data
 @Builder

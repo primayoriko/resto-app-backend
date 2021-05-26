@@ -1,13 +1,13 @@
 package com.future.restoapp.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 //import com.future.restoapp.model.entity.*;
 
@@ -24,6 +24,7 @@ public class Board extends BaseEntity{
     public static final String COLUMN_Y = "y";
     public static final String COLUMN_WIDTH = "width";
     public static final String COLUMN_HEIGHT = "height";
+    public static final String COLUMN_CAPACITY = "capacity";
 
     @Column(name = Board.COLUMN_X)
     private Integer x;
@@ -36,5 +37,8 @@ public class Board extends BaseEntity{
 
     @Column(name = Board.COLUMN_HEIGHT)
     private Integer height;
+
+    @Column(name = Board.COLUMN_CAPACITY)
+    private Integer capacity;
 
 }
