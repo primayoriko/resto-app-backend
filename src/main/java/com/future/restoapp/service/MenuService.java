@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface MenuService {
 
-    void create(Menu menu) throws Exception;
+    Menu create(Menu menu) throws Exception;
 
-    void updateById(Long id, Menu menu) throws Exception;
+    Menu updateById(Long id, Menu menu) throws Exception;
 
     Menu deleteById(Long id) throws Exception;
 

@@ -21,8 +21,9 @@ public class MenuServiceImpl implements MenuService {
     MenuRepository menuRepository;
 
     @Override
-    public void create(Menu menu) throws Exception {
-        menuRepository.save(menu);
+    public Menu create(Menu menu) throws Exception {
+        System.out.println(menu);
+        return menuRepository.save(menu);
     }
 
     @Override
@@ -37,20 +38,17 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void updateById(Long id, Menu menu) throws Exception {
+    public Menu updateById(Long id, Menu menu) throws Exception {
         Optional<Menu> menuDb = menuRepository.findById(id);
 
         if(!menuDb.isPresent()) throw new NoSuchElementException("Menu with specified ID not found");
 
         Menu savedMenu = menuDb.get();
 
-        if(savedMenu.getName() != null) savedMenu.setName(menu.getName());
-        if(savedMenu.getCategory() != null) savedMenu.setCategory(menu.getCategory());
-        if(savedMenu.getPrice() != null) savedMenu.setPrice(menu.getPrice());
-        if(savedMenu.getDescription() != null) savedMenu.setDescription(menu.getDescription());
-        if(savedMenu.getStock() != null) savedMenu.setStock(menu.getStock());
+        if(menu.getPrice() != null) savedMenu.setPrice(menu.getPrice());
+        if(menu.getIsSold() != null) savedMenu.setIsSold(menu.getIsSold());
 
-        menuRepository.save(savedMenu);
+        return menuRepository.save(savedMenu);
     }
 
     @Override

@@ -7,7 +7,6 @@ import com.future.restoapp.model.entity.Menu;
 import com.future.restoapp.service.AssetService;
 import com.future.restoapp.service.MenuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.NoSuchElementException;
 
 @Tag(name = "Menu")
@@ -37,29 +37,27 @@ public class MenuController extends BaseController {
         if(menuReq.getImage() != null){
             String filename = addImage(menuReq.getName(), menuReq.getFileExtension(), menuReq.getImage(), false);
             menu.setImageFilename(filename);
+        } else {
+            menu.setImageFilename("default-menu.png");
         }
 
         menuService.create(menu);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        return ResponseEntity.created(new URI("/api/v1/client/menus/1")).build();
     }
 
     @RequestMapping(value = MenuControllerPath.UPDATE, method = RequestMethod.PATCH)
     public ResponseEntity update(@Valid @RequestBody MenuUpdateRequest menuReq) throws Exception {
         Menu menu = Menu.builder().build();
 
-        BeanUtils.copyProperties(menuReq, menu);
-
-        if(menuReq.getImage() != null){
-            String filename = addImage(menuReq.getName(), menuReq.getFileExtension(), menuReq.getImage(), true);
-            menu.setImageFilename(filename);
-        }
+        menuReq.inject(menu);
 
         menuService.updateById(menu.getId(), menu);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.ok().build();
     }
 
+    // TODO: Must be delete for future version
     @RequestMapping(value = MenuControllerPath.DELETE, method = RequestMethod.DELETE)
     public ResponseEntity delete(@Valid @PathVariable Long id) throws Exception {
         Menu menu = menuService.deleteById(id);
