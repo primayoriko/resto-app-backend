@@ -45,7 +45,7 @@ public class Menu extends BaseEntity {
     @Column(name = COLUMN_IS_SOLD, nullable = false)
     private Boolean isSold = true;
 
-    @OneToMany(mappedBy = TABLE_NAME)
+    @OneToMany(mappedBy = "menu")
     private Collection<OrderItem> orders = new HashSet<>();
 
     public enum MenuCategory {
