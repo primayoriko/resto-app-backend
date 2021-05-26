@@ -8,6 +8,7 @@ import com.future.restoapp.repository.ReservationRepository;
 import com.future.restoapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -25,6 +26,7 @@ public class ReservationServiceImpl implements ReservationService {
     MenuRepository menuRepository;
 
     @Override
+    @Transactional
     public Reservation create(Reservation reservation) throws Exception {
         System.out.println(reservation);
 
