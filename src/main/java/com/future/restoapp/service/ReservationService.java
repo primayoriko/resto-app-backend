@@ -6,6 +6,6 @@ public interface ReservationService {
 
     Reservation create(Reservation reservation) throws Exception;
 
-    Reservation findById(String id);
+    Reservation findById(Long id);
 
 }

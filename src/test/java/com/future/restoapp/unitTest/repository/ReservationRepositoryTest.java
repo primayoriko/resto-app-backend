@@ -43,24 +43,22 @@ public class ReservationRepositoryTest {
         user = User.builder()
                 .username("hello")
                 .email("hello@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(false)
                 .build();
 
         menu1 = Menu.builder()
                 .name("kiranti")
-                .category("drink")
+                .category(Menu.MenuCategory.DRINK)
                 .price(12345F)
-                .stock(12)
                 .description("so good")
                 .build();
 
         menu2 = Menu.builder()
                 .name("superjoss")
-                .category("drink")
+                .category(Menu.MenuCategory.DRINK)
                 .price(1345F)
-                .stock(1200)
                 .description("so nice")
                 .build();
     }

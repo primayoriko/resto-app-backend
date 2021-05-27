@@ -5,11 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Locale;
 
-@Table(name = com.future.restoapp.model.entity.Menu.TABLE_NAME)
+@Table(name = Menu.TABLE_NAME)
 @Entity
 @Data
 @Builder
@@ -20,30 +19,41 @@ public class Menu extends BaseEntity {
 
     public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_STOCK = "stock";
+    public static final String COLUMN_IS_SOLD = "is_sold";
     public static final String COLUMN_PRICE = "price";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_IMAGE_FILENAME = "image_filename";
 
-    @Column(name = Menu.COLUMN_NAME, unique = true, nullable = false)
+    @Column(name = Menu.COLUMN_NAME, unique = true, nullable = false, updatable = false)
     private String name;
 
-    @Column(name = Menu.COLUMN_CATEGORY, nullable = false)
-    private String category;
+    @Column(name = Menu.COLUMN_CATEGORY, nullable = false, updatable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private MenuCategory category;
+
+    @Column(name = Menu.COLUMN_DESCRIPTION, updatable = false)
+    private String description;
+
+    @Column(name = Menu.COLUMN_IMAGE_FILENAME, updatable = false)
+    private String imageFilename;
 
     @Column(name = Menu.COLUMN_PRICE, nullable = false)
     private Float price;
 
-    @Column(name = Menu.COLUMN_STOCK, nullable = false)
-    private Integer stock;
+    @Column(name = COLUMN_IS_SOLD, nullable = false)
+    private Boolean isSold = true;
 
-    @Column(name = Menu.COLUMN_DESCRIPTION)
-    private String description;
-
-    @Column(name = Menu.COLUMN_IMAGE_FILENAME)
-    private String imageFilename;
-
-//    @OneToMany(mappedBy = TABLE_NAME)
+//    @OneToMany(mappedBy = "menu")
 //    private Collection<OrderItem> orders = new HashSet<>();
+
+    public enum MenuCategory {
+        FOOD, DRINK, OTHER;
+
+        public static MenuCategory of(String value){
+            if(value.toUpperCase(Locale.ROOT).equals("FOOD")) return MenuCategory.FOOD;
+            else if(value.toUpperCase(Locale.ROOT).equals("DRINK")) return MenuCategory.DRINK;
+            return MenuCategory.OTHER;
+        }
+    }
 
 }

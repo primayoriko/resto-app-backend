@@ -20,10 +20,10 @@ public class OrderItemKey implements Serializable {
     public static final String COLUMN_MENU_ID = "menu_id";
 
     @Column(name = COLUMN_RESERVATION_ID)
-    private String reservationId;
+    private Long reservationId;
 
     @Column(name = COLUMN_MENU_ID)
-    private String menuId;
+    private Long menuId;
 
     @Override
     public boolean equals(Object o) {

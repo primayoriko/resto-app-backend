@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserPrincipal implements UserDetails {
-    private User user;
+    private final User user;
 
     public UserPrincipal(User user){
         this.user = user;
@@ -20,23 +20,25 @@ public class UserPrincipal implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if(this.user.getIsAdmin()){
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else {
-            authorities.add(new SimpleGrantedAuthority("ROLE_CLIENT"));
+        if(user != null){
+            if(this.user.getIsAdmin()){
+                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            } else {
+                authorities.add(new SimpleGrantedAuthority("ROLE_CLIENT"));
+            }
         }
 
         return authorities;
     }
 
     @Override
-    public String getPassword() {
-        return this.user.getPassword();
+    public String getUsername() {
+        return user != null? this.user.getUsername() : null;
     }
 
     @Override
-    public String getUsername() {
-        return this.user.getUsername();
+    public String getPassword() {
+        return user != null? this.user.getPassword() : null;
     }
 
     @Override
@@ -57,7 +59,9 @@ public class UserPrincipal implements UserDetails {
     @Override
     public boolean isEnabled() { return true; }
 
-    public boolean isAdmin() { return this.user.getIsAdmin(); }
+    public boolean isAdmin() {
+        return user != null? this.user.getIsAdmin() : false;
+    }
 
     public User getUser() { return this.user; }
 
