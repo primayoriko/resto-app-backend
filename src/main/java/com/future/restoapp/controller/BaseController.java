@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -26,10 +27,10 @@ public class BaseController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity handleValidationExceptions(
             MethodArgumentNotValidException ex){
-        HttpStatus status = HttpStatus.BAD_REQUEST;
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
         List<String> errors = new ArrayList<>();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
@@ -44,14 +45,18 @@ public class BaseController {
                 ""
         );
 
-        return ResponseEntity.badRequest().body(message);
+        return ResponseEntity.unprocessableEntity().body(message);
     }
 
-    @ExceptionHandler(NoSuchElementException.class)
+    @ExceptionHandler(value = {
+//            ResourceNotFoundException.class,
+            NoSuchElementException.class,
+            FileNotFoundException.class,
+    })
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity handleNoSuchElementExceptions(
-            MethodArgumentNotValidException ex){
+    public ResponseEntity handleNotFoundItemExceptions(
+            NoSuchElementException ex){
         HttpStatus status = HttpStatus.NOT_FOUND;
 
         ErrorResponse message = new ErrorResponse(
@@ -61,7 +66,7 @@ public class BaseController {
                 ""
         );
 
-        return ResponseEntity.badRequest().body(message);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
     @ExceptionHandler(value = {
@@ -70,8 +75,7 @@ public class BaseController {
     })
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity handleIntegrityViolationExceptions(
-            MethodArgumentNotValidException ex){
+    public ResponseEntity handleSQLIntegrityViolationExceptions(Exception ex){
         HttpStatus status = HttpStatus.CONFLICT;
 
         ErrorResponse message = new ErrorResponse(
@@ -81,7 +85,7 @@ public class BaseController {
                 ""
         );
 
-        return ResponseEntity.badRequest().body(message);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
     }
 
     @ExceptionHandler(value = {
@@ -90,9 +94,8 @@ public class BaseController {
     })
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity handleDataAndGrammarExceptions(
-            MethodArgumentNotValidException ex){
-        HttpStatus status = HttpStatus.CONFLICT;
+    public ResponseEntity handleSQLDataAndGrammarExceptions(SQLException ex){
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
 
         ErrorResponse message = new ErrorResponse(
                 status.value(),
@@ -101,15 +104,14 @@ public class BaseController {
                 ""
         );
 
-        return ResponseEntity.badRequest().body(message);
+        return ResponseEntity.unprocessableEntity().body(message);
     }
 
     @ExceptionHandler(SQLException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity handleSQLExceptions(
-            MethodArgumentNotValidException ex){
-        HttpStatus status = HttpStatus.CONFLICT;
+    public ResponseEntity handleSQLExceptions(SQLException ex){
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
 
         ErrorResponse message = new ErrorResponse(
                 status.value(),
@@ -118,7 +120,7 @@ public class BaseController {
                 ""
         );
 
-        return ResponseEntity.badRequest().body(message);
+        return ResponseEntity.unprocessableEntity().body(message);
     }
 
 }

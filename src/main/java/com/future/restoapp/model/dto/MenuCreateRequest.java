@@ -3,6 +3,7 @@ package com.future.restoapp.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.restoapp.model.entity.Menu;
+import com.future.restoapp.model.entity.Menu.MenuCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,6 @@ import org.springframework.beans.BeanUtils;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -35,20 +35,15 @@ public class MenuCreateRequest {
     @NotBlank(message = "description must be specified")
     private String description;
 
-    @NotNull(message = "stock must be specified")
-    @PositiveOrZero(message = "stock value must equals or more than zero")
-    private Integer stock;
+    private String image;
+
+    private String fileExtension;
 
     public Menu toMenu(){
-//        menu.setName(name);
-//        menu.setCategory(category);
-//        menu.setPrice(price);
-//        menu.setDescription(description);
-//        menu.setStock(stock);
 		return Optional.of(this).map(e -> {
-            Menu menu = Menu.builder().build();
-			BeanUtils.copyProperties(e, menu);
-
+            Menu menu = new Menu();
+			BeanUtils.copyProperties(e, menu, "category");
+			menu.setCategory(MenuCategory.of(category));
 			return menu;
 		}).orElse(null);
     }

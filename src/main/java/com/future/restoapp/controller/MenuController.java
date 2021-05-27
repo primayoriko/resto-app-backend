@@ -3,19 +3,24 @@ package com.future.restoapp.controller;
 import com.future.restoapp.controller.path.MenuControllerPath;
 import com.future.restoapp.model.dto.MenuCreateRequest;
 import com.future.restoapp.model.dto.MenuUpdateRequest;
+import com.future.restoapp.model.dto.SuccessResponse;
 import com.future.restoapp.model.entity.Menu;
+import com.future.restoapp.model.entity.Menu.MenuCategory;
+import com.future.restoapp.service.AssetService;
 import com.future.restoapp.service.MenuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Tag(name = "Menu")
@@ -26,70 +31,119 @@ public class MenuController extends BaseController {
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private AssetService assetService;
+
     @RequestMapping(value = MenuControllerPath.CREATE, method = RequestMethod.POST)
     public ResponseEntity create(@Valid @RequestBody MenuCreateRequest menuReq) throws Exception {
         Menu menu = menuReq.toMenu();
 
+        if(menuReq.getImage() != null){
+            String filename = addImage(menuReq.getName(), menuReq.getFileExtension(), menuReq.getImage(), false);
+            menu.setImageFilename(filename);
+        } else {
+            menu.setImageFilename("default-menu.png");
+        }
+
         menuService.create(menu);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        return ResponseEntity.created(new URI("/api/v1/client/menus/1")).build();
     }
 
     @RequestMapping(value = MenuControllerPath.UPDATE, method = RequestMethod.PATCH)
     public ResponseEntity update(@Valid @RequestBody MenuUpdateRequest menuReq) throws Exception {
         Menu menu = Menu.builder().build();
 
-        BeanUtils.copyProperties(menuReq, menu);
+        menuReq.inject(menu);
 
-        menuService.updateById(menu.getId(), menu);
+        Menu newMenu = menuService.updateById(menu.getId(), menu);
+        SuccessResponse responseBody = SuccessResponse.builder().content(newMenu).build();
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.ok(responseBody);
     }
 
+    // TODO: Must be delete for future version
     @RequestMapping(value = MenuControllerPath.DELETE, method = RequestMethod.DELETE)
-    public ResponseEntity delete(@Valid @PathVariable String id) throws Exception {
+    public ResponseEntity delete(@Valid @PathVariable Long id) throws Exception {
         Menu menu = menuService.deleteById(id);
+        String path = menu.getImageFilename();
+
+        if(path != null){
+            String[] splittedPath = path.split("/");
+            String filename = splittedPath[splittedPath.length - 1];
+
+            assetService.deleteImage(filename);
+        }
         
         return ResponseEntity.status(HttpStatus.OK).body(menu);
     }
 
     @RequestMapping(
             value = {
-                    MenuControllerPath.FETCH_ONE_ADMIN,
-                    MenuControllerPath.FETCH_ONE_CLIENT
+                    MenuControllerPath.FETCH_ONE
             },
             method = RequestMethod.GET
     )
-    public ResponseEntity fetchOne(@Valid @PathVariable String id) throws Exception {
+    public ResponseEntity fetchOne(@Valid @PathVariable Long id) throws Exception {
         Menu menu = menuService.findOneById(id);
 
         if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
 
-        return ResponseEntity.status(HttpStatus.OK).body(menu);
+        SuccessResponse responseBody = SuccessResponse.builder().content(menu).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
     @RequestMapping(
             value = {
-                    MenuControllerPath.FETCH_ADMIN,
-                    MenuControllerPath.FETCH_CLIENT
+                    MenuControllerPath.FETCH,
             },
             method = RequestMethod.GET
     )
     public ResponseEntity fetch(
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(name = "size", defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "#$#") String name,
-            @RequestParam(defaultValue = "#$#") String category
+            @RequestParam(name = "category", defaultValue = "#$#") String categoryParam,
+            @RequestParam(name = "isSold", defaultValue = "#$#") String isSoldParam
     ) throws Exception {
+        MenuCategory category;
+        Boolean isSold;
+
         if(name.equals("#$#")) name = null;
-        if(category.equals("#$#")) category = null;
 
-        Pageable pageable = PageRequest.of(page, pageSize);
-        Page<Menu> result = menuService.findAllByNameAndCategory(name, category, pageable);
+        if(categoryParam.equals("#$#")) category = null;
+        else category = MenuCategory.of(categoryParam);
 
-        if(result == null) throw new NoSuchElementException("Menus with specified criterion not found");
+        if(isSoldParam.toLowerCase(Locale.ROOT).equals("true")) isSold = true;
+        else if(isSoldParam.toLowerCase(Locale.ROOT).equals("false")) isSold = false;
+        else isSold = null;
+//        System.out.println(name);
+//        System.out.println(category);
+//        System.out.println(isSold);
+        Pageable pageable = PageRequest.of(
+                    page - 1, pageSize,
+                    Sort.by("isSold").descending()
+                        .and(Sort.by("category").ascending())
+                        .and(Sort.by("name").ascending())
+                );
+        Page<Menu> result = menuService.findAll(name, category, isSold, pageable);
+//        System.out.println(result);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    private String addImage(String rawMenuName, String fileExtension,
+                            String base64Content, boolean deleteExisting) throws Exception {
+        String filename = rawMenuName.replace(" ", "_") + "." + fileExtension;
+
+        if(deleteExisting){
+            assetService.deleteImage(filename);
+        }
+
+        assetService.addImage(filename, base64Content);
+
+        return filename;
     }
 
 }
