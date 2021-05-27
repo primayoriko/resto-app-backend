@@ -4,6 +4,7 @@ import com.future.restoapp.controller.path.MenuControllerPath;
 import com.future.restoapp.model.dto.MenuCreateRequest;
 import com.future.restoapp.model.dto.MenuUpdateRequest;
 import com.future.restoapp.model.entity.Menu;
+import com.future.restoapp.model.entity.Menu.MenuCategory;
 import com.future.restoapp.service.AssetService;
 import com.future.restoapp.service.MenuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Tag(name = "Menu")
@@ -75,8 +78,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(
             value = {
-                    MenuControllerPath.FETCH_ONE_ADMIN,
-                    MenuControllerPath.FETCH_ONE_CLIENT
+                    MenuControllerPath.FETCH_ONE
             },
             method = RequestMethod.GET
     )
@@ -90,24 +92,42 @@ public class MenuController extends BaseController {
 
     @RequestMapping(
             value = {
-                    MenuControllerPath.FETCH_ADMIN,
-                    MenuControllerPath.FETCH_CLIENT
+                    MenuControllerPath.FETCH,
             },
             method = RequestMethod.GET
     )
     public ResponseEntity fetch(
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(name = "size", defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "#$#") String name,
-            @RequestParam(defaultValue = "#$#") String category
+            @RequestParam(name = "category", defaultValue = "#$#") String categoryParam,
+            @RequestParam(name = "isSold", defaultValue = "#$#") String isSoldParam
     ) throws Exception {
+        MenuCategory category;
+        Boolean isSold;
+
         if(name.equals("#$#")) name = null;
-        if(category.equals("#$#")) category = null;
 
-        Pageable pageable = PageRequest.of(page, pageSize);
-        Page<Menu> result = menuService.findAllByNameAndCategory(name, category, pageable);
+        if(categoryParam.equals("#$#")) category = null;
+        else category = MenuCategory.of(categoryParam);
 
-        if(result == null) throw new NoSuchElementException("Menus with specified criterion not found");
+        if(isSoldParam.toLowerCase(Locale.ROOT).equals("true")) isSold = true;
+        else if(isSoldParam.toLowerCase(Locale.ROOT).equals("false")) isSold = false;
+        else isSold = null;
+
+//        System.out.println(name);
+//        System.out.println(category);
+//        System.out.println(isSold);
+
+        Pageable pageable = PageRequest.of(
+                    page - 1, pageSize,
+                    Sort.by("isSold").descending()
+                        .and(Sort.by("category").ascending())
+                        .and(Sort.by("name").ascending())
+                );
+        Page<Menu> result = menuService.findAll(name, category, isSold, pageable);
+
+//        System.out.println(result);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

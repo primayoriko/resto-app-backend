@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Locale;
 
 @Table(name = Menu.TABLE_NAME)
@@ -45,8 +43,8 @@ public class Menu extends BaseEntity {
     @Column(name = COLUMN_IS_SOLD, nullable = false)
     private Boolean isSold = true;
 
-    @OneToMany(mappedBy = "menu")
-    private Collection<OrderItem> orders = new HashSet<>();
+//    @OneToMany(mappedBy = "menu")
+//    private Collection<OrderItem> orders = new HashSet<>();
 
     public enum MenuCategory {
         FOOD, DRINK, OTHER;
