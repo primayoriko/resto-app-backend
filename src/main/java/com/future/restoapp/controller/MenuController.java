@@ -3,6 +3,7 @@ package com.future.restoapp.controller;
 import com.future.restoapp.controller.path.MenuControllerPath;
 import com.future.restoapp.model.dto.MenuCreateRequest;
 import com.future.restoapp.model.dto.MenuUpdateRequest;
+import com.future.restoapp.model.dto.SuccessResponse;
 import com.future.restoapp.model.entity.Menu;
 import com.future.restoapp.model.entity.Menu.MenuCategory;
 import com.future.restoapp.service.AssetService;
@@ -55,9 +56,10 @@ public class MenuController extends BaseController {
 
         menuReq.inject(menu);
 
-        menuService.updateById(menu.getId(), menu);
+        Menu newMenu = menuService.updateById(menu.getId(), menu);
+        SuccessResponse responseBody = SuccessResponse.builder().content(newMenu).build();
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(responseBody);
     }
 
     // TODO: Must be delete for future version
@@ -87,7 +89,9 @@ public class MenuController extends BaseController {
 
         if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
 
-        return ResponseEntity.status(HttpStatus.OK).body(menu);
+        SuccessResponse responseBody = SuccessResponse.builder().content(menu).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
     @RequestMapping(
@@ -114,11 +118,9 @@ public class MenuController extends BaseController {
         if(isSoldParam.toLowerCase(Locale.ROOT).equals("true")) isSold = true;
         else if(isSoldParam.toLowerCase(Locale.ROOT).equals("false")) isSold = false;
         else isSold = null;
-
 //        System.out.println(name);
 //        System.out.println(category);
 //        System.out.println(isSold);
-
         Pageable pageable = PageRequest.of(
                     page - 1, pageSize,
                     Sort.by("isSold").descending()
@@ -126,7 +128,6 @@ public class MenuController extends BaseController {
                         .and(Sort.by("name").ascending())
                 );
         Page<Menu> result = menuService.findAll(name, category, isSold, pageable);
-
 //        System.out.println(result);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
