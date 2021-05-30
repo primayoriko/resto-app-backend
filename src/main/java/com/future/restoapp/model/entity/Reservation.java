@@ -23,6 +23,7 @@ public class Reservation extends BaseEntity {
 
     public static final String COLUMN_USER_ID = "user_id";
     public static final String COLUMN_DURATION = "duration";
+    public static final String COLUMN_TOTAL_PRICE = "total_price";
     public static final String COLUMN_START_TIME = "start_time";
 
     @ManyToOne
@@ -34,6 +35,9 @@ public class Reservation extends BaseEntity {
 
     @Column(name = COLUMN_DURATION)
     private Float duration;
+
+    @Column(name = COLUMN_TOTAL_PRICE)
+    private Float totalPrice = 0F;
 
     @OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Collection<OrderItem> orders = new HashSet<>();
