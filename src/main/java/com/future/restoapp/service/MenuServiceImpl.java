@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class MenuServiceImpl implements MenuService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceBean.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MenuServiceImpl.class);
 
     @Autowired
     MenuRepository menuRepository;
