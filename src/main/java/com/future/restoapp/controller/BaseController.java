@@ -1,12 +1,15 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.model.dto.ErrorResponse;
+import com.future.restoapp.model.entity.User;
+import com.future.restoapp.model.security.UserPrincipal;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileNotFoundException;
+import java.security.Principal;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -24,6 +28,15 @@ import java.util.NoSuchElementException;
 @RestController
 @CrossOrigin
 public class BaseController {
+
+    public static User getUser(Principal principal) throws Exception {
+        if(principal instanceof UsernamePasswordAuthenticationToken
+            && ((UsernamePasswordAuthenticationToken) principal).getPrincipal() instanceof UserPrincipal){
+            return ((UserPrincipal) ((UsernamePasswordAuthenticationToken)principal).getPrincipal()).getUser();
+        }
+
+        throw new RuntimeException("mismatch principal type");
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
