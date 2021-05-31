@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotBlank;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateByUsername(String username, User user) throws Exception {
+    public void updateByUsername(@NotBlank String username, User user) throws Exception {
         User oldUser = this.userRepository.findByUsername(username);
         if(oldUser != null){
             // TODO: Checking field that gonna updated in user and update it to oldUser
@@ -33,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) throws Exception {
+    public User findByUsername(@NotBlank String username) throws Exception {
 	    return this.userRepository.findByUsername(username);
     }
 
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteByUsername(String username) throws Exception {
+    public void deleteByUsername(@NotBlank String username) throws Exception {
         this.userRepository.deleteByUsername(username);
     }
 
