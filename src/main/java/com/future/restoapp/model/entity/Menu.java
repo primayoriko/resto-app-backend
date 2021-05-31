@@ -15,6 +15,7 @@ import java.util.Locale;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Menu extends BaseEntity {
+
     public static final String TABLE_NAME = "menus";
 
     public static final String COLUMN_CATEGORY = "category";
@@ -42,9 +43,6 @@ public class Menu extends BaseEntity {
 
     @Column(name = COLUMN_IS_SOLD, nullable = false)
     private Boolean isSold = true;
-
-//    @OneToMany(mappedBy = "menu")
-//    private Collection<OrderItem> orders = new HashSet<>();
 
     public enum MenuCategory {
         FOOD, DRINK, OTHER;

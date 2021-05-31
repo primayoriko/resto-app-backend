@@ -3,6 +3,7 @@ package com.future.restoapp.service;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.util.Base64;
 
@@ -10,7 +11,7 @@ import java.util.Base64;
 public class AssetServiceImpl implements AssetService {
 
     @Override
-    public byte[] getImageBytes(String filename) throws Exception {
+    public byte[] getImageBytes(@NotBlank String filename) throws Exception {
         String path = new File(".").getCanonicalPath() + IMAGE_MENU_DIRECTORY + "/" + filename;
         return FileUtils.readFileToByteArray(new File(path));
 //        System.out.println(path);
@@ -30,13 +31,13 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public String getImageBase64(String filename) throws Exception {
+    public String getImageBase64(@NotBlank String filename) throws Exception {
         byte[] fileContent = getImageBytes(filename);
         return Base64.getEncoder().encodeToString(fileContent);
     }
 
     @Override
-    public String addImage(String filename, String base64Content) throws Exception {
+    public String addImage(@NotBlank String filename, @NotBlank String base64Content) throws Exception {
         String path = new File(".").getCanonicalPath() + IMAGE_MENU_DIRECTORY + "/" + filename;
         byte[] decodedBytes = Base64.getDecoder().decode(base64Content);
 
@@ -46,7 +47,7 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public boolean deleteImage(String filename) throws Exception {
+    public boolean deleteImage(@NotBlank String filename) throws Exception {
         String path = new File(".").getCanonicalPath() + IMAGE_MENU_DIRECTORY + "/" + filename;
         File imageFile = new File(path);
 

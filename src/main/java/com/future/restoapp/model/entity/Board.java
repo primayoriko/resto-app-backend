@@ -17,13 +17,14 @@ import javax.persistence.Table;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board extends BaseEntity{
+public class Board extends BaseEntity {
+
     public static final String TABLE_NAME = "boards";
 
     public static final String COLUMN_X = "x";
     public static final String COLUMN_Y = "y";
+    public static final String COLUMN_LENGTH = "length";
     public static final String COLUMN_WIDTH = "width";
-    public static final String COLUMN_HEIGHT = "height";
     public static final String COLUMN_CAPACITY = "capacity";
 
     @Column(name = Board.COLUMN_X)
@@ -32,11 +33,11 @@ public class Board extends BaseEntity{
     @Column(name = Board.COLUMN_Y)
     private Integer y;
 
+    @Column(name = Board.COLUMN_LENGTH)
+    private Integer length;
+
     @Column(name = Board.COLUMN_WIDTH)
     private Integer width;
-
-    @Column(name = Board.COLUMN_HEIGHT)
-    private Integer height;
 
     @Column(name = Board.COLUMN_CAPACITY)
     private Integer capacity;
