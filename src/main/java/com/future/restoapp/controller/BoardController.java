@@ -1,6 +1,7 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.BoardControllerPath;
+import com.future.restoapp.model.dto.SuccessResponse;
 import com.future.restoapp.model.entity.Board;
 import com.future.restoapp.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @RestController
 public class BoardController extends BaseController {
@@ -39,7 +41,8 @@ public class BoardController extends BaseController {
 
     @RequestMapping(value = BoardControllerPath.FETCH_ALL, method = RequestMethod.GET)
     public ResponseEntity fetchAll() throws Exception {
-        return ResponseEntity.ok().build();
+        Collection<Board> boards = boardService.findAll();
+        return ResponseEntity.ok(new SuccessResponse(boards));
     }
 
 }
