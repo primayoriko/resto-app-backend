@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.io.FileNotFoundException;
 import java.security.Principal;
@@ -55,6 +56,23 @@ public class BaseController {
                 status.value(),
                 status.getReasonPhrase(),
                 errors.toString(),
+                ""
+        );
+
+        return ResponseEntity.unprocessableEntity().body(message);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity handleTypeValidationExceptions(
+            MethodArgumentNotValidException ex){
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+
+        ErrorResponse message = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                ex.getMessage(),
                 ""
         );
 
