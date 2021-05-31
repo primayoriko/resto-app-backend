@@ -1,20 +1,23 @@
 package com.future.restoapp.service;
 
-import com.future.restoapp.model.entity.Menu;
-import com.future.restoapp.model.entity.Reservation;
-import com.future.restoapp.model.entity.User;
+import com.future.restoapp.model.entity.*;
 import com.future.restoapp.repository.MenuRepository;
 import com.future.restoapp.repository.ReservationRepository;
 import com.future.restoapp.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReservationServiceImpl.class);
 
     @Autowired
     ReservationRepository reservationRepository;
@@ -27,36 +30,41 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional
-    public Reservation create(Reservation reservation) throws Exception {
-        System.out.println(reservation);
+    public Reservation create(Reservation reservation, User client) throws Exception {
+        Collection<OrderItem> orders  = reservation.getOrders();
 
-        Long userId = reservation.getUser().getId();
-        User user = userRepository.findById(userId).orElse(null);
-
-        if(user == null) throw new NoSuchElementException("");
-        reservation.setUser(user);
-
-        System.out.println(reservation);
-
-        reservation.setOrders(
-                reservation.getOrders()
-                        .stream()
-                        .peek(order -> {
-                            Long id = order.getId().getMenuId();
-                            Menu menu = menuRepository.findById(id)
-                                    .orElse(null);
-
-                            if(menu == null) throw new NoSuchElementException("");
-
-                            order.setMenu(menu);
-                        }).collect(Collectors.toList())
-        );
-
-        System.out.println(reservation);
-
+        reservation.setOrders(null);
+        reservation.setUser(client);
         reservationRepository.save(reservation);
 
-        System.out.println(reservation);
+        reservation.setOrders(
+                orders
+                    .stream()
+                    .peek(order -> {
+                        Long id = order.getMenu().getId();
+                        Menu menu = menuRepository.findById(id)
+                                .orElse(null);
+
+                        if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
+
+                        order.setMenu(menu);
+                        order.setReservation(reservation);
+                        order.setId(OrderItemKey
+                                .builder()
+                                .menuId(menu.getId())
+                                .reservationId(reservation.getId())
+                                .build());
+                    }).collect(Collectors.toList())
+        );
+
+        reservation.setTotalPrice(
+                reservation.getOrders()
+                    .stream()
+                    .map(el -> el.getMenu().getPrice() * el.getQuantity())
+                    .reduce(0F, Float::sum)
+        );
+
+        reservationRepository.save(reservation);
 
         return reservation;
     }

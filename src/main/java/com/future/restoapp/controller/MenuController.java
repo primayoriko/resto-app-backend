@@ -118,9 +118,7 @@ public class MenuController extends BaseController {
         if(isSoldParam.toLowerCase(Locale.ROOT).equals("true")) isSold = true;
         else if(isSoldParam.toLowerCase(Locale.ROOT).equals("false")) isSold = false;
         else isSold = null;
-//        System.out.println(name);
-//        System.out.println(category);
-//        System.out.println(isSold);
+
         Pageable pageable = PageRequest.of(
                     page - 1, pageSize,
                     Sort.by("isSold").descending()
@@ -128,7 +126,6 @@ public class MenuController extends BaseController {
                         .and(Sort.by("name").ascending())
                 );
         Page<Menu> result = menuService.findAll(name, category, isSold, pageable);
-//        System.out.println(result);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

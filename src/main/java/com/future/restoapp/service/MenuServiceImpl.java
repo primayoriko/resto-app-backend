@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class MenuServiceImpl implements MenuService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceBean.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MenuServiceImpl.class);
 
     @Autowired
     MenuRepository menuRepository;
@@ -30,7 +30,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu deleteById(Long id) throws Exception {
+    public Menu deleteById(long id) throws Exception {
         Menu menu = menuRepository.findById(id).orElse(null);
 
         if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
@@ -41,7 +41,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu updateById(Long id, Menu menu) throws Exception {
+    public Menu updateById(long id, Menu menu) throws Exception {
         Optional<Menu> menuDb = menuRepository.findById(id);
 
         if(!menuDb.isPresent()) throw new NoSuchElementException("Menu with specified ID not found");
@@ -55,7 +55,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu findOneById(Long id) throws Exception {
+    public Menu findOneById(long id) throws Exception {
         Optional<Menu> menu = menuRepository.findById(id);
 
         return menu.orElse(null);
@@ -71,14 +71,7 @@ public class MenuServiceImpl implements MenuService {
 
         menu.setCreatedDate(null);
         menu.setUpdatedDate(null);
-//        System.out.println(menu.getId());
-//        System.out.println(menu.getUpdatedDate());
-//        System.out.println(menu.getCreatedDate());
-//        System.out.println(menu);
-//        Collection<Menu> result = menuRepository.findAll(Example.of(menu));
-//        Page<Menu> result2 = menuRepository.findAll(Example.of(menu), pageable);
-//        System.out.println(result);
-//        System.out.println(result2);
+
         ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll()
                 .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
                 .withMatcher("category", ExampleMatcher.GenericPropertyMatchers.exact())
