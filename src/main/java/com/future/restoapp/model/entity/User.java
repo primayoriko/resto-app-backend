@@ -18,6 +18,7 @@ import java.util.HashSet;
 @NoArgsConstructor  
 @AllArgsConstructor
 public class User extends BaseEntity {
+
     public static final String TABLE_NAME = "users";
 
     public static final String COLUMN_USERNAME = "username";

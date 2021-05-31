@@ -19,6 +19,7 @@ import java.util.HashSet;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reservation extends BaseEntity {
+
     public static final String TABLE_NAME = "reservations";
 
     public static final String COLUMN_USER_ID = "user_id";
