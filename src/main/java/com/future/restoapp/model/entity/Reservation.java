@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 
 //import com.future.restoapp.model.entity.*;
@@ -33,10 +33,10 @@ public class Reservation extends BaseEntity {
     private User user;
 
     @Column(name = COLUMN_START_TIME, columnDefinition = "TIMESTAMP", nullable = false)
-    private Date startTime;
+    private LocalDateTime startTime;
 
     @Column(name = COLUMN_END_TIME, columnDefinition = "TIMESTAMP", nullable = false)
-    private Date endTime;
+    private LocalDateTime endTime;
 
     @Column(name = COLUMN_IS_ACCEPTED, nullable = false)
     private Boolean isAccepted = false;

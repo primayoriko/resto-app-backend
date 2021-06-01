@@ -13,8 +13,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -27,11 +27,11 @@ public class ReservationCreateRequest implements Serializable {
 
     @NotNull(message = "startTime must be specified")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date startTime;
+    private LocalDateTime startTime;
 
     @NotNull(message = "endTime must be specified")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date endTime;
+    private LocalDateTime endTime;
 
     private Collection<OrderItemCreateRequest> orders = new HashSet<>();
 

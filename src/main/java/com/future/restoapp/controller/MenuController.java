@@ -57,7 +57,7 @@ public class MenuController extends BaseController {
         menuReq.inject(menu);
 
         Menu newMenu = menuService.updateById(menu.getId(), menu);
-        SuccessResponse responseBody = SuccessResponse.builder().content(newMenu).build();
+        SuccessResponse responseBody = new SuccessResponse(newMenu);
 
         return ResponseEntity.ok(responseBody);
     }
@@ -89,7 +89,7 @@ public class MenuController extends BaseController {
 
         if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
 
-        SuccessResponse responseBody = SuccessResponse.builder().content(menu).build();
+        SuccessResponse responseBody = new SuccessResponse(menu);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
