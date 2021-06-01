@@ -125,7 +125,7 @@ public class MenuController extends BaseController {
                         .and(Sort.by("category").ascending())
                         .and(Sort.by("name").ascending())
                 );
-        Page<Menu> result = menuService.findAll(name, category, isSold, pageable);
+        Page<Menu> result = menuService.findByQuery(name, category, isSold, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

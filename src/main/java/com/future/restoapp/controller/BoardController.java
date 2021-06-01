@@ -25,9 +25,8 @@ public class BoardController extends BaseController {
 
     @RequestMapping(value = BoardControllerPath.CREATE, method = RequestMethod.POST)
     public ResponseEntity create(@Valid @RequestBody Board boardReq) throws Exception {
-        Board board = boardService.create(boardReq);
-
-        return ResponseEntity.created(new URI("")).build();
+        boardService.create(boardReq);
+        return ResponseEntity.created(new URI(BoardControllerPath.FETCH_ALL)).build();
     }
 
     @RequestMapping(value = BoardControllerPath.CHECK, method = RequestMethod.GET)
@@ -35,7 +34,6 @@ public class BoardController extends BaseController {
                                 @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startTime,
                                 @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endTime
                       ) throws Exception {
-
         System.out.println(startTime);
         System.out.println(endTime);
         return ResponseEntity.ok().build();

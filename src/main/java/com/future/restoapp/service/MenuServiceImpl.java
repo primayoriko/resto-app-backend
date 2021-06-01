@@ -62,7 +62,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Page<Menu> findAll(String name, MenuCategory category, Boolean isSold, Pageable pageable) throws Exception{
+    public Page<Menu> findByQuery(String name, MenuCategory category, Boolean isSold, Pageable pageable) throws Exception{
         Menu menu = Menu.builder()
                 .name(name)
                 .category(category)
