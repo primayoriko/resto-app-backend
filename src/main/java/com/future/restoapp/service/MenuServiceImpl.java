@@ -56,9 +56,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu findOneById(long id) throws Exception {
-        Optional<Menu> menu = menuRepository.findById(id);
-
-        return menu.orElse(null);
+        return menuRepository.findById(id).orElse(null);
     }
 
     @Override

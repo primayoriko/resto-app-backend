@@ -31,11 +31,11 @@ public class BoardController extends BaseController {
 
     @RequestMapping(value = BoardControllerPath.CHECK, method = RequestMethod.GET)
     public ResponseEntity check(@PathVariable Long id,
-                                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startTime,
-                                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endTime
+                                @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startTime,
+                                @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endTime
                       ) throws Exception {
-        System.out.println(startTime);
-        System.out.println(endTime);
+//        System.out.println(startTime);
+//        System.out.println(endTime);
         return ResponseEntity.ok().build();
 //        boolean isAvailable = boardService.checkAvailable(id);
     }
