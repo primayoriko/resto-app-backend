@@ -4,6 +4,7 @@ import com.future.restoapp.controller.path.BoardControllerPath;
 import com.future.restoapp.model.dto.SuccessResponse;
 import com.future.restoapp.model.entity.Board;
 import com.future.restoapp.service.BoardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,9 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+@Tag(name = "Board")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BoardController extends BaseController {
 
     @Autowired

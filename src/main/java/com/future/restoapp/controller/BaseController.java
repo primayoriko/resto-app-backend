@@ -2,6 +2,7 @@ package com.future.restoapp.controller;
 
 import com.future.restoapp.model.dto.ErrorResponse;
 import com.future.restoapp.model.entity.User;
+import com.future.restoapp.model.exception.BusinessLogicException;
 import com.future.restoapp.model.security.UserPrincipal;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.core.Ordered;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,8 +27,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@CrossOrigin
-public class BaseController {
+public class BaseController{
 
     public static User getUser(Principal principal) throws Exception {
         if(principal instanceof UsernamePasswordAuthenticationToken
@@ -102,17 +101,18 @@ public class BaseController {
 
     @ExceptionHandler(value = {
             DataIntegrityViolationException.class,
-            SQLIntegrityConstraintViolationException.class
+            SQLIntegrityConstraintViolationException.class,
+            BusinessLogicException.class
     })
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity handleSQLIntegrityViolationExceptions(Exception ex){
+    public ResponseEntity handleDataOrStateViolationExceptions(Exception ex){
         HttpStatus status = HttpStatus.CONFLICT;
 
         ErrorResponse message = new ErrorResponse(
                 status.value(),
                 status.getReasonPhrase(),
-                "Conflict in database occurred",
+                "Data or state conflict occurred and can't be processed right now",
                 ""
         );
 
@@ -147,7 +147,7 @@ public class BaseController {
         ErrorResponse message = new ErrorResponse(
                 status.value(),
                 status.getReasonPhrase(),
-                "Something wrong when processing the DB",
+                "Something wrong when processing data with the DB",
                 ""
         );
 
