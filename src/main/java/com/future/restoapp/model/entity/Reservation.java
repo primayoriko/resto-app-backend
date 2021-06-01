@@ -23,21 +23,25 @@ public class Reservation extends BaseEntity {
     public static final String TABLE_NAME = "reservations";
 
     public static final String COLUMN_USER_ID = "user_id";
-    public static final String COLUMN_DURATION = "duration";
-    public static final String COLUMN_TOTAL_PRICE = "total_price";
     public static final String COLUMN_START_TIME = "start_time";
+    public static final String COLUMN_END_TIME = "end_time";
+    public static final String COLUMN_IS_ACCEPTED = "is_accepted";
+    public static final String COLUMN_TOTAL_PRICE = "total_price";
 
     @ManyToOne
     @JoinColumn(name = COLUMN_USER_ID, nullable = false, updatable = false)
     private User user;
 
-    @Column(name = COLUMN_START_TIME)
+    @Column(name = COLUMN_START_TIME, columnDefinition = "TIMESTAMP", nullable = false)
     private Date startTime;
 
-    @Column(name = COLUMN_DURATION)
-    private Float duration;
+    @Column(name = COLUMN_END_TIME, columnDefinition = "TIMESTAMP", nullable = false)
+    private Date endTime;
 
-    @Column(name = COLUMN_TOTAL_PRICE)
+    @Column(name = COLUMN_IS_ACCEPTED, nullable = false)
+    private Boolean isAccepted = false;
+
+    @Column(name = COLUMN_TOTAL_PRICE, nullable = false)
     private Float totalPrice = 0F;
 
     @OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

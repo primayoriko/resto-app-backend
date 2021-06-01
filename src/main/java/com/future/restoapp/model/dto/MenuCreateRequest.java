@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -20,7 +21,7 @@ import java.util.Optional;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuCreateRequest {
+public class MenuCreateRequest implements Serializable {
 
     @NotBlank(message = "category must be specified")
     private String category;

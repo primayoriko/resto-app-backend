@@ -89,7 +89,6 @@ public class ReservationRepositoryTest {
         Reservation reservation = Reservation.builder()
                                     .user(user)
                                     .startTime(startTime)
-                                    .duration(30F)
                                     .orders(orders)
                                     .build();
 
