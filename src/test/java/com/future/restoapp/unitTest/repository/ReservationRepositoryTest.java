@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @DisplayName("Reservation Repository Unit Tests")
@@ -81,15 +82,12 @@ public class ReservationRepositoryTest {
         System.out.println(menu1);
         System.out.println(menu2);
 
-        Date startTime = new Date(2021, 5, 17, 13, 20);
-
         Set<OrderItem> orders = new HashSet<>();
 //        orders.add();
 
         Reservation reservation = Reservation.builder()
                                     .user(user)
-                                    .startTime(startTime)
-                                    .duration(30F)
+                                    .startTime(LocalDateTime.now())
                                     .orders(orders)
                                     .build();
 

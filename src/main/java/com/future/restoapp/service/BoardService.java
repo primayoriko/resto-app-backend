@@ -7,12 +7,12 @@ import java.util.Collection;
 
 public interface BoardService {
 
-    Board create(Board board);
+    Board create(Board board) throws Exception;
 
-    Collection<Board> findAll();
+    Collection<Board> findAll() throws Exception;
 
-    Collection<Board> findAllAvailable(LocalDateTime startTime, LocalDateTime endTime);
+    Collection<Board> findAllAvailable(LocalDateTime startTime, LocalDateTime endTime) throws Exception;
 
-    boolean checkAvailable(long id, LocalDateTime startTime, LocalDateTime endTime);
+    boolean checkAvailable(long id, LocalDateTime startTime, LocalDateTime endTime) throws Exception;
 
 }

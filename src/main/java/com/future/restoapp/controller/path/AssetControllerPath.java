@@ -2,7 +2,7 @@ package com.future.restoapp.controller.path;
 
 import com.future.restoapp.constant.UrlBasePath;
 
-public interface AssetControllerPath {
+public interface AssetControllerPath{
 
     /* Contexts List */
     String CONTEXT_MENU = "/menus";

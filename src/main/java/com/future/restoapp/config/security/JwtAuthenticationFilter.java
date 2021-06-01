@@ -25,7 +25,7 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
 
-    public static String LOGIN_PATH = UrlBasePath.CURRENT_BASE + "/login";
+    public static String LOGIN_PATH = UrlBasePath.CURRENT_PUBLIC + "/login";
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;

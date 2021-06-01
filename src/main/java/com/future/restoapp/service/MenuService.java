@@ -15,6 +15,6 @@ public interface MenuService {
 
     Menu findOneById(long id) throws Exception;
 
-    Page<Menu> findAll(String name, MenuCategory category, Boolean isSold, Pageable pageable) throws Exception;
+    Page<Menu> findByQuery(String name, MenuCategory category, Boolean isSold, Pageable pageable) throws Exception;
 
 }

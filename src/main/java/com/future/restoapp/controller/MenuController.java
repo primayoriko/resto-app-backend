@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Tag(name = "Menu")
@@ -57,7 +56,7 @@ public class MenuController extends BaseController {
         menuReq.inject(menu);
 
         Menu newMenu = menuService.updateById(menu.getId(), menu);
-        SuccessResponse responseBody = SuccessResponse.builder().content(newMenu).build();
+        SuccessResponse responseBody = new SuccessResponse(newMenu);
 
         return ResponseEntity.ok(responseBody);
     }
@@ -89,7 +88,7 @@ public class MenuController extends BaseController {
 
         if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
 
-        SuccessResponse responseBody = SuccessResponse.builder().content(menu).build();
+        SuccessResponse responseBody = new SuccessResponse(menu);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
@@ -100,32 +99,21 @@ public class MenuController extends BaseController {
             },
             method = RequestMethod.GET
     )
-    public ResponseEntity fetch(
+    public ResponseEntity fetchByQuery(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "20") Integer pageSize,
-            @RequestParam(defaultValue = "#$#") String name,
-            @RequestParam(name = "category", defaultValue = "#$#") String categoryParam,
-            @RequestParam(name = "isSold", defaultValue = "#$#") String isSoldParam
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) MenuCategory category,
+            @RequestParam(required = false) Boolean isSold
     ) throws Exception {
-        MenuCategory category;
-        Boolean isSold;
-
-        if(name.equals("#$#")) name = null;
-
-        if(categoryParam.equals("#$#")) category = null;
-        else category = MenuCategory.of(categoryParam);
-
-        if(isSoldParam.toLowerCase(Locale.ROOT).equals("true")) isSold = true;
-        else if(isSoldParam.toLowerCase(Locale.ROOT).equals("false")) isSold = false;
-        else isSold = null;
-
         Pageable pageable = PageRequest.of(
                     page - 1, pageSize,
                     Sort.by("isSold").descending()
                         .and(Sort.by("category").ascending())
                         .and(Sort.by("name").ascending())
                 );
-        Page<Menu> result = menuService.findAll(name, category, isSold, pageable);
+
+        Page<Menu> result = menuService.findByQuery(name, category, isSold, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
