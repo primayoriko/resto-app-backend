@@ -82,18 +82,26 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Page<Reservation> findByQuery(
             Long userId,
+            Long boardId,
             Boolean isAccepted,
-            LocalDateTime startTime,
-            LocalDateTime endTime,
+            LocalDateTime lowerStartTime,
+            LocalDateTime upperStartTime,
+            LocalDateTime lowerEndTime,
+            LocalDateTime upperEndTime,
             Pageable pageable
     ) throws Exception {
-        if(startTime == null) startTime = LocalDateTime.now().plusYears(9999);
-        if(endTime == null) endTime = LocalDateTime.now().minusYears(2000);
+        if(lowerStartTime == null) lowerStartTime = LocalDateTime.now().minusYears(2000);
+        if(lowerEndTime == null) lowerEndTime = LocalDateTime.now().minusYears(2000);
+        if(upperStartTime == null) upperStartTime = LocalDateTime.now().plusYears(9999);
+        if(upperEndTime == null) upperEndTime = LocalDateTime.now().plusYears(9999);
 
-        Date start = Timestamp.valueOf(startTime);
-        Date end = Timestamp.valueOf(endTime);
+        Date lowerStart = Timestamp.valueOf(lowerStartTime);
+        Date lowerEnd = Timestamp.valueOf(lowerEndTime);
+        Date upperStart = Timestamp.valueOf(upperStartTime);
+        Date upperEnd = Timestamp.valueOf(upperEndTime);
 
-        return reservationRepository.findByQuery(userId, isAccepted, start, end, pageable);
+        return reservationRepository.findByQuery(userId, boardId, isAccepted,
+                lowerStart, upperStart, lowerEnd, upperEnd, pageable);
     }
 
 }

@@ -65,9 +65,12 @@ public class ReservationController extends BaseController {
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(required = false) Long userId,
+            @RequestParam(required = false) Long boardId,
             @RequestParam(required = false) Boolean isAccepted,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startTime,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endTime,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime lowerStartTime,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime lowerEndTime,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime upperStartTime,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime upperEndTime,
             Principal principal
     ) throws Exception {
         // Debug
@@ -86,7 +89,8 @@ public class ReservationController extends BaseController {
 
         if(!user.getIsAdmin()) isAccepted = false;
 
-        Page<Reservation> reservations = reservationService.findByQuery(userId, isAccepted, startTime, endTime, pageable);
+        Page<Reservation> reservations = reservationService.findByQuery(userId, boardId, isAccepted,
+                lowerStartTime, upperStartTime, lowerEndTime, upperEndTime, pageable);
         Page<ReservationResponse> responseBody = reservations.map(ReservationResponse::build);
 
         return ResponseEntity.ok(responseBody);
