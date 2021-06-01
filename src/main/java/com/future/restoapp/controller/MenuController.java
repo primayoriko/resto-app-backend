@@ -100,7 +100,7 @@ public class MenuController extends BaseController {
             },
             method = RequestMethod.GET
     )
-    public ResponseEntity fetch(
+    public ResponseEntity fetchByQuery(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "#$#") String name,
