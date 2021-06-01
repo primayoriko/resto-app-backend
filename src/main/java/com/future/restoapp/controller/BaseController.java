@@ -42,8 +42,7 @@ public class BaseController{
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity handleValidationExceptions(
-            MethodArgumentNotValidException ex){
+    public ResponseEntity handleValidationExceptions(MethodArgumentNotValidException ex){
         List<String> errors = new ArrayList<>();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
@@ -61,8 +60,7 @@ public class BaseController{
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity handleTypeValidationExceptions(
-            MethodArgumentNotValidException ex){
+    public ResponseEntity handleTypeValidationExceptions(MethodArgumentNotValidException ex){
         return ErrorResponse.buildErrorResponse(
                 HttpStatus.UNPROCESSABLE_ENTITY,
                 ex.getMessage(),
@@ -77,8 +75,7 @@ public class BaseController{
     })
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity handleNotFoundItemExceptions(
-            NoSuchElementException ex){
+    public ResponseEntity handleNotFoundItemExceptions(Exception ex){
         return ErrorResponse.buildErrorResponse(
                 HttpStatus.NOT_FOUND,
                 ex.getMessage(),
@@ -129,7 +126,7 @@ public class BaseController{
     @ExceptionHandler(AccessPrivilegeNotEnoughException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity handleAccessPrivilegeException(SQLException ex){
+    public ResponseEntity handleAccessPrivilegeException(AccessPrivilegeNotEnoughException ex){
         return ErrorResponse.buildErrorResponse(
                 HttpStatus.FORBIDDEN,
                 ex.getMessage(),
