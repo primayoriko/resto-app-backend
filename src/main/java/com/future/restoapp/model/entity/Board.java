@@ -5,10 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+//import com.future.restoapp.model.entity.*;
 
 @Table(name = Board.TABLE_NAME)
 @Entity
@@ -40,14 +41,5 @@ public class Board extends BaseEntity {
 
     @Column(name = Board.COLUMN_CAPACITY)
     private Integer capacity;
-
-    @OneToMany(
-            targetEntity = Reservation.class,
-            mappedBy = "board",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = false
-    )
-    private Collection<Reservation> reservations = new HashSet<>();
 
 }
