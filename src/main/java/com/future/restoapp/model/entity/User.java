@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 
-//import com.future.restoapp.model.entity.*;
 
 @Table(name = User.TABLE_NAME)
 @Entity
