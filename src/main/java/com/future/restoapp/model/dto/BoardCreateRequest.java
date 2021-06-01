@@ -1,14 +1,17 @@
 package com.future.restoapp.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.future.restoapp.model.entity.Board;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
+import java.util.Optional;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -35,5 +38,13 @@ public class BoardCreateRequest implements Serializable {
     @NotNull(message = "capacity must be specified")
     @Positive(message = "capacity value must be positive")
     private Integer capacity;
+
+    public Board toBoard(){
+        return Optional.of(this).map(dto -> {
+            Board board = new Board();
+            BeanUtils.copyProperties(dto, board);
+            return board;
+        }).orElse(null);
+    }
 
 }

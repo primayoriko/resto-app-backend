@@ -41,9 +41,9 @@ public class MenuCreateRequest implements Serializable {
     private String fileExtension;
 
     public Menu toMenu(){
-		return Optional.of(this).map(e -> {
+		return Optional.of(this).map(dto -> {
             Menu menu = new Menu();
-			BeanUtils.copyProperties(e, menu, "category");
+			BeanUtils.copyProperties(dto, menu, "category");
 			menu.setCategory(MenuCategory.of(category));
 			return menu;
 		}).orElse(null);
