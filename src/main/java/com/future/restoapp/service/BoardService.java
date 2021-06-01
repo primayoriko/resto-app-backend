@@ -9,6 +9,8 @@ public interface BoardService {
 
     Board create(Board board) throws Exception;
 
+    Board update(Board board) throws Exception;
+
     Collection<Board> findAll() throws Exception;
 
     Collection<Board> findAllAvailable(LocalDateTime startTime, LocalDateTime endTime) throws Exception;

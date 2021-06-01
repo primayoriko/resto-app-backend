@@ -3,6 +3,7 @@ package com.future.restoapp.controller;
 import com.future.restoapp.controller.path.BoardControllerPath;
 import com.future.restoapp.model.dto.BoardCreateRequest;
 import com.future.restoapp.model.dto.BoardResponse;
+import com.future.restoapp.model.dto.BoardUpdateRequest;
 import com.future.restoapp.model.dto.SuccessResponse;
 import com.future.restoapp.model.entity.Board;
 import com.future.restoapp.service.BoardService;
@@ -40,6 +41,12 @@ public class BoardController extends BaseController {
                 .map(BoardResponse::build)
                 .collect(Collectors.toSet());
         return ResponseEntity.ok(new SuccessResponse(responseBody));
+    }
+
+    @RequestMapping(value = BoardControllerPath.UPDATE, method = RequestMethod.PATCH)
+    public ResponseEntity update(@Valid @RequestBody BoardUpdateRequest boardReq) throws Exception {
+        boardService.update(boardReq.toBoard());
+        return ResponseEntity.created(new URI(BoardControllerPath.FETCH_ALL)).build();
     }
 
     @RequestMapping(value = BoardControllerPath.CHECK, method = RequestMethod.GET)

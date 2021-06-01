@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -17,6 +18,15 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Board create(Board board) throws Exception {
         return boardRepository.save(board);
+    }
+
+    @Override
+    public Board update(Board board) throws Exception {
+        Board boardDb = boardRepository
+                .findById(board.getId())
+                .orElseThrow(() -> new NoSuchElementException("Board with specified ID not found"));
+        boardDb.update(board);
+        return boardRepository.save(boardDb);
     }
 
     @Override
