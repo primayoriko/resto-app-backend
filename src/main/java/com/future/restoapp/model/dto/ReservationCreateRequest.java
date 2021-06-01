@@ -35,6 +35,27 @@ public class ReservationCreateRequest implements Serializable {
 
     private Collection<OrderItemCreateRequest> orders = new HashSet<>();
 
+    public Reservation toReservation(){
+        return Reservation
+                .builder()
+                .startTime(startTime)
+                .endTime(endTime)
+                .isAccepted(false)
+                .totalPrice(0F)
+                .orders(
+                        orders.stream()
+                                .map(el -> {
+                                    Menu menu = Menu.builder().build();
+                                    OrderItem order = OrderItem.builder()
+                                            .quantity(el.getQuantity())
+                                            .menu(menu)
+                                            .build();
+                                    menu.setId(el.getMenuId());
+                                    return order;
+                                }).collect(Collectors.toSet())
+                ).build();
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     @Data
     @Builder
@@ -50,33 +71,6 @@ public class ReservationCreateRequest implements Serializable {
         @Positive(message = "quantity value must be positive")
         private Integer quantity;
 
-    }
-
-    public Reservation toReservation(){
-        Reservation reservation = Reservation.builder()
-                .startTime(startTime)
-                .endTime(endTime)
-                .isAccepted(false)
-                .totalPrice(0F)
-                .orders(
-                        orders.stream()
-                            .map(el -> {
-                                Menu menu = Menu.builder().build();
-                                OrderItem order = OrderItem.builder()
-                                        .quantity(el.getQuantity())
-                                        .menu(menu)
-                                        .build();
-
-                                menu.setId(el.getMenuId());
-                                System.out.println(order);
-
-                                return order;
-                            }).collect(Collectors.toSet())
-                )
-                .build();
-
-        System.out.println(reservation);
-        return reservation;
     }
 
 }

@@ -15,7 +15,7 @@ public interface ReservationControllerPath{
 
     // Client access
     String CREATE = BASE_CLIENT;
-    String UPDATE_CLIENT = BASE_ADMIN; // Status Only
+    String UPDATE_CLIENT = BASE_CLIENT; // Status Only
     String DELETE = BASE_CLIENT + "/{id}";
     String FETCH_ONE_CLIENT = BASE_CLIENT + "/{id}";
     String FETCH_OWN_CLIENT = BASE_CLIENT;
