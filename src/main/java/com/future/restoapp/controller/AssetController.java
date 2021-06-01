@@ -23,7 +23,6 @@ public class AssetController extends BaseController {
 
         // Debug
 //        System.out.println(Arrays.toString(media));
-
         headers.setCacheControl(CacheControl.noCache().getHeaderValue());
         headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_OCTET_STREAM_VALUE));
 

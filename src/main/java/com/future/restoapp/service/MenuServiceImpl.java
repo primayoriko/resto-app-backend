@@ -56,13 +56,11 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu findOneById(long id) throws Exception {
-        Optional<Menu> menu = menuRepository.findById(id);
-
-        return menu.orElse(null);
+        return menuRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Page<Menu> findAll(String name, MenuCategory category, Boolean isSold, Pageable pageable) throws Exception{
+    public Page<Menu> findByQuery(String name, MenuCategory category, Boolean isSold, Pageable pageable) throws Exception{
         Menu menu = Menu.builder()
                 .name(name)
                 .category(category)

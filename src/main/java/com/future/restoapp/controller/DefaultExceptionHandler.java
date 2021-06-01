@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-//@Order(Ordered.HIGHEST_PRECEDENCE)
+//@Order(Ordered.HIGHEST_PRECEDENCE + 10)
 @ControllerAdvice
 public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -19,37 +19,31 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+    protected ResponseEntity handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex,
             HttpHeaders headers,
             HttpStatus status,
             WebRequest request
     ){
-        ErrorResponse message = new ErrorResponse(
-                status.value(),
-                status.getReasonPhrase(),
+        return ErrorResponse.buildErrorResponse(
+                status,
                 "Body Not Valid/Malformed",
                 ""
         );
-
-        return ResponseEntity.status(status).body(message);
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+    protected ResponseEntity handleHttpRequestMethodNotSupported(
             HttpRequestMethodNotSupportedException ex,
             HttpHeaders headers,
             HttpStatus status,
             WebRequest request
     ){
-        ErrorResponse message = new ErrorResponse(
-                status.value(),
-                status.getReasonPhrase(),
+        return ErrorResponse.buildErrorResponse(
+                status,
                 "Specified request method not supported",
                 ""
         );
-
-        return ResponseEntity.status(status).body(message);
     }
 
 //    @Override

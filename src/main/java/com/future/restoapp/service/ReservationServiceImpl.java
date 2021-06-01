@@ -7,10 +7,15 @@ import com.future.restoapp.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -70,8 +75,25 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation findById(Long id){
+    public Reservation findById(Long id) throws Exception {
         return reservationRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Page<Reservation> findByQuery(
+            Long userId,
+            Boolean isAccepted,
+            LocalDateTime startTime,
+            LocalDateTime endTime,
+            Pageable pageable
+    ) throws Exception {
+        if(startTime == null) startTime = LocalDateTime.now().plusYears(9999);
+        if(endTime == null) endTime = LocalDateTime.now().minusYears(2000);
+
+        Date start = Timestamp.valueOf(startTime);
+        Date end = Timestamp.valueOf(endTime);
+
+        return reservationRepository.findByQuery(userId, isAccepted, start, end, pageable);
     }
 
 }

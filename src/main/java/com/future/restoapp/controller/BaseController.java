@@ -2,6 +2,8 @@ package com.future.restoapp.controller;
 
 import com.future.restoapp.model.dto.ErrorResponse;
 import com.future.restoapp.model.entity.User;
+import com.future.restoapp.model.exception.AccessPrivilegeNotEnoughException;
+import com.future.restoapp.model.exception.BusinessLogicException;
 import com.future.restoapp.model.security.UserPrincipal;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.core.Ordered;
@@ -11,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,8 +28,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@CrossOrigin
-public class BaseController {
+public class BaseController{
 
     public static User getUser(Principal principal) throws Exception {
         if(principal instanceof UsernamePasswordAuthenticationToken
@@ -42,9 +42,7 @@ public class BaseController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity handleValidationExceptions(
-            MethodArgumentNotValidException ex){
-        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+    public ResponseEntity handleValidationExceptions(MethodArgumentNotValidException ex){
         List<String> errors = new ArrayList<>();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
@@ -52,31 +50,22 @@ public class BaseController {
             errors.add(error.getDefaultMessage());
         });
 
-        ErrorResponse message = new ErrorResponse(
-                status.value(),
-                status.getReasonPhrase(),
+        return ErrorResponse.buildErrorResponse(
+                HttpStatus.UNPROCESSABLE_ENTITY,
                 errors.toString(),
                 ""
         );
-
-        return ResponseEntity.unprocessableEntity().body(message);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity handleTypeValidationExceptions(
-            MethodArgumentNotValidException ex){
-        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-
-        ErrorResponse message = new ErrorResponse(
-                status.value(),
-                status.getReasonPhrase(),
+    public ResponseEntity handleTypeValidationExceptions(MethodArgumentNotValidException ex){
+        return ErrorResponse.buildErrorResponse(
+                HttpStatus.UNPROCESSABLE_ENTITY,
                 ex.getMessage(),
                 ""
         );
-
-        return ResponseEntity.unprocessableEntity().body(message);
     }
 
     @ExceptionHandler(value = {
@@ -86,37 +75,27 @@ public class BaseController {
     })
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity handleNotFoundItemExceptions(
-            NoSuchElementException ex){
-        HttpStatus status = HttpStatus.NOT_FOUND;
-
-        ErrorResponse message = new ErrorResponse(
-                status.value(),
-                status.getReasonPhrase(),
+    public ResponseEntity handleNotFoundItemExceptions(Exception ex){
+        return ErrorResponse.buildErrorResponse(
+                HttpStatus.NOT_FOUND,
                 ex.getMessage(),
                 ""
         );
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
     @ExceptionHandler(value = {
             DataIntegrityViolationException.class,
-            SQLIntegrityConstraintViolationException.class
+            SQLIntegrityConstraintViolationException.class,
+            BusinessLogicException.class
     })
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity handleSQLIntegrityViolationExceptions(Exception ex){
-        HttpStatus status = HttpStatus.CONFLICT;
-
-        ErrorResponse message = new ErrorResponse(
-                status.value(),
-                status.getReasonPhrase(),
-                "Conflict in database occurred",
+    public ResponseEntity handleDataOrStateViolationExceptions(Exception ex){
+        return ErrorResponse.buildErrorResponse(
+                HttpStatus.CONFLICT,
+                "Data or state conflict occurred and can't be processed right now",
                 ""
         );
-
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
     }
 
     @ExceptionHandler(value = {
@@ -126,32 +105,33 @@ public class BaseController {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity handleSQLDataAndGrammarExceptions(SQLException ex){
-        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-
-        ErrorResponse message = new ErrorResponse(
-                status.value(),
-                status.getReasonPhrase(),
+        return ErrorResponse.buildErrorResponse(
+                HttpStatus.UNPROCESSABLE_ENTITY,
                 "Something wrong in the input and can't be processed",
                 ""
         );
-
-        return ResponseEntity.unprocessableEntity().body(message);
     }
 
     @ExceptionHandler(SQLException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity handleSQLExceptions(SQLException ex){
-        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-
-        ErrorResponse message = new ErrorResponse(
-                status.value(),
-                status.getReasonPhrase(),
-                "Something wrong when processing the DB",
+        return ErrorResponse.buildErrorResponse(
+                HttpStatus.UNPROCESSABLE_ENTITY,
+                "Something wrong when processing data with the DB",
                 ""
         );
+    }
 
-        return ResponseEntity.unprocessableEntity().body(message);
+    @ExceptionHandler(AccessPrivilegeNotEnoughException.class)
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity handleAccessPrivilegeException(AccessPrivilegeNotEnoughException ex){
+        return ErrorResponse.buildErrorResponse(
+                HttpStatus.FORBIDDEN,
+                ex.getMessage(),
+                ""
+        );
     }
 
 }

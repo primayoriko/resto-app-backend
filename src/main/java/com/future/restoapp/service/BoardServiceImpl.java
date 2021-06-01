@@ -15,22 +15,22 @@ public class BoardServiceImpl implements BoardService {
     private BoardRepository boardRepository;
 
     @Override
-    public Board create(Board board){
+    public Board create(Board board) throws Exception {
         return boardRepository.save(board);
     }
 
     @Override
-    public Collection<Board> findAll(){
+    public Collection<Board> findAll() throws Exception {
         return boardRepository.findAll();
     }
 
     @Override
-    public Collection<Board> findAllAvailable(LocalDateTime startTime, LocalDateTime endTime){
+    public Collection<Board> findAllAvailable(LocalDateTime startTime, LocalDateTime endTime) throws Exception {
         return null;
     }
 
     @Override
-    public boolean checkAvailable(long id, LocalDateTime startTime, LocalDateTime endTime){
+    public boolean checkAvailable(long id, LocalDateTime startTime, LocalDateTime endTime) throws Exception {
         return true;
     }
 

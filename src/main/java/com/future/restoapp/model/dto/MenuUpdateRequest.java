@@ -19,7 +19,7 @@ import javax.validation.constraints.Positive;
 public class MenuUpdateRequest {
 
     @NotBlank(message = "id must be specified")
-    @Positive(message = "price must be positive value")
+    @Positive(message = "id must be positive value")
     private Long id;
 
     @Positive(message = "price must be positive value")
