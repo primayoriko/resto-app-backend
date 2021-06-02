@@ -9,12 +9,12 @@ public interface UserControllerPath{
     String BASE_USER = UrlBasePath.CURRENT_USER + "/users";
 
     // Admin access
-    String REGISTER_ADMIN = BASE_ADMIN + "/register";
+    String REGISTER_ADMIN = BASE_ADMIN;
     String FETCH_ONE = BASE_ADMIN + "/{username}";
     String FETCH = BASE_ADMIN;
 
     // Public access
-    String REGISTER = BASE_PUBLIC + "/register";
+    String REGISTER = BASE_PUBLIC;
 
     // User access
     String FETCH_ME = BASE_USER + "/me";

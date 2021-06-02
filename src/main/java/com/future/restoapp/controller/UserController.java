@@ -1,5 +1,6 @@
 package com.future.restoapp.controller;
 
+import com.future.restoapp.controller.path.ReservationControllerPath;
 import com.future.restoapp.controller.path.UserControllerPath;
 import com.future.restoapp.model.dto.RegisterRequest;
 import com.future.restoapp.model.dto.SuccessResponse;
@@ -18,8 +19,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.security.Principal;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 @Tag(name = "User")
 @RestController
@@ -34,38 +37,39 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = UserControllerPath.REGISTER, method = RequestMethod.POST)
     public ResponseEntity registerClient(@Valid @RequestBody RegisterRequest request) throws Exception{
-
         User user = request.toUser();
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        this.userService.create(user);
+        user = userService.create(user);
+        String uri = String.format("%s/%d", UserControllerPath.BASE_ADMIN, user.getId());
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.created(new URI(uri)).build();
     }
 
     // Just for development purpose
     @RequestMapping(value = UserControllerPath.REGISTER_ADMIN, method = RequestMethod.POST)
     public ResponseEntity registerAdmin(@Valid @RequestBody RegisterRequest request) throws Exception {
-
         User user = request.toUser();
 
+        user.setIsAdmin(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        user.setIsAdmin(true);
+        user = userService.create(user);
+        String uri = String.format("%s/%d", UserControllerPath.BASE_ADMIN, user.getId());
 
-        this.userService.create(user);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.created(new URI(uri)).build();
     }
 
     @RequestMapping(value = UserControllerPath.FETCH_ONE, method = RequestMethod.GET)
     public ResponseEntity fetchOne(@PathVariable String username) throws Exception {
         User user = this.userService.findByUsername(username);
 
-        if(user == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if(user == null) throw new NoSuchElementException("User with specified ID not found");
 
-        return ResponseEntity.status(HttpStatus.OK).body(UserResponse.build(user));
+        SuccessResponse responseBody = new SuccessResponse(UserResponse.build(user));
+
+        return ResponseEntity.ok(responseBody);
     }
 
     @RequestMapping(value = UserControllerPath.FETCH_ME, method = RequestMethod.GET)

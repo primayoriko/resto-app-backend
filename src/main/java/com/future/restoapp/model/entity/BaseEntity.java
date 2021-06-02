@@ -25,12 +25,13 @@ public class BaseEntity implements Serializable {
   public static final String COLUMN_UPDATED_DATE = "updated_date";
   //  public static final String COLUMN_VERSION = "version";
 
-  @Id
-  @Column(name = BaseEntity.COLUMN_ID)
-  @GeneratedValue(strategy= GenerationType.IDENTITY)
+
 //  @org.springframework.data.annotation.Id
 //  @GeneratedValue(generator = "uuid")
 //  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Id
+  @Column(name = BaseEntity.COLUMN_ID)
+  @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
 
 //  @Version
@@ -38,7 +39,6 @@ public class BaseEntity implements Serializable {
 //  @Builder.Default
 //  private Long version = 0L;
 
-  //  @Temporal(value = TemporalType.TIMESTAMP)
   @CreatedDate
   @Column(
           name = BaseEntity.COLUMN_CREATED_DATE,
@@ -48,7 +48,6 @@ public class BaseEntity implements Serializable {
   )
   private LocalDateTime createdDate = LocalDateTime.now();
 
-  //  @Temporal(value = TemporalType.TIMESTAMP)
   @LastModifiedDate
   @Column(
           name = BaseEntity.COLUMN_UPDATED_DATE,
