@@ -23,6 +23,7 @@ public class Reservation extends BaseEntity {
     public static final String TABLE_NAME = "reservations";
 
     public static final String COLUMN_USER_ID = "user_id";
+    public static final String COLUMN_BOARD_ID = "board_id";
     public static final String COLUMN_START_TIME = "start_time";
     public static final String COLUMN_END_TIME = "end_time";
     public static final String COLUMN_IS_ACCEPTED = "is_accepted";
@@ -31,6 +32,10 @@ public class Reservation extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = COLUMN_USER_ID, nullable = false, updatable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = COLUMN_BOARD_ID, nullable = false, updatable = false)
+    private Board board;
 
     @Column(name = COLUMN_START_TIME, columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime startTime;

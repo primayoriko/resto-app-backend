@@ -51,7 +51,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = MenuControllerPath.UPDATE, method = RequestMethod.PATCH)
     public ResponseEntity update(@Valid @RequestBody MenuUpdateRequest menuReq) throws Exception {
-        Menu menu = Menu.builder().build();
+        Menu menu = new Menu();
 
         menuReq.inject(menu);
 
