@@ -31,7 +31,7 @@ public class UserResponse implements Serializable {
 
     public static UserResponse build(User user){
         return Optional.ofNullable(user).map(entity -> {
-            UserResponse userResponse = UserResponse.builder().build();
+            UserResponse userResponse = new UserResponse();
             BeanUtils.copyProperties(entity, userResponse);
             return userResponse;
         }).orElse(null);

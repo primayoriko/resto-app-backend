@@ -8,11 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -23,6 +25,10 @@ import java.util.stream.Collectors;
 public class ReservationResponse implements Serializable {
 
     private Long id;
+
+    private UserResponse user;
+
+    private BoardResponse board;
 
     private LocalDateTime startTime;
 
@@ -35,15 +41,14 @@ public class ReservationResponse implements Serializable {
     private Collection<OrderItemResponse> orders = new HashSet<>();
 
     public static ReservationResponse build(Reservation r){
-        return ReservationResponse
-                .builder()
-                .id(r.getId())
-                .startTime(r.getStartTime())
-                .endTime(r.getEndTime())
-                .isAccepted(r.getIsAccepted())
-                .totalPrice(r.getTotalPrice())
-                .orders(
-                        r.getOrders()
+        return Optional.of(r).map(entity -> {
+            ReservationResponse response = new ReservationResponse();
+
+            BeanUtils.copyProperties(entity, response, "orders", "board", "user");
+            response.setUser(UserResponse.build(r.getUser()));
+            response.setBoard(BoardResponse.build(r.getBoard()));
+            response.setOrders(
+                    r.getOrders()
                             .stream()
                             .map(el -> {
                                 Menu menu = el.getMenu();
@@ -57,7 +62,10 @@ public class ReservationResponse implements Serializable {
                                         .quantity(el.getQuantity())
                                         .build();
                             }).collect(Collectors.toSet())
-                ).build();
+            );
+
+            return response;
+        }).orElse(null);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
