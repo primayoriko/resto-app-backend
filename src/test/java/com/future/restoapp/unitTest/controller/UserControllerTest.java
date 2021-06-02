@@ -33,7 +33,7 @@ class UserControllerTest {
 
     @InjectMocks
     private UserController userController;
-    
+
     @Mock
     private UserService userService;
 
@@ -117,7 +117,7 @@ class UserControllerTest {
         }).when(userService).create(any());
 
         mockMvc.perform(
-                post(UserControllerPath.REGISTER_CLIENT)
+                post(UserControllerPath.REGISTER)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(request))
         ).andDo(MockMvcResultHandlers.print());
@@ -151,13 +151,13 @@ class UserControllerTest {
 
         try {
             mockMvc.perform(
-                    post(UserControllerPath.REGISTER_CLIENT)
+                    post(UserControllerPath.REGISTER)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(asJsonString(request))
             ).andDo(MockMvcResultHandlers.print());
 
             mockMvc.perform(
-                    post(UserControllerPath.REGISTER_CLIENT)
+                    post(UserControllerPath.REGISTER)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(asJsonString(request))
             ).andDo(MockMvcResultHandlers.print());
@@ -184,7 +184,7 @@ class UserControllerTest {
 
         try {
             mockMvc.perform(
-                    post(UserControllerPath.REGISTER_CLIENT)
+                    post(UserControllerPath.REGISTER)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(asJsonString(request))
             ).andDo(MockMvcResultHandlers.print());

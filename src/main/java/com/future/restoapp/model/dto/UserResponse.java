@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -27,13 +28,12 @@ public class UserResponse implements Serializable {
 
     private Boolean isAdmin;
 
-    private Date CreatedDate;
+    private LocalDateTime createdDate;
 
     public static UserResponse build(User user){
-        return Optional.ofNullable(user).map(e -> {
-            UserResponse userResponse = UserResponse.builder().build();
-            BeanUtils.copyProperties(user, userResponse);
-
+        return Optional.ofNullable(user).map(entity -> {
+            UserResponse userResponse = new UserResponse();
+            BeanUtils.copyProperties(entity, userResponse);
             return userResponse;
         }).orElse(null);
     }

@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -20,7 +21,7 @@ import java.util.Optional;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuCreateRequest {
+public class MenuCreateRequest implements Serializable {
 
     @NotBlank(message = "category must be specified")
     private String category;
@@ -40,9 +41,9 @@ public class MenuCreateRequest {
     private String fileExtension;
 
     public Menu toMenu(){
-		return Optional.of(this).map(e -> {
+		return Optional.of(this).map(dto -> {
             Menu menu = new Menu();
-			BeanUtils.copyProperties(e, menu, "category");
+			BeanUtils.copyProperties(dto, menu, "category");
 			menu.setCategory(MenuCategory.of(category));
 			return menu;
 		}).orElse(null);

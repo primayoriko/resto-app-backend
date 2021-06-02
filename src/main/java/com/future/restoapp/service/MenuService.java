@@ -9,12 +9,12 @@ public interface MenuService {
 
     Menu create(Menu menu) throws Exception;
 
-    Menu updateById(Long id, Menu menu) throws Exception;
+    Menu updateById(long id, Menu menu) throws Exception;
 
-    Menu deleteById(Long id) throws Exception;
+    Menu deleteById(long id) throws Exception;
 
-    Menu findOneById(Long id) throws Exception;
+    Menu findOneById(long id) throws Exception;
 
-    Page<Menu> findAll(String name, MenuCategory category, Boolean isSold, Pageable pageable) throws Exception;
+    Page<Menu> findByQuery(String name, MenuCategory category, Boolean isSold, Pageable pageable) throws Exception;
 
 }

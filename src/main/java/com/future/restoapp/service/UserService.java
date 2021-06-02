@@ -4,16 +4,19 @@ import com.future.restoapp.model.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public interface UserService {
 
-	void create(User user) throws Exception;
+	User create(@NotNull User user) throws Exception;
 
-	void deleteByUsername(String username) throws Exception;
+	User findByUsername(@NotBlank String username) throws Exception;
 
-	void updateByUsername(String username, User user) throws Exception;
+	Page<User> findByQuery(String username, String email, String hpNumber, Pageable pageable) throws Exception;
 
-	User findByUsername(String username) throws Exception;
+	void deleteById(long id) throws Exception;
 
-	Page<User> find(Pageable pageable) throws Exception;
+	User update(@NotNull User user) throws Exception;
 
 }

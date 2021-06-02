@@ -2,19 +2,23 @@ package com.future.restoapp.controller.path;
 
 import com.future.restoapp.constant.UrlBasePath;
 
-public interface UserControllerPath {
+public interface UserControllerPath{
 
-    String BASE = UrlBasePath.CURRENT_CLIENT + "/users";
+    String BASE_ADMIN = UrlBasePath.CURRENT_ADMIN + "/users";
+    String BASE_PUBLIC = UrlBasePath.CURRENT_PUBLIC + "/users";
+    String BASE_USER = UrlBasePath.CURRENT_USER + "/users";
 
-    String REGISTER_CLIENT = UrlBasePath.CURRENT_CLIENT + "/register";
-    String REGISTER_ADMIN = UrlBasePath.CURRENT_ADMIN + "/register";
+    // Admin access
+    String REGISTER_ADMIN = BASE_ADMIN;
+    String FETCH_ONE = BASE_ADMIN + "/{username}";
+    String FETCH = BASE_ADMIN;
 
-    String DELETE = BASE;
+    // Public access
+    String REGISTER = BASE_PUBLIC;
 
-    String UPDATE = BASE;
-
-    String FETCH_ONE = BASE + "/{username}";
-
-    String FETCH = BASE;
+    // User access
+    String FETCH_ME = BASE_USER + "/me";
+    String UPDATE_ME = BASE_USER + "/me";
+    String DELETE_ME = BASE_USER + "/me";
 
 }
