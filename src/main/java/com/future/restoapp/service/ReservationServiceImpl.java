@@ -1,6 +1,9 @@
 package com.future.restoapp.service;
 
-import com.future.restoapp.model.entity.*;
+import com.future.restoapp.model.entity.Menu;
+import com.future.restoapp.model.entity.OrderItem;
+import com.future.restoapp.model.entity.OrderItemKey;
+import com.future.restoapp.model.entity.Reservation;
 import com.future.restoapp.repository.MenuRepository;
 import com.future.restoapp.repository.ReservationRepository;
 import com.future.restoapp.repository.UserRepository;
@@ -10,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.NoSuchElementException;
@@ -32,12 +35,11 @@ public class ReservationServiceImpl implements ReservationService {
     MenuRepository menuRepository;
 
     @Override
-    @Transactional
-    public Reservation create(Reservation reservation, User client) throws Exception {
+    public Reservation create(@NotNull Reservation reservation) throws Exception {
         Collection<OrderItem> orders  = reservation.getOrders();
 
         reservation.setOrders(null);
-        reservation.setUser(client);
+
         reservationRepository.save(reservation);
 
         reservation.setOrders(
@@ -73,7 +75,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation findById(Long id) throws Exception {
+    public Reservation findById(long id) throws Exception {
         return reservationRepository.findById(id).orElse(null);
     }
 
@@ -95,6 +97,23 @@ public class ReservationServiceImpl implements ReservationService {
 
         return reservationRepository.findByQuery(userId, boardId, isAccepted,
                 lowerStartTime, upperStartTime, lowerEndTime, upperEndTime, pageable);
+    }
+
+    @Override
+    public Reservation update(@NotNull Reservation reservation) throws Exception {
+        Reservation reservationDb = reservationRepository
+                .findById(reservation.getId())
+                .orElseThrow(() -> new NoSuchElementException("Reservation with specified ID not found"));
+        reservationDb.update(reservation);
+        return reservationRepository.save(reservationDb);
+    }
+
+    @Override
+    public void deleteById(long id) throws Exception {
+        Reservation reservation = reservationRepository
+                .findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Reservation with specified ID not found"));
+        reservationRepository.deleteById(id);
     }
 
 }

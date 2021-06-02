@@ -1,17 +1,17 @@
 package com.future.restoapp.service;
 
 import com.future.restoapp.model.entity.Reservation;
-import com.future.restoapp.model.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public interface ReservationService {
 
-    Reservation create(Reservation reservation, User client) throws Exception;
+    Reservation create(@NotNull Reservation reservation) throws Exception;
 
-    Reservation findById(Long id) throws Exception;
+    Reservation findById(long id) throws Exception;
 
     Page<Reservation> findByQuery(
             Long userId,
@@ -23,5 +23,9 @@ public interface ReservationService {
             LocalDateTime upperEndTime,
             Pageable pageable
     ) throws Exception;
+
+    Reservation update(@NotNull Reservation reservation) throws Exception;
+
+    void deleteById(long id) throws Exception;
 
 }

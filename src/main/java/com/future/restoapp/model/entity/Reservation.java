@@ -1,5 +1,6 @@
 package com.future.restoapp.model.entity;
 
+import com.future.restoapp.util.CopyUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +10,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
-
-//import com.future.restoapp.model.entity.*;
 
 @Table(name = Reservation.TABLE_NAME)
 @Entity
@@ -51,5 +50,9 @@ public class Reservation extends BaseEntity {
 
     @OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Collection<OrderItem> orders = new HashSet<>();
+
+    public void update(Reservation r){
+        CopyUtil.copyNonNullProperties(r, this);
+    }
 
 }
