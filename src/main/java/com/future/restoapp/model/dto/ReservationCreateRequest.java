@@ -1,7 +1,6 @@
 package com.future.restoapp.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.future.restoapp.model.entity.Board;
 import com.future.restoapp.model.entity.Menu;
 import com.future.restoapp.model.entity.OrderItem;
 import com.future.restoapp.model.entity.Reservation;
@@ -11,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
@@ -27,10 +25,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ReservationCreateRequest implements Serializable {
 
-    @NotBlank(message = "boardId must be specified")
-    @Positive(message = "boardId must be positive value")
-    private Long boardId;
-
     @NotNull(message = "startTime must be specified")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startTime;
@@ -42,12 +36,8 @@ public class ReservationCreateRequest implements Serializable {
     private Collection<OrderItemCreateRequest> orders = new HashSet<>();
 
     public Reservation toReservation(){
-        Board board = new Board();
-        board.setId(boardId);
-
         return Reservation
                 .builder()
-                .board(board)
                 .startTime(startTime)
                 .endTime(endTime)
                 .isAccepted(false)
