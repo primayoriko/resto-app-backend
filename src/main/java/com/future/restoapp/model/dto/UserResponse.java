@@ -30,15 +30,9 @@ public class UserResponse implements Serializable {
     private Date CreatedDate;
 
     public static UserResponse build(User user){
-//        ur.setUsername(user.getUsername());
-//        ur.setEmail(user.getEmail());
-//        ur.setHpNumber(user.getHpNumber());
-//        ur.setIsAdmin(user.getIsAdmin());
-//        ur.setCreatedDate(user.getCreatedDate());
-        return Optional.ofNullable(user).map(e -> {
-            UserResponse userResponse = UserResponse.builder().build();
-            BeanUtils.copyProperties(user, userResponse);
-
+        return Optional.ofNullable(user).map(entity -> {
+            UserResponse userResponse = new UserResponse();
+            BeanUtils.copyProperties(entity, userResponse);
             return userResponse;
         }).orElse(null);
     }

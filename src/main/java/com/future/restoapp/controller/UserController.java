@@ -1,5 +1,6 @@
 package com.future.restoapp.controller;
 
+import com.future.restoapp.controller.path.UserControllerPath;
 import com.future.restoapp.model.dto.RegisterRequest;
 import com.future.restoapp.model.dto.UserResponse;
 import com.future.restoapp.model.entity.User;
@@ -24,7 +25,7 @@ public class UserController extends BaseController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(value = UserControllerPath.REGISTER_CLIENT, method = RequestMethod.POST)
+    @RequestMapping(value = UserControllerPath.REGISTER, method = RequestMethod.POST)
     public ResponseEntity registerClient(@Valid @RequestBody RegisterRequest request) throws Exception{
 
         User user = request.toUser();
@@ -59,6 +60,6 @@ public class UserController extends BaseController {
         return ResponseEntity.status(HttpStatus.OK).body(UserResponse.build(user));
     }
 
-    // TODO: Add fetch list of user
+    // TODO: Add fetch ME in client and by query in admin
 
 }

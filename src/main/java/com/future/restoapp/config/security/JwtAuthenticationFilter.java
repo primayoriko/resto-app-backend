@@ -25,7 +25,7 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
 
-    public static String LOGIN_PATH = UrlBasePath.CURRENT_BASE + "/login";
+    public static String LOGIN_PATH = UrlBasePath.CURRENT_PUBLIC + "/login";
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -56,9 +56,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 new ArrayList<>());
 
         // Authenticate user
-
         return authenticationManager.authenticate(authenticationToken);
-//        return null;
     }
 
     @Override
@@ -69,6 +67,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Create JWT Token
         String token = JWT.create()
                 .withSubject(principal.getUsername())
+                .withClaim("username", principal.getUsername())
+                .withClaim("email", principal.getUser().getEmail())
                 .withClaim("isAdmin", principal.isAdmin())
                 .withClaim("role", principal.isAdmin()? "admin" : "client")
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))

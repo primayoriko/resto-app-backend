@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(value = AuditingEntityListener.class)
@@ -28,22 +28,33 @@ public class BaseEntity implements Serializable {
   @Id
   @Column(name = BaseEntity.COLUMN_ID)
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  @org.springframework.data.annotation.Id
-  private String id;
+//  @org.springframework.data.annotation.Id
+//  @GeneratedValue(generator = "uuid")
+//  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  private Long id;
 
 //  @Version
 //  @Column(name = BaseEntity.COLUMN_VERSION)
 //  @Builder.Default
 //  private Long version = 0L;
 
+  //  @Temporal(value = TemporalType.TIMESTAMP)
   @CreatedDate
-  @Temporal(value = TemporalType.TIMESTAMP)
-  @Column(name = BaseEntity.COLUMN_CREATED_DATE, nullable = false)
-  private Date createdDate = new Date();
+  @Column(
+          name = BaseEntity.COLUMN_CREATED_DATE,
+          columnDefinition = "TIMESTAMP",
+          nullable = false,
+          updatable = false
+  )
+  private LocalDateTime createdDate = LocalDateTime.now();
 
+  //  @Temporal(value = TemporalType.TIMESTAMP)
   @LastModifiedDate
-  @Temporal(value = TemporalType.TIMESTAMP)
-  @Column(name = BaseEntity.COLUMN_UPDATED_DATE, nullable = false)
-  private Date updatedDate = new Date();
+  @Column(
+          name = BaseEntity.COLUMN_UPDATED_DATE,
+          columnDefinition = "TIMESTAMP",
+          nullable = false
+  )
+  private LocalDateTime updatedDate = LocalDateTime.now();
 
 }

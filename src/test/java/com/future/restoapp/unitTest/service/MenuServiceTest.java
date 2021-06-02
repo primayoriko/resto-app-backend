@@ -44,30 +44,27 @@ public class MenuServiceTest {
 
         menu1 = Menu.builder()
                 .name("kiranti")
-                .category("drink")
+                .category(Menu.MenuCategory.DRINK)
                 .price(12345F)
-                .stock(12)
                 .description("so good")
                 .build();
-        menu1.setId("1");
+        menu1.setId(1L);
 
         menu2 = Menu.builder()
                 .name("superjoss")
-                .category("drink")
+                .category(Menu.MenuCategory.DRINK)
                 .price(1345F)
-                .stock(1200)
                 .description("so nice")
                 .build();
-        menu2.setId("2");
+        menu2.setId(2L);
 
         menu3 = Menu.builder()
                 .name("bipang")
-                .category("food")
+                .category(Menu.MenuCategory.FOOD)
                 .price(20333F)
-                .stock(8)
                 .description("extreme meal")
                 .build();
-        menu3.setId("3");
+        menu3.setId(3L);
 
         menuList.add(menu1);
         menuList.add(menu2);
@@ -127,14 +124,14 @@ public class MenuServiceTest {
     @Test
     public void deleteByIdSuccess() throws Exception {
         doAnswer(invocation -> {
-            String id = invocation.getArgument(0);
+            Long id = invocation.getArgument(0);
             return menuList.stream()
                     .filter(e -> e.getId().equals(id))
                     .findFirst();
-        }).when(menuRepository).findById(anyString());
+        }).when(menuRepository).findById(anyLong());
 
         doAnswer(invocation -> {
-            String id = invocation.getArgument(0);
+            Long id = invocation.getArgument(0);
 
             boolean exist = false;
             Menu menu = menu1;
@@ -151,7 +148,7 @@ public class MenuServiceTest {
             if(!exist) throw new RuntimeException();
 
             return Optional.of(menu);
-        }).when(menuRepository).deleteById(anyString());
+        }).when(menuRepository).deleteById(anyLong());
 
         Menu menu = menuService.deleteById(menu1.getId());
 
@@ -164,13 +161,13 @@ public class MenuServiceTest {
     @Test
     public void deleteFailNoRecord() throws Exception {
         doAnswer(invocation -> {
-            String id = invocation.getArgument(0);
+            Long id = invocation.getArgument(0);
             return menuList.stream()
                     .filter(e -> e.getId().equals(id))
                     .findFirst();
-        }).when(menuRepository).findById(anyString());
+        }).when(menuRepository).findById(anyLong());
 
-        String id = "456";
+        Long id = 456L;
 
         try {
             menuService.deleteById(id);

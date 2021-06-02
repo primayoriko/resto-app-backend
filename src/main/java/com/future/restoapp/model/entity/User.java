@@ -5,9 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
 
 //import com.future.restoapp.model.entity.*;
 
@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @NoArgsConstructor  
 @AllArgsConstructor
 public class User extends BaseEntity {
+
     public static final String TABLE_NAME = "users";
 
     public static final String COLUMN_USERNAME = "username";
@@ -40,5 +41,14 @@ public class User extends BaseEntity {
 
     @Column(name = User.COLUMN_IS_ADMIN, nullable = false)
     private Boolean isAdmin = false;
+
+    @OneToMany(
+            targetEntity = Reservation.class,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = false
+    )
+    private Collection<Reservation> reservations = new HashSet<>();
 
 }
