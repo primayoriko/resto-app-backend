@@ -15,9 +15,12 @@ public interface ReservationService {
 
     Page<Reservation> findByQuery(
             Long userId,
+            Long boardId,
             Boolean isAccepted,
-            LocalDateTime startTime,
-            LocalDateTime endTime,
+            LocalDateTime lowerStartTime,
+            LocalDateTime upperStartTime,
+            LocalDateTime lowerEndTime,
+            LocalDateTime upperEndTime,
             Pageable pageable
     ) throws Exception;
 

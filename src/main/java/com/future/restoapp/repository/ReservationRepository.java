@@ -6,19 +6,36 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.Date;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.Collection;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    @Query("SELECT r FROM Reservation r where " +
-            "r.startTime <= cast(:startTime as timestamp) and " +
-            "r.endTime >= cast(:endTime as timestamp) and " +
-            "(r.isAccepted = :isAccepted or :isAccepted is null) and " +
-            "(r.user.id = :userId or :userId is null)")
+    @Query("SELECT r FROM Reservation r WHERE " +
+            "(r.user.id = :userId OR :userId  IS NULL) AND " +
+            "(r.board.id = :boardId OR :boardId  IS NULL) AND " +
+            "(r.isAccepted = :isAccepted OR :isAccepted  IS NULL) AND " +
+            "r.startTime >= :lowerStartTime AND " +
+            "r.startTime <= :upperStartTime AND " +
+            "r.endTime >= :lowerEndTime AND " +
+            "r.endTime <= :upperEndTime")
     Page<Reservation> findByQuery(
-            Long userId, Boolean isAccepted,
-            Date startTime, Date endTime, Pageable pageable
+            Long userId, Long boardId, Boolean isAccepted,
+            @NotNull LocalDateTime lowerStartTime, @NotNull LocalDateTime upperStartTime,
+            @NotNull LocalDateTime lowerEndTime, @NotNull LocalDateTime upperEndTime,
+            Pageable pageable
         );
-//    Page<Reservation> findByStartTimeBeforeAndEndTimeAfterOrderByIsAcceptedAscStartTimeAsc(Date startTime, Date endTime, Pageable pageable);
+
+    @Query("SELECT r FROM Reservation r WHERE " +
+            "r.board.id = :boardId AND " +
+            "((:startTime <= r.startTime AND :endTime >= r.startTime) OR " +
+            "(:startTime >= r.startTime AND :startTime <= r.endTime) OR " +
+            "(:endTime >= r.startTime AND :endTime <= r.endTime) OR " +
+            "(:startTime <= r.endTime AND :endTime >= r.endTime))")
+    Collection<Reservation> findBoardConflictedOnTime(
+            @NotNull Long boardId,
+            @NotNull LocalDateTime startTime, @NotNull LocalDateTime endTime
+    );
 
 }

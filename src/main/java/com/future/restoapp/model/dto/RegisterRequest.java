@@ -31,9 +31,9 @@ public class RegisterRequest {
     private String hpNumber;
 
     public User toUser(){
-        return Optional.of(this).map(e -> {
+        return Optional.of(this).map(dto -> {
             User user = new User();
-            BeanUtils.copyProperties(e, user);
+            BeanUtils.copyProperties(dto, user);
             return user;
         }).orElse(null);
     }

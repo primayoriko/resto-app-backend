@@ -59,10 +59,10 @@ public class BaseController{
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity handleTypeValidationExceptions(MethodArgumentNotValidException ex){
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity handleTypeValidationExceptions(MethodArgumentTypeMismatchException ex){
         return ErrorResponse.buildErrorResponse(
-                HttpStatus.UNPROCESSABLE_ENTITY,
+                HttpStatus.BAD_REQUEST,
                 ex.getMessage(),
                 ""
         );
@@ -119,6 +119,17 @@ public class BaseController{
         return ErrorResponse.buildErrorResponse(
                 HttpStatus.UNPROCESSABLE_ENTITY,
                 "Something wrong when processing data with the DB",
+                ""
+        );
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity handleIllegalArgumentExceptions(IllegalArgumentException ex){
+        return ErrorResponse.buildErrorResponse(
+                HttpStatus.UNPROCESSABLE_ENTITY,
+                ex.getMessage(),
                 ""
         );
     }
