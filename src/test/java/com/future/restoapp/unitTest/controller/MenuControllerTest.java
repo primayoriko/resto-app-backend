@@ -60,7 +60,7 @@ class MenuControllerTest {
 
         request = MenuCreateRequest.builder()
                 .name("bipang")
-                .category("FOOD")
+                .category(Menu.MenuCategory.FOOD)
                 .price(20333F)
                 .description("extreme meal")
                 .build();

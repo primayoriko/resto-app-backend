@@ -27,7 +27,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     ){
         return ErrorResponse.buildErrorResponse(
                 status,
-                "Body Not Valid/Malformed",
+                "Body either not valid/malformed or field conversion from json error, please check again",
                 ""
         );
     }

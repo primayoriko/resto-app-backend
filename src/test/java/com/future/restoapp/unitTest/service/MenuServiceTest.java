@@ -150,9 +150,10 @@ public class MenuServiceTest {
             return Optional.of(menu);
         }).when(menuRepository).deleteById(anyLong());
 
-        Menu menu = menuService.deleteById(menu1.getId());
+//        Menu menu = menuService.deleteById(menu1.getId());
+        menuService.deleteById(menu1.getId());
 
-        assertThat(menu).isEqualTo(menu1);
+//        assertThat(menu).isEqualTo(menu1);
         verify(menuRepository, times(1)).findById(menu1.getId());
         verify(menuRepository, times(1)).deleteById(menu1.getId());
     }
