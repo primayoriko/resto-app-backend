@@ -1,6 +1,7 @@
 package com.future.restoapp.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.future.restoapp.model.entity.Board;
 import com.future.restoapp.model.entity.Menu;
 import com.future.restoapp.model.entity.OrderItem;
 import com.future.restoapp.model.entity.Reservation;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -16,6 +18,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -24,6 +27,10 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservationCreateRequest implements Serializable {
+
+    @NotNull(message = "boardId must be specified")
+    @Positive(message = "boardId value must be positive")
+    private Long boardId;
 
     @NotNull(message = "startTime must be specified")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -36,24 +43,28 @@ public class ReservationCreateRequest implements Serializable {
     private Collection<OrderItemCreateRequest> orders = new HashSet<>();
 
     public Reservation toReservation(){
-        return Reservation
-                .builder()
-                .startTime(startTime)
-                .endTime(endTime)
-                .isAccepted(false)
-                .totalPrice(0F)
-                .orders(
-                        orders.stream()
-                                .map(el -> {
-                                    Menu menu = Menu.builder().build();
-                                    OrderItem order = OrderItem.builder()
-                                            .quantity(el.getQuantity())
-                                            .menu(menu)
-                                            .build();
-                                    menu.setId(el.getMenuId());
-                                    return order;
-                                }).collect(Collectors.toSet())
-                ).build();
+        return Optional.of(this).map(dto -> {
+            Reservation reservation = new Reservation();
+            Board board = new Board();
+
+            BeanUtils.copyProperties(dto, reservation, "orders", "boardId");
+            board.setId(boardId);
+            reservation.setBoard(board);
+            reservation.setOrders(
+                    orders.stream()
+                            .map(el -> {
+                                Menu menu = new Menu();
+                                OrderItem order = OrderItem.builder()
+                                        .quantity(el.getQuantity())
+                                        .menu(menu)
+                                        .build();
+                                menu.setId(el.getMenuId());
+                                return order;
+                            }).collect(Collectors.toSet())
+            );
+
+            return reservation;
+        }).orElse(null);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

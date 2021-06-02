@@ -1,6 +1,7 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.ReservationControllerPath;
+import com.future.restoapp.model.dto.ReservationAdminUpdateRequest;
 import com.future.restoapp.model.dto.ReservationCreateRequest;
 import com.future.restoapp.model.dto.ReservationResponse;
 import com.future.restoapp.model.dto.SuccessResponse;
@@ -36,9 +37,13 @@ public class ReservationController extends BaseController {
     @RequestMapping(value = ReservationControllerPath.CREATE, method = RequestMethod.POST)
     public ResponseEntity create(@Valid @RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
         User user = getUser(principal);
-        Reservation reservation = reservationService.create(reservationReq.toReservation(), user);
+        Reservation reservation = reservationReq.toReservation();
 
+        reservation.setUser(user);
+
+        reservation = reservationService.create(reservation);
         String uri = String.format("%s/%d", ReservationControllerPath.BASE_CLIENT, reservation.getId());
+
         return ResponseEntity.created(new URI(uri)).build();
     }
 
@@ -51,9 +56,8 @@ public class ReservationController extends BaseController {
         Reservation reservation = reservationService.findById(id);
 
         if(reservation == null) throw new NoSuchElementException("Reservation with specified ID not found");
-
         if(!user.getIsAdmin() && !user.getId().equals(reservation.getUser().getId()))
-            throw new AccessPrivilegeNotEnoughException("Your account is either not admin or not have access to this reservation");
+            throw new AccessPrivilegeNotEnoughException("Your account is either not admin or not have access to look this resource(s)");
 
         SuccessResponse responseBody = new SuccessResponse(ReservationResponse.build(reservation));
 
@@ -74,12 +78,6 @@ public class ReservationController extends BaseController {
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime upperEndTime,
             Principal principal
     ) throws Exception {
-        // Debug
-//        System.out.println(startTime);
-//        System.out.println(endTime);
-//        System.out.println(userId);
-//        System.out.println(isAccepted);
-
         User user = getUser(principal);
         Pageable pageable = PageRequest.of(
                 page - 1, pageSize,
@@ -98,21 +96,29 @@ public class ReservationController extends BaseController {
     }
 
     @RequestMapping(value = ReservationControllerPath.UPDATE_ADMIN, method = RequestMethod.PATCH)
-    public ResponseEntity updateAdmin(@Valid @RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
-        User user = getUser(principal);
-        Reservation reservation = reservationService.create(reservationReq.toReservation(), user);
-
-        String uri = String.format("%s/%d", ReservationControllerPath.BASE_CLIENT, reservation.getId());
-        return ResponseEntity.created(new URI(uri)).build();
+    public ResponseEntity updateAdmin(@Valid @RequestBody ReservationAdminUpdateRequest reservationReq) throws Exception {
+        Reservation reservation = reservationService.update(reservationReq.toReservation());
+        SuccessResponse response = new SuccessResponse(ReservationResponse.build(reservation));
+        return ResponseEntity.ok(response);
     }
 
-    @RequestMapping(value = ReservationControllerPath.UPDATE_CLIENT, method = RequestMethod.PATCH)
-    public ResponseEntity updateClient(@Valid @RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
-        User user = getUser(principal);
-        Reservation reservation = reservationService.create(reservationReq.toReservation(), user);
+//    @RequestMapping(value = ReservationControllerPath.UPDATE_CLIENT, method = RequestMethod.PATCH)
+//    public ResponseEntity updateClient(@Valid @RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
+//        Reservation reservation = reservationService.update(reservationReq.toReservation());
+//        return ResponseEntity.ok(new SuccessResponse(reservation));
+//    }
 
-        String uri = String.format("%s/%d", ReservationControllerPath.BASE_CLIENT, reservation.getId());
-        return ResponseEntity.created(new URI(uri)).build();
+    @RequestMapping(value = ReservationControllerPath.DELETE, method = RequestMethod.DELETE)
+    public ResponseEntity delete(@PathVariable Long id, Principal principal) throws Exception {
+        User user = getUser(principal);
+        Reservation reservation = reservationService.findById(id);
+
+        if(reservation == null) throw new NoSuchElementException("Reservation with specified ID not found");
+        if(!user.getId().equals(reservation.getUser().getId()))
+            throw new AccessPrivilegeNotEnoughException("Your account don't have access to modify this resource(s)");
+
+        reservationService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

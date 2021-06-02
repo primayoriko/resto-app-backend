@@ -33,7 +33,7 @@ public class BoardResponse implements Serializable {
 
     public static BoardResponse build(Board b){
         return Optional.ofNullable(b).map(entity -> {
-            BoardResponse boardResponse = BoardResponse.builder().build();
+            BoardResponse boardResponse = new BoardResponse();
             BeanUtils.copyProperties(entity, boardResponse, "reservations");
             return boardResponse;
         }).orElse(null);
