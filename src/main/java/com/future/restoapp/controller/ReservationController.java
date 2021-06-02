@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -33,7 +34,7 @@ public class ReservationController extends BaseController {
     ReservationService reservationService;
 
     @RequestMapping(value = ReservationControllerPath.CREATE, method = RequestMethod.POST)
-    public ResponseEntity create(@RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
+    public ResponseEntity create(@Valid @RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
         User user = getUser(principal);
         Reservation reservation = reservationService.create(reservationReq.toReservation(), user);
 
@@ -97,7 +98,7 @@ public class ReservationController extends BaseController {
     }
 
     @RequestMapping(value = ReservationControllerPath.UPDATE_ADMIN, method = RequestMethod.PATCH)
-    public ResponseEntity updateAdmin(@RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
+    public ResponseEntity updateAdmin(@Valid @RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
         User user = getUser(principal);
         Reservation reservation = reservationService.create(reservationReq.toReservation(), user);
 
@@ -106,7 +107,7 @@ public class ReservationController extends BaseController {
     }
 
     @RequestMapping(value = ReservationControllerPath.UPDATE_CLIENT, method = RequestMethod.PATCH)
-    public ResponseEntity updateClient(@RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
+    public ResponseEntity updateClient(@Valid @RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
         User user = getUser(principal);
         Reservation reservation = reservationService.create(reservationReq.toReservation(), user);
 

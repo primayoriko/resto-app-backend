@@ -63,7 +63,7 @@ public class MenuController extends BaseController {
 
     // TODO: Must be delete for future version
     @RequestMapping(value = MenuControllerPath.DELETE, method = RequestMethod.DELETE)
-    public ResponseEntity delete(@Valid @PathVariable Long id) throws Exception {
+    public ResponseEntity delete(@PathVariable Long id) throws Exception {
         Menu menu = menuService.deleteById(id);
         String path = menu.getImageFilename();
 
