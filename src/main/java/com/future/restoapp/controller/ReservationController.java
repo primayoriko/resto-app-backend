@@ -95,19 +95,6 @@ public class ReservationController extends BaseController {
         return ResponseEntity.ok(responseBody);
     }
 
-    @RequestMapping(value = ReservationControllerPath.UPDATE_ADMIN, method = RequestMethod.PATCH)
-    public ResponseEntity updateAdmin(@Valid @RequestBody ReservationAdminUpdateRequest reservationReq) throws Exception {
-        Reservation reservation = reservationService.update(reservationReq.toReservation());
-        SuccessResponse responseBody = new SuccessResponse(ReservationResponse.build(reservation));
-        return ResponseEntity.ok(responseBody);
-    }
-
-//    @RequestMapping(value = ReservationControllerPath.UPDATE_CLIENT, method = RequestMethod.PATCH)
-//    public ResponseEntity updateClient(@Valid @RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
-//        Reservation reservation = reservationService.update(reservationReq.toReservation());
-//        return ResponseEntity.ok(new SuccessResponse(reservation));
-//    }
-
     @RequestMapping(value = ReservationControllerPath.DELETE, method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable Long id, Principal principal) throws Exception {
         User user = getUser(principal);
@@ -120,5 +107,18 @@ public class ReservationController extends BaseController {
         reservationService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @RequestMapping(value = ReservationControllerPath.UPDATE_ADMIN, method = RequestMethod.PATCH)
+    public ResponseEntity updateAdmin(@Valid @RequestBody ReservationAdminUpdateRequest reservationReq) throws Exception {
+        Reservation reservation = reservationService.update(reservationReq.toReservation());
+        SuccessResponse responseBody = new SuccessResponse(ReservationResponse.build(reservation));
+        return ResponseEntity.ok(responseBody);
+    }
+
+//    @RequestMapping(value = ReservationControllerPath.UPDATE_CLIENT, method = RequestMethod.PATCH)
+//    public ResponseEntity updateClient(@Valid @RequestBody ReservationCreateRequest reservationReq, Principal principal) throws Exception {
+//        Reservation reservation = reservationService.update(reservationReq.toReservation());
+//        return ResponseEntity.ok(new SuccessResponse(reservation));
+//    }
 
 }

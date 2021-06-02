@@ -7,10 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
@@ -28,13 +30,12 @@ public class MenuUpdateRequest {
 
     private Boolean isSold;
 
-    public Menu inject(Menu target){
-        target.setId(id);
-
-        if(price != null) target.setPrice(price);
-        if(isSold != null) target.setIsSold(isSold);
-
-        return target;
+    public Menu toMenu(){
+        return Optional.of(this).map(dto -> {
+            Menu menu = Menu.builder().build();
+            BeanUtils.copyProperties(dto, menu);
+            return menu;
+        }).orElse(null);
     }
 
 }

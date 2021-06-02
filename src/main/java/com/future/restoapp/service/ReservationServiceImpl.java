@@ -100,20 +100,20 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public void deleteById(long id) throws Exception {
+        reservationRepository
+                .findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Reservation with specified ID not found"));
+        reservationRepository.deleteById(id);
+    }
+
+    @Override
     public Reservation update(@NotNull Reservation reservation) throws Exception {
         Reservation reservationDb = reservationRepository
                 .findById(reservation.getId())
                 .orElseThrow(() -> new NoSuchElementException("Reservation with specified ID not found"));
         reservationDb.update(reservation);
         return reservationRepository.save(reservationDb);
-    }
-
-    @Override
-    public void deleteById(long id) throws Exception {
-        reservationRepository
-                .findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Reservation with specified ID not found"));
-        reservationRepository.deleteById(id);
     }
 
 }

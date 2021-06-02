@@ -12,8 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -24,38 +24,12 @@ public class MenuServiceImpl implements MenuService {
     MenuRepository menuRepository;
 
     @Override
-    public Menu create(Menu menu) throws Exception {
-        System.out.println(menu);
+    public Menu create(@NotNull Menu menu) throws Exception {
         return menuRepository.save(menu);
     }
 
     @Override
-    public Menu deleteById(long id) throws Exception {
-        Menu menu = menuRepository.findById(id).orElse(null);
-
-        if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
-
-        menuRepository.deleteById(id);
-
-        return menu;
-    }
-
-    @Override
-    public Menu updateById(long id, Menu menu) throws Exception {
-        Optional<Menu> menuDb = menuRepository.findById(id);
-
-        if(!menuDb.isPresent()) throw new NoSuchElementException("Menu with specified ID not found");
-
-        Menu savedMenu = menuDb.get();
-
-        if(menu.getPrice() != null) savedMenu.setPrice(menu.getPrice());
-        if(menu.getIsSold() != null) savedMenu.setIsSold(menu.getIsSold());
-
-        return menuRepository.save(savedMenu);
-    }
-
-    @Override
-    public Menu findOneById(long id) throws Exception {
+    public Menu findById(long id) throws Exception {
         return menuRepository.findById(id).orElse(null);
     }
 
@@ -77,6 +51,23 @@ public class MenuServiceImpl implements MenuService {
                 .withMatcher("isSold", ExampleMatcher.GenericPropertyMatchers.exact());
 
         return menuRepository.findAll(Example.of(menu, exampleMatcher), pageable);
+    }
+
+    @Override
+    public void deleteById(long id) throws Exception {
+        menuRepository
+                .findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User with specified ID not found"));
+        menuRepository.deleteById(id);
+    }
+
+    @Override
+    public Menu update(@NotNull Menu menu) throws Exception {
+        Menu menuDb = menuRepository
+                .findById(menu.getId())
+                .orElseThrow(() -> new NoSuchElementException("Menu with specified ID not found"));
+        menuDb.update(menu);
+        return menuRepository.save(menuDb);
     }
 
 }

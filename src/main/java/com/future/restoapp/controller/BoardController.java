@@ -56,12 +56,6 @@ public class BoardController extends BaseController {
         return ResponseEntity.ok(new SuccessResponse(responseBody));
     }
 
-    @RequestMapping(value = BoardControllerPath.UPDATE, method = RequestMethod.PATCH)
-    public ResponseEntity update(@Valid @RequestBody BoardUpdateRequest boardReq) throws Exception {
-        boardService.update(boardReq.toBoard());
-        return ResponseEntity.created(new URI(BoardControllerPath.FETCH_ALL)).build();
-    }
-
     @RequestMapping(value = BoardControllerPath.CHECK, method = RequestMethod.GET)
     public ResponseEntity check(@PathVariable Long id,
                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startTime,
@@ -69,6 +63,12 @@ public class BoardController extends BaseController {
     ) throws Exception {
         boolean result = boardService.checkIfAvailable(id, startTime, endTime);
         return ResponseEntity.ok(new SuccessResponse(result));
+    }
+
+    @RequestMapping(value = BoardControllerPath.UPDATE, method = RequestMethod.PATCH)
+    public ResponseEntity update(@Valid @RequestBody BoardUpdateRequest boardReq) throws Exception {
+        boardService.update(boardReq.toBoard());
+        return ResponseEntity.created(new URI(BoardControllerPath.FETCH_ALL)).build();
     }
 
 }

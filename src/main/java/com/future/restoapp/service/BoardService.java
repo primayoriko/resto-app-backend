@@ -10,8 +10,6 @@ public interface BoardService {
 
     Board create(@NotNull Board board) throws Exception;
 
-    Board update(@NotNull Board board) throws Exception;
-
     Collection<Board> findAll() throws Exception;
 
     Collection<Board> findAllAvailable(@NotNull LocalDateTime startTime,
@@ -19,5 +17,7 @@ public interface BoardService {
 
     boolean checkIfAvailable(long id, @NotNull LocalDateTime startTime,
                              @NotNull LocalDateTime endTime) throws Exception;
+
+    Board update(@NotNull Board board) throws Exception;
 
 }

@@ -23,11 +23,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class MenuCreateRequest implements Serializable {
 
-    @NotBlank(message = "category must be specified")
-    private String category;
-
     @NotBlank(message = "name must be specified")
     private String name;
+
+    @NotNull(message = "category must be specified")
+    private MenuCategory category;
 
     @NotNull(message = "price must be specified")
     @Positive(message = "price value must be positive")
@@ -43,8 +43,7 @@ public class MenuCreateRequest implements Serializable {
     public Menu toMenu(){
 		return Optional.of(this).map(dto -> {
             Menu menu = new Menu();
-			BeanUtils.copyProperties(dto, menu, "category");
-			menu.setCategory(MenuCategory.of(category));
+			BeanUtils.copyProperties(dto, menu);
 			return menu;
 		}).orElse(null);
     }
