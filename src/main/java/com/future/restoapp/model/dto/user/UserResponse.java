@@ -1,4 +1,4 @@
-package com.future.restoapp.model.dto;
+package com.future.restoapp.model.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.restoapp.model.entity.User;
@@ -10,7 +10,6 @@ import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

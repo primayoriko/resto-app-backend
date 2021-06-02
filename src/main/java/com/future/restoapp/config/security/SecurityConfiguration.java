@@ -50,6 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
             .authorizeRequests()
             // configure access rules
+            .antMatchers(HttpMethod.GET, "/version").permitAll()
             .antMatchers(HttpMethod.GET, "/docs*/**").permitAll()
             .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
             .antMatchers(HttpMethod.GET, UrlBasePath.CURRENT_PUBLIC + "/**").permitAll()

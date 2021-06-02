@@ -1,7 +1,5 @@
 package com.future.restoapp.service;
 
-import com.future.restoapp.model.entity.Menu;
-import com.future.restoapp.model.entity.Reservation;
 import com.future.restoapp.model.entity.User;
 import com.future.restoapp.repository.UserRepository;
 import org.slf4j.Logger;
@@ -26,7 +24,7 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Override
-    public User create(User user) throws Exception {
+    public User create(@NotNull User user) throws Exception {
         return userRepository.save(user);
     }
 
@@ -69,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public User update(@NotNull User user) throws Exception {
         User userDb = userRepository
                 .findById(user.getId())
-                .orElseThrow(() -> new NoSuchElementException("Reservation with specified ID not found"));
+                .orElseThrow(() -> new NoSuchElementException("User with specified ID not found"));
         userDb.update(user);
         return userRepository.save(userDb);
     }

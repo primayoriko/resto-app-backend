@@ -1,6 +1,8 @@
-package com.future.restoapp.model.dto;
+package com.future.restoapp.model.dto.reservation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.future.restoapp.model.dto.user.UserResponse;
+import com.future.restoapp.model.dto.board.BoardResponse;
 import com.future.restoapp.model.entity.Menu;
 import com.future.restoapp.model.entity.Menu.MenuCategory;
 import com.future.restoapp.model.entity.Reservation;

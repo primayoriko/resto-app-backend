@@ -1,11 +1,13 @@
 package com.future.restoapp.model.entity;
 
+import com.future.restoapp.util.CopyUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Locale;
 
 @Table(name = Menu.TABLE_NAME)
@@ -43,6 +45,11 @@ public class Menu extends BaseEntity {
 
     @Column(name = COLUMN_IS_SOLD, nullable = false)
     private Boolean isSold = true;
+
+    @Transactional
+    public void update(Menu m){
+        CopyUtil.copyNonNullProperties(m, this);
+    }
 
     public enum MenuCategory {
         FOOD, DRINK, OTHER;

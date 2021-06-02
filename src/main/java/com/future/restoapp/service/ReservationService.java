@@ -24,8 +24,8 @@ public interface ReservationService {
             Pageable pageable
     ) throws Exception;
 
-    Reservation update(@NotNull Reservation reservation) throws Exception;
-
     void deleteById(long id) throws Exception;
+
+    Reservation update(@NotNull Reservation reservation) throws Exception;
 
 }

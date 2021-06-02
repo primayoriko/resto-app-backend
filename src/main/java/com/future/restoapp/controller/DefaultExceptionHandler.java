@@ -1,6 +1,6 @@
 package com.future.restoapp.controller;
 
-import com.future.restoapp.model.dto.ErrorResponse;
+import com.future.restoapp.model.dto.core.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     ){
         return ErrorResponse.buildErrorResponse(
                 status,
-                "Body Not Valid/Malformed",
+                "Body either not valid/malformed or field conversion from json error, please check again",
                 ""
         );
     }

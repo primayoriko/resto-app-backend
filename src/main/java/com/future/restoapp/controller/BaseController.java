@@ -1,6 +1,6 @@
 package com.future.restoapp.controller;
 
-import com.future.restoapp.model.dto.ErrorResponse;
+import com.future.restoapp.model.dto.core.ErrorResponse;
 import com.future.restoapp.model.entity.User;
 import com.future.restoapp.model.exception.AccessPrivilegeNotEnoughException;
 import com.future.restoapp.model.exception.BusinessLogicException;

@@ -4,6 +4,8 @@ import com.future.restoapp.model.entity.Board;
 import com.future.restoapp.model.entity.Reservation;
 import com.future.restoapp.repository.BoardRepository;
 import com.future.restoapp.repository.ReservationRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.NoSuchElementException;
 @Service
 public class BoardServiceImpl implements BoardService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BoardServiceImpl.class);
+
     @Autowired
     private BoardRepository boardRepository;
 
@@ -24,15 +28,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Board create(@NotNull Board board) throws Exception {
         return boardRepository.save(board);
-    }
-
-    @Override
-    public Board update(@NotNull Board board) throws Exception {
-        Board boardDb = boardRepository
-                .findById(board.getId())
-                .orElseThrow(() -> new NoSuchElementException("Board with specified ID not found"));
-        boardDb.update(board);
-        return boardRepository.save(boardDb);
     }
 
     @Override
@@ -58,6 +53,15 @@ public class BoardServiceImpl implements BoardService {
         Collection<Reservation> reservations = reservationRepository.findBoardConflictedOnTime(id, startTime, endTime);
 
         return reservations.isEmpty();
+    }
+
+    @Override
+    public Board update(@NotNull Board board) throws Exception {
+        Board boardDb = boardRepository
+                .findById(board.getId())
+                .orElseThrow(() -> new NoSuchElementException("Board with specified ID not found"));
+        boardDb.update(board);
+        return boardRepository.save(boardDb);
     }
 
 }
