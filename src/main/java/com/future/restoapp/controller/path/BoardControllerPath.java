@@ -9,9 +9,11 @@ public interface BoardControllerPath {
 
     // Admin access
     String CREATE = BASE_ADMIN;
+    String UPDATE = BASE_ADMIN;
 
     // Public access
     String CHECK = BASE_PUBLIC + "/{id}/check";
     String FETCH_ALL = BASE_PUBLIC;
+    String FETCH_ALL_AVAILABLE = BASE_PUBLIC + "/available";
 
 }

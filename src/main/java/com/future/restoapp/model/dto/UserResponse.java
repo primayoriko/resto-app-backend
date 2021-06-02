@@ -30,10 +30,9 @@ public class UserResponse implements Serializable {
     private Date CreatedDate;
 
     public static UserResponse build(User user){
-        return Optional.ofNullable(user).map(e -> {
+        return Optional.ofNullable(user).map(entity -> {
             UserResponse userResponse = UserResponse.builder().build();
-            BeanUtils.copyProperties(user, userResponse);
-
+            BeanUtils.copyProperties(entity, userResponse);
             return userResponse;
         }).orElse(null);
     }

@@ -12,10 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -82,18 +80,21 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Page<Reservation> findByQuery(
             Long userId,
+            Long boardId,
             Boolean isAccepted,
-            LocalDateTime startTime,
-            LocalDateTime endTime,
+            LocalDateTime lowerStartTime,
+            LocalDateTime upperStartTime,
+            LocalDateTime lowerEndTime,
+            LocalDateTime upperEndTime,
             Pageable pageable
     ) throws Exception {
-        if(startTime == null) startTime = LocalDateTime.now().plusYears(9999);
-        if(endTime == null) endTime = LocalDateTime.now().minusYears(2000);
+        if(lowerStartTime == null) lowerStartTime = LocalDateTime.now().minusYears(2000);
+        if(lowerEndTime == null) lowerEndTime = LocalDateTime.now().minusYears(2000);
+        if(upperStartTime == null) upperStartTime = LocalDateTime.now().plusYears(9999);
+        if(upperEndTime == null) upperEndTime = LocalDateTime.now().plusYears(9999);
 
-        Date start = Timestamp.valueOf(startTime);
-        Date end = Timestamp.valueOf(endTime);
-
-        return reservationRepository.findByQuery(userId, isAccepted, start, end, pageable);
+        return reservationRepository.findByQuery(userId, boardId, isAccepted,
+                lowerStartTime, upperStartTime, lowerEndTime, upperEndTime, pageable);
     }
 
 }

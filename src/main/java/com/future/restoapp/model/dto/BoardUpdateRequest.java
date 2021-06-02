@@ -19,23 +19,22 @@ import java.util.Optional;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardCreateRequest implements Serializable {
+public class BoardUpdateRequest implements Serializable {
 
-    @NotNull(message = "x must be specified")
+    @NotNull(message = "id must be specified")
+    @Positive(message = "id value must be positive")
+    private Long id;
+
     private Integer x;
 
-    @NotNull(message = "y must be specified")
     private Integer y;
 
-    @NotNull(message = "length must be specified")
     @Positive(message = "length value must be positive")
     private Integer length;
 
-    @NotNull(message = "width must be specified")
     @Positive(message = "width value must be positive")
     private Integer width;
 
-    @NotNull(message = "capacity must be specified")
     @Positive(message = "capacity value must be positive")
     private Integer capacity;
 

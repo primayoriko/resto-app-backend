@@ -1,5 +1,6 @@
 package com.future.restoapp.model.entity;
 
+import com.future.restoapp.util.CopyUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,5 +42,18 @@ public class Board extends BaseEntity {
 
     @Column(name = Board.COLUMN_CAPACITY)
     private Integer capacity;
+
+    @OneToMany(
+            targetEntity = Reservation.class,
+            mappedBy = "board",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = false
+    )
+    private Collection<Reservation> reservations = new HashSet<>();
+
+    public void update(Board b){
+        CopyUtil.copyNonNullProperties(b, this);
+    }
 
 }
