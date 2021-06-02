@@ -1,17 +1,16 @@
-package com.future.restoapp.model.dto;
-
+package com.future.restoapp.model.dto.reservation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.future.restoapp.model.entity.Menu;
+import com.future.restoapp.model.entity.Reservation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -19,22 +18,20 @@ import java.util.Optional;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuUpdateRequest {
+public class ReservationAdminUpdateRequest implements Serializable {
 
     @NotNull(message = "id must be specified")
-    @Positive(message = "id must be positive value")
+    @Positive(message = "id value must be positive")
     private Long id;
 
-    @Positive(message = "price must be positive value")
-    private Float price;
+    @NotNull(message = "isAccepted must be specified")
+    private Boolean isAccepted;
 
-    private Boolean isSold;
-
-    public Menu toMenu(){
+    public Reservation toReservation(){
         return Optional.of(this).map(dto -> {
-            Menu menu = Menu.builder().build();
-            BeanUtils.copyProperties(dto, menu);
-            return menu;
+            Reservation reservation = Reservation.builder().build();
+            BeanUtils.copyProperties(dto, reservation);
+            return reservation;
         }).orElse(null);
     }
 

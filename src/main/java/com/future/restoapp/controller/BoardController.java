@@ -1,10 +1,10 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.BoardControllerPath;
-import com.future.restoapp.model.dto.BoardCreateRequest;
-import com.future.restoapp.model.dto.BoardResponse;
-import com.future.restoapp.model.dto.BoardUpdateRequest;
-import com.future.restoapp.model.dto.SuccessResponse;
+import com.future.restoapp.model.dto.board.BoardCreateRequest;
+import com.future.restoapp.model.dto.board.BoardResponse;
+import com.future.restoapp.model.dto.board.BoardUpdateRequest;
+import com.future.restoapp.model.dto.core.SuccessResponse;
 import com.future.restoapp.model.entity.Board;
 import com.future.restoapp.service.BoardService;
 import io.swagger.v3.oas.annotations.tags.Tag;

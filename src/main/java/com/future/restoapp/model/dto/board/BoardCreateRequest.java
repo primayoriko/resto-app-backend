@@ -1,4 +1,4 @@
-package com.future.restoapp.model.dto;
+package com.future.restoapp.model.dto.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.restoapp.model.entity.Board;
@@ -19,28 +19,29 @@ import java.util.Optional;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardUpdateRequest implements Serializable {
+public class BoardCreateRequest implements Serializable {
 
-    @NotNull(message = "id must be specified")
-    @Positive(message = "id value must be positive")
-    private Long id;
-
+    @NotNull(message = "x must be specified")
     private Integer x;
 
+    @NotNull(message = "y must be specified")
     private Integer y;
 
+    @NotNull(message = "length must be specified")
     @Positive(message = "length value must be positive")
     private Integer length;
 
+    @NotNull(message = "width must be specified")
     @Positive(message = "width value must be positive")
     private Integer width;
 
+    @NotNull(message = "capacity must be specified")
     @Positive(message = "capacity value must be positive")
     private Integer capacity;
 
     public Board toBoard(){
         return Optional.of(this).map(dto -> {
-            Board board = Board.builder().build();
+            Board board = new Board();
             BeanUtils.copyProperties(dto, board);
             return board;
         }).orElse(null);

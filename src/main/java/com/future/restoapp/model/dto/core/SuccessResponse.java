@@ -1,4 +1,4 @@
-package com.future.restoapp.model.dto;
+package com.future.restoapp.model.dto.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

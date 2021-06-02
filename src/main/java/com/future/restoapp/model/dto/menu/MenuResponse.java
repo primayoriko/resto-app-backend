@@ -1,17 +1,13 @@
-package com.future.restoapp.model.dto;
+package com.future.restoapp.model.dto.menu;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.future.restoapp.model.entity.Menu;
-import com.future.restoapp.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.io.Serializable;
 import java.util.Optional;
 

@@ -1,10 +1,10 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.ReservationControllerPath;
-import com.future.restoapp.model.dto.ReservationAdminUpdateRequest;
-import com.future.restoapp.model.dto.ReservationCreateRequest;
-import com.future.restoapp.model.dto.ReservationResponse;
-import com.future.restoapp.model.dto.SuccessResponse;
+import com.future.restoapp.model.dto.reservation.ReservationAdminUpdateRequest;
+import com.future.restoapp.model.dto.reservation.ReservationCreateRequest;
+import com.future.restoapp.model.dto.reservation.ReservationResponse;
+import com.future.restoapp.model.dto.core.SuccessResponse;
 import com.future.restoapp.model.entity.Reservation;
 import com.future.restoapp.model.entity.User;
 import com.future.restoapp.model.exception.AccessPrivilegeNotEnoughException;

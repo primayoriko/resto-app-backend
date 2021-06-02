@@ -1,4 +1,4 @@
-package com.future.restoapp.model.dto;
+package com.future.restoapp.model.dto.menu;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
