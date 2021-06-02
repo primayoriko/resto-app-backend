@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.NoSuchElementException;
 
 @Service
@@ -48,10 +46,7 @@ public class BoardServiceImpl implements BoardService {
         if(startTime == null) startTime = LocalDateTime.now().minusYears(2000);
         if(endTime == null) endTime = LocalDateTime.now().plusYears(9999);
 
-        Date start = Timestamp.valueOf(startTime);
-        Date end = Timestamp.valueOf(endTime);
-
-        return reservationRepository.findAllAvailableBoard(start, end);
+        return boardRepository.findAllAvailableBoard(startTime, endTime);
     }
 
     @Override
