@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -18,7 +19,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class MenuUpdateRequest {
 
-    @NotBlank(message = "id must be specified")
+    @NotNull(message = "id must be specified")
     @Positive(message = "id must be positive value")
     private Long id;
 

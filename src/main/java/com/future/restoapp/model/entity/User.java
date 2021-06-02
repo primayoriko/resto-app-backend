@@ -1,11 +1,13 @@
 package com.future.restoapp.model.entity;
 
+import com.future.restoapp.util.CopyUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -50,5 +52,10 @@ public class User extends BaseEntity {
             orphanRemoval = false
     )
     private Collection<Reservation> reservations = new HashSet<>();
+
+    @Transactional
+    public void update(User u){
+        CopyUtil.copyNonNullProperties(u, this);
+    }
 
 }

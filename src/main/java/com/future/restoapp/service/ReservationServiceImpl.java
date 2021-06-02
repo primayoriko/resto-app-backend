@@ -110,7 +110,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public void deleteById(long id) throws Exception {
-        Reservation reservation = reservationRepository
+        reservationRepository
                 .findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Reservation with specified ID not found"));
         reservationRepository.deleteById(id);

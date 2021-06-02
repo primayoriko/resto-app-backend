@@ -18,7 +18,7 @@ public interface UserControllerPath{
 
     // User access
     String FETCH_ME = BASE_USER + "/me";
-    String UPDATE = BASE_USER;
-    String DELETE = BASE_USER;
+    String UPDATE_ME = BASE_USER + "/me";
+    String DELETE_ME = BASE_USER + "/me";
 
 }

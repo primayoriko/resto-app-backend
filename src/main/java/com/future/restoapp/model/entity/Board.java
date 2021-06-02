@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -50,6 +51,7 @@ public class Board extends BaseEntity {
     )
     private Collection<Reservation> reservations = new HashSet<>();
 
+    @Transactional
     public void update(Board b){
         CopyUtil.copyNonNullProperties(b, this);
     }

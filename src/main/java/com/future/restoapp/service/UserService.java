@@ -11,12 +11,12 @@ public interface UserService {
 
 	User create(@NotNull User user) throws Exception;
 
-//	void deleteById(long id) throws Exception;
-
-	User update(@NotNull User user) throws Exception;
-
 	User findByUsername(@NotBlank String username) throws Exception;
 
 	Page<User> findByQuery(String username, String email, String hpNumber, Pageable pageable) throws Exception;
+
+	void deleteById(long id) throws Exception;
+
+	User update(@NotNull User user) throws Exception;
 
 }

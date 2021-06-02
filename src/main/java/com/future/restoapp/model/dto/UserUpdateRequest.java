@@ -8,8 +8,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -17,19 +21,13 @@ import java.util.Optional;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
+public class UserUpdateRequest implements Serializable {
 
-    @NotBlank(message = "username must be specified")
-    private String username;
-
-    @NotBlank(message = "email must be specified")
     @Email(message = "email format invalid")
     private String email;
 
-    @NotBlank(message = "password must be specified")
     private String password;
 
-    @NotBlank(message = "hpNumber must be specified")
     private String hpNumber;
 
     public User toUser(){

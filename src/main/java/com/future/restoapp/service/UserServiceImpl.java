@@ -1,6 +1,7 @@
 package com.future.restoapp.service;
 
 import com.future.restoapp.model.entity.Menu;
+import com.future.restoapp.model.entity.Reservation;
 import com.future.restoapp.model.entity.User;
 import com.future.restoapp.repository.UserRepository;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,11 +28,6 @@ public class UserServiceImpl implements UserService {
 	@Override
     public User create(User user) throws Exception {
         return userRepository.save(user);
-    }
-
-    @Override
-    public User update(@NotNull User user) throws Exception {
-        return null;
     }
 
     @Override
@@ -57,6 +54,24 @@ public class UserServiceImpl implements UserService {
                 .withMatcher("hpNumber", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
 
         return userRepository.findAll(Example.of(user, exampleMatcher), pageable);
+    }
+
+    @Override
+    public void deleteById(long id) throws Exception {
+        userRepository
+                .findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User with specified ID not found"));
+        userRepository.deleteById(id);
+    }
+
+
+    @Override
+    public User update(@NotNull User user) throws Exception {
+        User userDb = userRepository
+                .findById(user.getId())
+                .orElseThrow(() -> new NoSuchElementException("Reservation with specified ID not found"));
+        userDb.update(user);
+        return userRepository.save(userDb);
     }
 
 }

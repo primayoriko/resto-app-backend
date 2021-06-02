@@ -5,6 +5,7 @@ import com.future.restoapp.controller.path.UserControllerPath;
 import com.future.restoapp.model.dto.RegisterRequest;
 import com.future.restoapp.model.dto.SuccessResponse;
 import com.future.restoapp.model.dto.UserResponse;
+import com.future.restoapp.model.dto.UserUpdateRequest;
 import com.future.restoapp.model.entity.User;
 import com.future.restoapp.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -96,23 +97,26 @@ public class UserController extends BaseController {
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
-    @RequestMapping(value = UserControllerPath.DELETE, method = RequestMethod.DELETE)
-    public ResponseEntity deleteSelf(Principal principal) throws Exception {
+    @RequestMapping(value = UserControllerPath.DELETE_ME, method = RequestMethod.DELETE)
+    public ResponseEntity deleteMe(Principal principal) throws Exception {
         User user = getUser(principal);
-        SuccessResponse responseBody = new SuccessResponse(UserResponse.build(user));
-        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+        userService.deleteById(user.getId());
+        return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value = UserControllerPath.UPDATE, method = RequestMethod.PATCH)
-    public ResponseEntity update(@Valid @RequestBody RegisterRequest request) throws Exception {
-
+    @RequestMapping(value = UserControllerPath.UPDATE_ME, method = RequestMethod.PATCH)
+    public ResponseEntity updateMe(@Valid @RequestBody UserUpdateRequest request,
+                                   Principal principal) throws Exception {
+        User myUser = getUser(principal);
         User user = request.toUser();
 
+        user.setId(myUser.getId());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user = userService.update(user);
 
-        this.userService.create(user);
+        SuccessResponse responseBody = new SuccessResponse(UserResponse.build(user));
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok(responseBody);
     }
 
 }
