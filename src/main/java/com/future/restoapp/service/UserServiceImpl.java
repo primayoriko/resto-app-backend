@@ -40,8 +40,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> find(Pageable pageable) throws Exception {
-	    return null;
+    public Page<User> findByQuery(String username, String Email,
+                                  String hpNumber, Pageable pageable) throws Exception {
+        return null;
     }
 
     @Override

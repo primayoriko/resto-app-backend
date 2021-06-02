@@ -83,7 +83,7 @@ public class MenuController extends BaseController {
             },
             method = RequestMethod.GET
     )
-    public ResponseEntity fetchOne(@Valid @PathVariable Long id) throws Exception {
+    public ResponseEntity fetchOne(@PathVariable Long id) throws Exception {
         Menu menu = menuService.findOneById(id);
 
         if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");

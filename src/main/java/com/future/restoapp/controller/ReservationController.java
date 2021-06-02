@@ -98,8 +98,8 @@ public class ReservationController extends BaseController {
     @RequestMapping(value = ReservationControllerPath.UPDATE_ADMIN, method = RequestMethod.PATCH)
     public ResponseEntity updateAdmin(@Valid @RequestBody ReservationAdminUpdateRequest reservationReq) throws Exception {
         Reservation reservation = reservationService.update(reservationReq.toReservation());
-        SuccessResponse response = new SuccessResponse(ReservationResponse.build(reservation));
-        return ResponseEntity.ok(response);
+        SuccessResponse responseBody = new SuccessResponse(ReservationResponse.build(reservation));
+        return ResponseEntity.ok(responseBody);
     }
 
 //    @RequestMapping(value = ReservationControllerPath.UPDATE_CLIENT, method = RequestMethod.PATCH)

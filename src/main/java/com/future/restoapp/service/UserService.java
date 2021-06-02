@@ -16,6 +16,6 @@ public interface UserService {
 
 	User findByUsername(@NotBlank String username) throws Exception;
 
-	Page<User> find(Pageable pageable) throws Exception;
+	Page<User> findByQuery(String username, String Email, String hpNumber, Pageable pageable) throws Exception;
 
 }
