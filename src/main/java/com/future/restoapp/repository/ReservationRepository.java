@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 
@@ -17,14 +18,14 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "(r.user.id = :userId or :userId is null) and " +
             "(r.board.id = :boardId or :boardId is null) and " +
             "(r.isAccepted = :isAccepted or :isAccepted is null) and " +
-            "r.startTime >= cast(:lowerStartTime as timestamp) and " +
-            "r.startTime <= cast(:upperStartTime as timestamp) and " +
-            "r.endTime >= cast(:lowerEndTime as timestamp) and " +
-            "r.endTime <= cast(:upperEndTime as timestamp)")
+            "r.startTime >= :lowerStartTime and " +
+            "r.startTime <= :upperStartTime and " +
+            "r.endTime >= :lowerEndTime and " +
+            "r.endTime <= :upperEndTime")
     Page<Reservation> findByQuery(
             Long userId, Long boardId, Boolean isAccepted,
-            @NotNull Date lowerStartTime, @NotNull Date upperStartTime,
-            @NotNull Date lowerEndTime, @NotNull Date upperEndTime,
+            @NotNull LocalDateTime lowerStartTime, @NotNull LocalDateTime upperStartTime,
+            @NotNull LocalDateTime lowerEndTime, @NotNull LocalDateTime upperEndTime,
             Pageable pageable
         );
 
@@ -36,7 +37,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "(:startTime <= r.endTime and :endTime >= r.endTime))")
     Collection<Reservation> findBoardConflictedOnTime(
             @NotNull Long boardId,
-            @NotNull Date startTime, @NotNull Date endTime
+            @NotNull LocalDateTime startTime, @NotNull LocalDateTime endTime
     );
 
     @Query(value = "SELECT DISTINCT r.board FROM Reservation r where " +

@@ -60,10 +60,7 @@ public class BoardServiceImpl implements BoardService {
         if(startTime == null) startTime = LocalDateTime.now().minusYears(2000);
         if(endTime == null) endTime = LocalDateTime.now().plusYears(9999);
 
-        Date start = Timestamp.valueOf(startTime);
-        Date end = Timestamp.valueOf(endTime);
-
-        Collection<Reservation> reservations = reservationRepository.findBoardConflictedOnTime(id, start, end);
+        Collection<Reservation> reservations = reservationRepository.findBoardConflictedOnTime(id, startTime, endTime);
 
         return reservations.isEmpty();
     }

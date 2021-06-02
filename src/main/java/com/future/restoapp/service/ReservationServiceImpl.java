@@ -12,10 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -95,13 +93,8 @@ public class ReservationServiceImpl implements ReservationService {
         if(upperStartTime == null) upperStartTime = LocalDateTime.now().plusYears(9999);
         if(upperEndTime == null) upperEndTime = LocalDateTime.now().plusYears(9999);
 
-        Date lowerStart = Timestamp.valueOf(lowerStartTime);
-        Date lowerEnd = Timestamp.valueOf(lowerEndTime);
-        Date upperStart = Timestamp.valueOf(upperStartTime);
-        Date upperEnd = Timestamp.valueOf(upperEndTime);
-
         return reservationRepository.findByQuery(userId, boardId, isAccepted,
-                lowerStart, upperStart, lowerEnd, upperEnd, pageable);
+                lowerStartTime, upperStartTime, lowerEndTime, upperEndTime, pageable);
     }
 
 }
