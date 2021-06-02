@@ -4,21 +4,21 @@ import com.future.restoapp.constant.UrlBasePath;
 
 public interface UserControllerPath{
 
-    String BASE_CLIENT = UrlBasePath.CURRENT_CLIENT + "/users";
     String BASE_ADMIN = UrlBasePath.CURRENT_ADMIN + "/users";
+    String BASE_PUBLIC = UrlBasePath.CURRENT_PUBLIC + "/users";
+    String BASE_USER = UrlBasePath.CURRENT_USER + "/users";
 
     // Admin access
-    String REGISTER_ADMIN = UrlBasePath.CURRENT_ADMIN + "/register";
-    String DELETE_ADMIN = BASE_ADMIN;
+    String REGISTER_ADMIN = BASE_ADMIN;
     String FETCH_ONE = BASE_ADMIN + "/{username}";
-    String FETCH_ALL = BASE_ADMIN;
-
-    // Client access
-    String UPDATE = BASE_CLIENT;
-    String DELETE_CLIENT = BASE_CLIENT;
-    String FETCH_OWN = BASE_CLIENT;
+    String FETCH = BASE_ADMIN;
 
     // Public access
-    String REGISTER = UrlBasePath.CURRENT_PUBLIC + "/register";
+    String REGISTER = BASE_PUBLIC;
+
+    // User access
+    String FETCH_ME = BASE_USER + "/me";
+    String UPDATE_ME = BASE_USER + "/me";
+    String DELETE_ME = BASE_USER + "/me";
 
 }

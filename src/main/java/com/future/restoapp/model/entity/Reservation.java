@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
@@ -51,6 +52,7 @@ public class Reservation extends BaseEntity {
     @OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Collection<OrderItem> orders = new HashSet<>();
 
+    @Transactional
     public void update(Reservation r){
         CopyUtil.copyNonNullProperties(r, this);
     }

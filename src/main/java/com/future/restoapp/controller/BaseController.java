@@ -11,6 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,9 +34,10 @@ public class BaseController{
     public static User getUser(Principal principal) throws Exception {
         if(principal instanceof UsernamePasswordAuthenticationToken
             && ((UsernamePasswordAuthenticationToken) principal).getPrincipal() instanceof UserPrincipal){
-            return ((UserPrincipal) ((UsernamePasswordAuthenticationToken)principal).getPrincipal()).getUser();
+            User user = ((UserPrincipal) ((UsernamePasswordAuthenticationToken)principal).getPrincipal()).getUser();
+            if(user == null) throw new AuthenticationCredentialsNotFoundException("Account not found");
+            return user;
         }
-
         throw new RuntimeException("mismatch principal type");
     }
 
