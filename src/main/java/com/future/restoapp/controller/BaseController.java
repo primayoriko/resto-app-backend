@@ -59,10 +59,10 @@ public class BaseController{
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity handleTypeValidationExceptions(MethodArgumentTypeMismatchException ex){
         return ErrorResponse.buildErrorResponse(
-                HttpStatus.UNPROCESSABLE_ENTITY,
+                HttpStatus.BAD_REQUEST,
                 ex.getMessage(),
                 ""
         );
