@@ -14,5 +14,6 @@ public interface BoardControllerPath {
     // Public access
     String CHECK = BASE_PUBLIC + "/{id}/check";
     String FETCH_ALL = BASE_PUBLIC;
+    String FETCH_ALL_AVAILABLE = BASE_PUBLIC + "/available";
 
 }

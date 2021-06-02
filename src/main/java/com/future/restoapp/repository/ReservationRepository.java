@@ -1,6 +1,7 @@
 package com.future.restoapp.repository;
 
 import com.future.restoapp.model.entity.Reservation;
+import com.future.restoapp.model.entity.Board;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,12 +30,22 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("SELECT r FROM Reservation r where " +
             "r.board.id = :boardId and " +
-            "((:startTime <= r.startTime and :endTime >= r.startTime) or" +
-            "(:startTime >= r.startTime and :startTime <= r.endTime) or" +
-            "(:endTime >= r.startTime and :endTime <= r.endTime) or" +
+            "((:startTime <= r.startTime and :endTime >= r.startTime) or " +
+            "(:startTime >= r.startTime and :startTime <= r.endTime) or " +
+            "(:endTime >= r.startTime and :endTime <= r.endTime) or " +
             "(:startTime <= r.endTime and :endTime >= r.endTime))")
     Collection<Reservation> findBoardConflictedOnTime(
             @NotNull Long boardId,
+            @NotNull Date startTime, @NotNull Date endTime
+    );
+
+    @Query(value = "SELECT DISTINCT r.board FROM Reservation r where " +
+            "not (:startTime <= r.startTime and :endTime >= r.startTime) and " +
+            "not (:startTime >= r.startTime and :startTime <= r.endTime) and " +
+            "not (:endTime >= r.startTime and :endTime <= r.endTime) and " +
+            "not (:startTime <= r.endTime and :endTime >= r.endTime))",
+            nativeQuery = true)
+    Collection<Board> findAllAvailableBoard(
             @NotNull Date startTime, @NotNull Date endTime
     );
 }

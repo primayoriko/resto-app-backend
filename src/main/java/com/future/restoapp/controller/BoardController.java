@@ -43,6 +43,19 @@ public class BoardController extends BaseController {
         return ResponseEntity.ok(new SuccessResponse(responseBody));
     }
 
+    @RequestMapping(value = BoardControllerPath.FETCH_ALL_AVAILABLE, method = RequestMethod.GET)
+    public ResponseEntity fetchAllAvailable(
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startTime,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endTime
+    ) throws Exception {
+        Collection<Board> boards = boardService.findAllAvailable(startTime, endTime);
+        Collection<BoardResponse> responseBody = boards
+                .stream()
+                .map(BoardResponse::build)
+                .collect(Collectors.toSet());
+        return ResponseEntity.ok(new SuccessResponse(responseBody));
+    }
+
     @RequestMapping(value = BoardControllerPath.UPDATE, method = RequestMethod.PATCH)
     public ResponseEntity update(@Valid @RequestBody BoardUpdateRequest boardReq) throws Exception {
         boardService.update(boardReq.toBoard());

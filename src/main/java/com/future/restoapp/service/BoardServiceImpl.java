@@ -45,15 +45,26 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Collection<Board> findAllAvailable(@NotNull LocalDateTime startTime,
                                               @NotNull LocalDateTime endTime) throws Exception {
-        return null;
+        if(startTime == null) startTime = LocalDateTime.now().minusYears(2000);
+        if(endTime == null) endTime = LocalDateTime.now().plusYears(9999);
+
+        Date start = Timestamp.valueOf(startTime);
+        Date end = Timestamp.valueOf(endTime);
+
+        return reservationRepository.findAllAvailableBoard(start, end);
     }
 
     @Override
     public boolean checkIfAvailable(long id, @NotNull LocalDateTime startTime,
                                     @NotNull LocalDateTime endTime) throws Exception {
+        if(startTime == null) startTime = LocalDateTime.now().minusYears(2000);
+        if(endTime == null) endTime = LocalDateTime.now().plusYears(9999);
+
         Date start = Timestamp.valueOf(startTime);
         Date end = Timestamp.valueOf(endTime);
+
         Collection<Reservation> reservations = reservationRepository.findBoardConflictedOnTime(id, start, end);
+
         return reservations.isEmpty();
     }
 
