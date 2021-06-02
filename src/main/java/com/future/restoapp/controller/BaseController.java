@@ -123,6 +123,17 @@ public class BaseController{
         );
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity handleIllegalArgumentExceptions(IllegalArgumentException ex){
+        return ErrorResponse.buildErrorResponse(
+                HttpStatus.UNPROCESSABLE_ENTITY,
+                ex.getMessage(),
+                ""
+        );
+    }
+
     @ExceptionHandler(AccessPrivilegeNotEnoughException.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ResponseStatus(HttpStatus.FORBIDDEN)
