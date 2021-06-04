@@ -26,7 +26,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 //import freemarker.template.TemplateException;
 
 @Service
-public class MainServiceImpl implements MailService {
+public class MailServiceImpl implements MailService {
 
     private static final String NOREPLY_ADDRESS = "noreply@baeldung.com";
 
