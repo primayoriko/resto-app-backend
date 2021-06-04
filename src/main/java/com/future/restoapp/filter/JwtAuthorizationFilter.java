@@ -1,4 +1,4 @@
-package com.future.restoapp.config;
+package com.future.restoapp.filter;
 
 import com.auth0.jwt.JWT;
 import com.future.restoapp.constant.JwtProperties;

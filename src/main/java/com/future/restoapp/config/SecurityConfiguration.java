@@ -2,6 +2,8 @@ package com.future.restoapp.config;
 
 import com.future.restoapp.constant.UrlBasePath;
 import com.future.restoapp.controller.path.UserControllerPath;
+import com.future.restoapp.filter.JwtAuthenticationFilter;
+import com.future.restoapp.filter.JwtAuthorizationFilter;
 import com.future.restoapp.repository.UserRepository;
 import com.future.restoapp.service.impl.UserPrincipalDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
