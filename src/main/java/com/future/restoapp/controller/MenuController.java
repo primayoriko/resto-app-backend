@@ -1,11 +1,11 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.MenuControllerPath;
-import com.future.restoapp.model.dto.menu.MenuCreateRequest;
-import com.future.restoapp.model.dto.menu.MenuUpdateRequest;
-import com.future.restoapp.model.dto.core.SuccessResponse;
-import com.future.restoapp.model.entity.Menu;
-import com.future.restoapp.model.entity.Menu.MenuCategory;
+import com.future.restoapp.dto.menu.MenuCreateRequest;
+import com.future.restoapp.dto.menu.MenuUpdateRequest;
+import com.future.restoapp.dto.core.SuccessResponse;
+import com.future.restoapp.domain.Menu;
+import com.future.restoapp.domain.Menu.MenuCategory;
 import com.future.restoapp.service.AssetService;
 import com.future.restoapp.service.MenuService;
 import io.swagger.v3.oas.annotations.tags.Tag;

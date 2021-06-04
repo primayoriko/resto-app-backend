@@ -1,6 +1,6 @@
 package com.future.restoapp.service;
 
-import com.future.restoapp.model.entity.Board;
+import com.future.restoapp.domain.Board;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;

@@ -1,13 +1,12 @@
 package com.future.restoapp.repository;
 
-import com.future.restoapp.model.entity.Board;
+import com.future.restoapp.domain.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 

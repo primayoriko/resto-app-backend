@@ -1,11 +1,11 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.UserControllerPath;
-import com.future.restoapp.model.dto.user.RegisterRequest;
-import com.future.restoapp.model.dto.core.SuccessResponse;
-import com.future.restoapp.model.dto.user.UserResponse;
-import com.future.restoapp.model.dto.user.UserUpdateRequest;
-import com.future.restoapp.model.entity.User;
+import com.future.restoapp.dto.user.RegisterRequest;
+import com.future.restoapp.dto.core.SuccessResponse;
+import com.future.restoapp.dto.user.UserResponse;
+import com.future.restoapp.dto.user.UserUpdateRequest;
+import com.future.restoapp.domain.User;
 import com.future.restoapp.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,11 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.BoardControllerPath;
-import com.future.restoapp.model.dto.board.BoardCreateRequest;
-import com.future.restoapp.model.dto.board.BoardResponse;
-import com.future.restoapp.model.dto.board.BoardUpdateRequest;
-import com.future.restoapp.model.dto.core.SuccessResponse;
-import com.future.restoapp.model.entity.Board;
+import com.future.restoapp.dto.board.BoardCreateRequest;
+import com.future.restoapp.dto.board.BoardResponse;
+import com.future.restoapp.dto.board.BoardUpdateRequest;
+import com.future.restoapp.dto.core.SuccessResponse;
+import com.future.restoapp.domain.Board;
 import com.future.restoapp.service.BoardService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

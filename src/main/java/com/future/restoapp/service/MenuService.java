@@ -1,7 +1,7 @@
 package com.future.restoapp.service;
 
-import com.future.restoapp.model.entity.Menu;
-import com.future.restoapp.model.entity.Menu.MenuCategory;
+import com.future.restoapp.domain.Menu;
+import com.future.restoapp.domain.Menu.MenuCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

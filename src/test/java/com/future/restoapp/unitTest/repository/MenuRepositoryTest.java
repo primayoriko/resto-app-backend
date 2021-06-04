@@ -1,6 +1,6 @@
 package com.future.restoapp.unitTest.repository;
 
-import com.future.restoapp.model.entity.Menu;
+import com.future.restoapp.domain.Menu;
 import com.future.restoapp.repository.MenuRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
