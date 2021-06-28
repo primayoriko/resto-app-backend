@@ -1,12 +1,10 @@
 package com.future.restoapp.service.impl;
 
-import com.future.restoapp.domain.Menu;
-import com.future.restoapp.domain.OrderItem;
-import com.future.restoapp.domain.OrderItemKey;
-import com.future.restoapp.domain.Reservation;
+import com.future.restoapp.domain.*;
 import com.future.restoapp.repository.MenuRepository;
 import com.future.restoapp.repository.ReservationRepository;
 import com.future.restoapp.repository.UserRepository;
+import com.future.restoapp.service.MailService;
 import com.future.restoapp.service.ReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +13,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,11 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     MenuRepository menuRepository;
 
+    @Autowired
+    MailService mailService;
+
     @Override
+    @Transactional
     public Reservation create(@NotNull Reservation reservation) throws Exception {
         Collection<OrderItem> orders  = reservation.getOrders();
 
@@ -71,6 +76,25 @@ public class ReservationServiceImpl implements ReservationService {
         );
 
         reservationRepository.save(reservation);
+
+        Map<String, Object> data = new HashMap<>();
+
+        User user = reservation.getUser();
+
+        data.put("name", user.getUsername());
+
+        data.put("boardId", reservation.getBoard().getId());
+
+        data.put("totalPrice", reservation.getTotalPrice());
+
+        data.put("orders", reservation.getOrders());
+
+        try {
+            mailService.sendMessageWithTemplate(user.getEmail(), "Reservation Details", data, null);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+//            throw e;
+        }
 
         return reservation;
     }

@@ -61,7 +61,8 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendMessageWithTemplate(
                 String to, String subject,
-                Map<String, Object> templateModel
+                Map<String, Object> templateModel,
+                String pathToAttachment
         ) throws MessagingException {
         Context context = new Context();
 
@@ -69,7 +70,7 @@ public class MailServiceImpl implements MailService {
 
         String htmlBody = templateEngine.process("mail/reservation", context);
 
-        sendHtmlMessage(to, subject, htmlBody, null);
+        sendHtmlMessage(to, subject, htmlBody, pathToAttachment);
     }
 
     private void sendHtmlMessage(String to, String subject,

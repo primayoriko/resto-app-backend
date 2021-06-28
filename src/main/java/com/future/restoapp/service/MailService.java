@@ -7,7 +7,8 @@ public interface MailService {
 
     void sendMessageWithTemplate(
                 String to, String subject,
-                Map<String, Object> templateModel
+                Map<String, Object> templateModel,
+                String pathToAttachment
         ) throws MessagingException;
 
 }
