@@ -23,6 +23,28 @@ import java.util.stream.Collectors;
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
+    class SendMailTask implements Runnable {
+        Map<String, Object> data;
+
+        SendMailTask(Map<String, Object> data) {
+            this.data = data;
+        }
+
+        public void run()
+        {
+            try {
+                mailService.sendMessageWithTemplate(
+                        (String) data.get("email"),
+                        (String) data.get("subject"),
+                        data, null
+                );
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+//                  throw e;
+            }
+        }
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ReservationServiceImpl.class);
 
     @Autowired
@@ -82,23 +104,18 @@ public class ReservationServiceImpl implements ReservationService {
 
     private void sendMailFromReservation(Reservation reservation) {
         Map<String, Object> data = new HashMap<>();
-
         User user = reservation.getUser();
 
+        data.put("email", user.getEmail());
         data.put("name", user.getUsername());
-
+        data.put("subject", "Reservation Details");
         data.put("boardId", reservation.getBoard().getId());
-
         data.put("totalPrice", reservation.getTotalPrice());
-
         data.put("orders", toMap(reservation.getOrders()));
 
-        try {
-            mailService.sendMessageWithTemplate(user.getEmail(), "Reservation Details", data, null);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-//            throw e;
-        }
+        Thread task = new Thread(new SendMailTask(data));
+
+        task.start();
     }
 
     private Collection<Map<String, Object>> toMap(Collection<OrderItem> orders) {
