@@ -6,6 +6,7 @@ import com.future.restoapp.repository.ReservationRepository;
 import com.future.restoapp.repository.UserRepository;
 import com.future.restoapp.service.MailService;
 import com.future.restoapp.service.ReservationService;
+import org.hibernate.criterion.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,6 +75,12 @@ public class ReservationServiceImpl implements ReservationService {
 
         reservationRepository.save(reservation);
 
+        sendMailFromReservation(reservation);
+
+        return reservation;
+    }
+
+    private void sendMailFromReservation(Reservation reservation) {
         Map<String, Object> data = new HashMap<>();
 
         User user = reservation.getUser();
@@ -87,7 +91,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         data.put("totalPrice", reservation.getTotalPrice());
 
-        data.put("orders", reservation.getOrders());
+        data.put("orders", toMap(reservation.getOrders()));
 
         try {
             mailService.sendMessageWithTemplate(user.getEmail(), "Reservation Details", data, null);
@@ -95,8 +99,20 @@ public class ReservationServiceImpl implements ReservationService {
             System.out.println(e.getMessage());
 //            throw e;
         }
+    }
 
-        return reservation;
+    private Collection<Map<String, Object>> toMap(Collection<OrderItem> orders) {
+        Collection<Map<String, Object>> mapList = new ArrayList<>();
+
+        for(OrderItem item: orders) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", item.getMenu().getName());
+            map.put("price", item.getMenu().getPrice());
+            map.put("quantity", item.getQuantity());
+            mapList.add(map);
+        }
+
+        return mapList;
     }
 
     @Override
