@@ -1,9 +1,9 @@
 package com.future.restoapp.unitTest.service;
 
-import com.future.restoapp.model.entity.Menu;
+import com.future.restoapp.domain.Menu;
 import com.future.restoapp.repository.MenuRepository;
 import com.future.restoapp.service.MenuService;
-import com.future.restoapp.service.MenuServiceImpl;
+import com.future.restoapp.service.impl.MenuServiceImpl;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

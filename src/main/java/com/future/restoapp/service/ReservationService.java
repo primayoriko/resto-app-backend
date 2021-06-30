@@ -1,6 +1,6 @@
 package com.future.restoapp.service;
 
-import com.future.restoapp.model.entity.Reservation;
+import com.future.restoapp.domain.Reservation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

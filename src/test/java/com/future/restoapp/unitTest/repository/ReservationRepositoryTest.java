@@ -1,9 +1,9 @@
 package com.future.restoapp.unitTest.repository;
 
-import com.future.restoapp.model.entity.Menu;
-import com.future.restoapp.model.entity.OrderItem;
-import com.future.restoapp.model.entity.Reservation;
-import com.future.restoapp.model.entity.User;
+import com.future.restoapp.domain.Menu;
+import com.future.restoapp.domain.OrderItem;
+import com.future.restoapp.domain.Reservation;
+import com.future.restoapp.domain.User;
 import com.future.restoapp.repository.MenuRepository;
 import com.future.restoapp.repository.ReservationRepository;
 import com.future.restoapp.repository.UserRepository;

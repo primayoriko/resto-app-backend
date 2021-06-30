@@ -1,13 +1,13 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.ReservationControllerPath;
-import com.future.restoapp.model.dto.reservation.ReservationAdminUpdateRequest;
-import com.future.restoapp.model.dto.reservation.ReservationCreateRequest;
-import com.future.restoapp.model.dto.reservation.ReservationResponse;
-import com.future.restoapp.model.dto.core.SuccessResponse;
-import com.future.restoapp.model.entity.Reservation;
-import com.future.restoapp.model.entity.User;
-import com.future.restoapp.model.exception.AccessPrivilegeNotEnoughException;
+import com.future.restoapp.dto.reservation.ReservationAdminUpdateRequest;
+import com.future.restoapp.dto.reservation.ReservationCreateRequest;
+import com.future.restoapp.dto.reservation.ReservationResponse;
+import com.future.restoapp.dto.core.SuccessResponse;
+import com.future.restoapp.domain.Reservation;
+import com.future.restoapp.domain.User;
+import com.future.restoapp.exception.AccessPrivilegeNotEnoughException;
 import com.future.restoapp.service.ReservationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

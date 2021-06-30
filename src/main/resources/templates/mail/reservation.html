@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 3px 6px;
+        }
+    </style>
+</head>
+<body style="background-color: darkgray; color: black;">
+    <div style="background-color: white; width: 50%; margin:50px auto">
+        <div style="background-color: gray;">
+            <div style="background-color: darkgreen; width: 50%; margin:auto; padding: 20px 0;"></div>
+        </div>
+        <header style="background-color: white; padding: 5px 10px ; margin: auto; text-align: center; font-size: 15pt; font-weight: bold">
+            Resto App <hr>
+        </header>
+        <main style="background-color: white; color: black; padding: 2px 15px 5px">
+            <p> Halo <span th:text="${name}"> name </span>,</p>
+            <p>   Berikut ini adalah rincian reservasi restoran yang anda telah lakukan di resto kami pada <strong>meja <span th:text="${boardId}">0</span></strong>, </p>
+            <table style="margin: auto;">
+                <thead>
+                <tr>
+                    <th> Nama </th>
+                    <th> Harga </th>
+                    <th> Kuantitas </th>
+                    <th> Total Harga </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${orders}">
+                    <td><span th:text="${item.name}"> NamaBarang </span></td>
+                    <td><span th:text="${item.price}"> 0 </span></td>
+                    <td><span th:text="${item.quantity}"> 0 </span></td>
+                    <td><span th:text="${item.quantity * item.price}"> 0 </span></td>
+                </tr>
+                <tr>
+                    <td colspan="3">Total: </td>
+                    <td><span th:text="${totalPrice}"> 0 </span></td>
+                </tr>
+                </tbody>
+            </table>
+            </br>
+            <p>Sekian, terima kasih.</p>
+            <p>Regards, </p>
+            </br>
+            <p>Resto App Team</p>
+            <p style="font-size: 10pt; font-style: italic">Your favourite resto partner</p>
+        </main>
+        <footer style="background-color: white; padding: 5px 10px 20px; text-align: center; margin: auto; font-size: 10pt; font-style: italic">
+            <hr> Jl. Docker no. 5 | 0812-832379721
+        </footer>
+        <div style="background-color: gray;">
+            <div style="background-color: darkgreen; width: 50%; margin:auto; padding: 20px 0;"></div>
+        </div>
+    </div>
+</body>
+</html>
