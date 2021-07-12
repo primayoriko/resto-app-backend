@@ -27,9 +27,10 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: resto-future-cluster    # TODO: update to cluster name
-  GKE_ZONE: us-central1-c   # TODO: update to cluster zone
-  DEPLOYMENT_NAME: restoapp # TODO: update to deployment name
+  GKE_CLUSTER: cost-optimized-cluster-1
+#  GKE_CLUSTER: resto-future-cluster
+  GKE_ZONE: asia-southeast1-a
+  DEPLOYMENT_NAME: restoapp
   IMAGE: future/restoapp
 
 jobs:
