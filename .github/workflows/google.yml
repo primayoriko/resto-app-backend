@@ -27,8 +27,7 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: cost-optimized-cluster-1
-#  GKE_CLUSTER: resto-future-cluster
+  GKE_CLUSTER: resto-future-cluster
   GKE_ZONE: asia-southeast1-a
   DEPLOYMENT_NAME: restoapp
   IMAGE: future/restoapp
