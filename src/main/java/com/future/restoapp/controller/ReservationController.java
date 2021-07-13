@@ -86,7 +86,9 @@ public class ReservationController extends BaseController {
                         .and(Sort.by("endTime").ascending())
         );
 
-        if(!user.getIsAdmin()) isAccepted = false;
+        if (userId==null && !user.getIsAdmin()){
+            userId = user.getId();
+        }
 
         Page<Reservation> reservations = reservationService.findByQuery(userId, boardId, isAccepted,
                 lowerStartTime, upperStartTime, lowerEndTime, upperEndTime, pageable);
