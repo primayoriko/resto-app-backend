@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.Base64;
 
 @Tag(name = "Asset")
 @RestController
@@ -19,17 +19,16 @@ public class AssetController extends BaseController {
 
     @RequestMapping(value = AssetControllerPath.IMAGE_MENU, method = RequestMethod.GET,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<byte[]> getImageMenu(@PathVariable String filename) throws Exception {
+    public ResponseEntity<String> getImageMenu(@PathVariable String filename) throws Exception {
         HttpHeaders headers = new HttpHeaders();
         byte[] media = assetService.getImageBytes(filename);
-
+        String base64String = Base64.getEncoder().encodeToString(media);
         // Debug
-        System.out.println(Arrays.toString(media));
-
+//        System.out.println(Arrays.toString(media));
         headers.setCacheControl(CacheControl.noCache().getHeaderValue());
         headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_OCTET_STREAM_VALUE));
 
-        return new ResponseEntity<>(media, headers, HttpStatus.OK);
+        return new ResponseEntity<>(base64String, headers, HttpStatus.OK);
     }
 
 }

@@ -1,9 +1,9 @@
 package com.future.restoapp.unitTest.service;
 
-import com.future.restoapp.model.entity.User;
+import com.future.restoapp.domain.User;
 import com.future.restoapp.repository.UserRepository;
 import com.future.restoapp.service.UserService;
-import com.future.restoapp.service.UserServiceImpl;
+import com.future.restoapp.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,7 +43,7 @@ public class UserServiceTest {
         user1 = User.builder()
                 .username("hello")
                 .email("hello@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(false)
                 .build();
@@ -51,7 +51,7 @@ public class UserServiceTest {
         user2 = User.builder()
                 .username("admin")
                 .email("admin@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(true)
                 .build();
@@ -59,7 +59,7 @@ public class UserServiceTest {
         user3 = User.builder()
                 .username("newbee")
                 .email("nb@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(false)
                 .build();

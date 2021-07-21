@@ -1,5 +1,7 @@
 package com.future.restoapp.service;
 
+import javax.validation.constraints.NotBlank;
+
 public interface AssetService {
 
     String CONTEXT_MENU = "/menus";
@@ -10,12 +12,12 @@ public interface AssetService {
 
     String IMAGE_MENU_DIRECTORY = BASE_IMAGE_DIRECTORY + CONTEXT_MENU;
 
-    byte[] getImageBytes(String filename) throws Exception;
+    byte[] getImageBytes(@NotBlank String filename) throws Exception;
 
-    String getImageBase64(String filename) throws Exception;
+    String getImageBase64(@NotBlank String filename) throws Exception;
 
-    String addImage(String filename, String base64Content) throws Exception;
+    String addImage(@NotBlank String filename, @NotBlank String base64Content) throws Exception;
 
-    boolean deleteImage(String filename) throws Exception;
+    boolean deleteImage(@NotBlank String filename) throws Exception;
 
 }

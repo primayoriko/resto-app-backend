@@ -2,21 +2,18 @@ package com.future.restoapp.controller.path;
 
 import com.future.restoapp.constant.UrlBasePath;
 
-public interface MenuControllerPath {
+public interface MenuControllerPath{
 
-    String BASE_CLIENT = UrlBasePath.CURRENT_CLIENT + "/menus";
     String BASE_ADMIN = UrlBasePath.CURRENT_ADMIN + "/menus";
+    String BASE_PUBLIC = UrlBasePath.CURRENT_PUBLIC + "/menus";
 
+    // Admin access
     String CREATE = BASE_ADMIN;
-
+    String UPDATE = BASE_ADMIN;
     String DELETE = BASE_ADMIN + "/{id}";
 
-    String UPDATE = BASE_ADMIN;
-
-    String FETCH_CLIENT = BASE_CLIENT;
-    String FETCH_ADMIN = BASE_ADMIN;
-
-    String FETCH_ONE_CLIENT = BASE_CLIENT + "/{id}";
-    String FETCH_ONE_ADMIN = BASE_ADMIN + "/{id}";
+    // Public access
+    String FETCH = BASE_PUBLIC;
+    String FETCH_ONE = BASE_PUBLIC + "/{id}";
 
 }

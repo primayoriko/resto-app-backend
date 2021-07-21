@@ -1,6 +1,6 @@
 package com.future.restoapp.unitTest.repository;
 
-import com.future.restoapp.model.entity.User;
+import com.future.restoapp.domain.User;
 import com.future.restoapp.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ public class UserRepositoryTest {
         user = User.builder()
                 .username("hello")
                 .email("hello@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(false)
                 .build();
@@ -59,7 +59,7 @@ public class UserRepositoryTest {
         User user2 = User.builder()
                 .username("hello")
                 .email("hello@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(false)
                 .build();

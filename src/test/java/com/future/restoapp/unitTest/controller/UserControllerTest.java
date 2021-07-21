@@ -2,8 +2,8 @@ package com.future.restoapp.unitTest.controller;
 
 import com.future.restoapp.controller.UserController;
 import com.future.restoapp.controller.path.UserControllerPath;
-import com.future.restoapp.model.dto.RegisterRequest;
-import com.future.restoapp.model.entity.User;
+import com.future.restoapp.dto.user.RegisterRequest;
+import com.future.restoapp.domain.User;
 import com.future.restoapp.service.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +33,7 @@ class UserControllerTest {
 
     @InjectMocks
     private UserController userController;
-    
+
     @Mock
     private UserService userService;
 
@@ -60,14 +60,14 @@ class UserControllerTest {
         request = RegisterRequest.builder()
                 .username("newbee")
                 .email("nb@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .build();
 
         user3 = User.builder()
                 .username("newbee")
                 .email("nb@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(false)
                 .build();
@@ -75,7 +75,7 @@ class UserControllerTest {
         user1 = User.builder()
                 .username("hello")
                 .email("hello@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(false)
                 .build();
@@ -83,7 +83,7 @@ class UserControllerTest {
         user2 = User.builder()
                 .username("admin")
                 .email("admin@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(true)
                 .build();
@@ -102,8 +102,8 @@ class UserControllerTest {
     @DisplayName("Create User Endpoint Success")
     @Test
     public void createUserSuccess() throws Exception {
-//        when(passwordEncoder.encode(anyString())).thenReturn("12345");
-        doReturn("12345").when(passwordEncoder).encode(anyString());
+//        when(passwordEncoder.encode(anyString())).thenReturn(12345L);
+        doReturn(12345L).when(passwordEncoder).encode(anyString());
         doAnswer(invocation -> {
             User user = invocation.getArgument(0);
 
@@ -117,7 +117,7 @@ class UserControllerTest {
         }).when(userService).create(any());
 
         mockMvc.perform(
-                post(UserControllerPath.REGISTER_CLIENT)
+                post(UserControllerPath.REGISTER)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(request))
         ).andDo(MockMvcResultHandlers.print());
@@ -128,7 +128,7 @@ class UserControllerTest {
     @DisplayName("Create User Endpoint Failed with Existing Data")
     @Test
     public void createUserFailedAlreadyExist() throws Exception {
-        doReturn("12345").when(passwordEncoder).encode(anyString());
+        doReturn(12345L).when(passwordEncoder).encode(anyString());
         doAnswer(invocation -> {
             User user = invocation.getArgument(0);
 
@@ -144,20 +144,20 @@ class UserControllerTest {
         user3 = User.builder()
                 .username("newbee")
                 .email("nb@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .isAdmin(false)
                 .build();
 
         try {
             mockMvc.perform(
-                    post(UserControllerPath.REGISTER_CLIENT)
+                    post(UserControllerPath.REGISTER)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(asJsonString(request))
             ).andDo(MockMvcResultHandlers.print());
 
             mockMvc.perform(
-                    post(UserControllerPath.REGISTER_CLIENT)
+                    post(UserControllerPath.REGISTER)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(asJsonString(request))
             ).andDo(MockMvcResultHandlers.print());
@@ -172,19 +172,19 @@ class UserControllerTest {
     @DisplayName("Create User Endpoint Failed with Incomplete Data")
     @Test
     public void createUserFailedIncompleteData() throws Exception {
-        doReturn("12345").when(passwordEncoder).encode(anyString());
+        doReturn(12345L).when(passwordEncoder).encode(anyString());
         doNothing().when(userService).create(any());
 
         // TODO: Fix validation check
         request = RegisterRequest.builder()
                 .email("nb@g.com")
-                .password("12345")
+                .password("123456")
                 .hpNumber("082116235723")
                 .build();
 
         try {
             mockMvc.perform(
-                    post(UserControllerPath.REGISTER_CLIENT)
+                    post(UserControllerPath.REGISTER)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(asJsonString(request))
             ).andDo(MockMvcResultHandlers.print());
