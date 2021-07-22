@@ -38,11 +38,11 @@ public class MenuController extends BaseController {
         Menu menu = menuReq.toMenu();
 
         if(menuReq.getImage() != null){
-            String filename = addImage(menuReq.getName(), menuReq.getFileExtension(),
-                    menuReq.getImage(), false);
-            menu.setImageFilename(filename);
+            String url = addImage(menuReq.getName(), menuReq.getFileExtension(),
+                    menuReq.getMimeType(), menuReq.getImage());
+            menu.setImageUrl(url);
         } else {
-            menu.setImageFilename("default-menu.png");
+            menu.setImageUrl("-");
         }
 
         menu = menuService.create(menu);
@@ -90,39 +90,16 @@ public class MenuController extends BaseController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    // TODO: Must be delete for future version
-//    @RequestMapping(value = MenuControllerPath.DELETE, method = RequestMethod.DELETE)
-//    public ResponseEntity delete(@PathVariable Long id) throws Exception {
-//        Menu menu = menuService.deleteById(id);
-//        String path = menu.getImageFilename();
-//
-//        if(path != null){
-//            String[] splittedPath = path.split("/");
-//            String filename = splittedPath[splittedPath.length - 1];
-//
-//            assetService.deleteImage(filename);
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(menu);
-//    }
-
     @RequestMapping(value = MenuControllerPath.UPDATE, method = RequestMethod.PATCH)
     public ResponseEntity update(@Valid @RequestBody MenuUpdateRequest menuReq) throws Exception {
         Menu menu = menuService.update(menuReq.toMenu());
         return ResponseEntity.ok(new SuccessResponse(menu));
     }
 
-    private String addImage(String rawMenuName, String fileExtension,
-                            String base64Content, boolean deleteExisting) throws Exception {
+    private String addImage(String rawMenuName, String fileExtension, String mimeType,
+                            String base64Content) throws Exception {
         String filename = rawMenuName.replace(" ", "_") + "." + fileExtension;
-
-        if(deleteExisting){
-            assetService.deleteImage(filename);
-        }
-
-        assetService.addImage(filename, base64Content);
-
-        return filename;
+        return assetService.saveImage(filename, mimeType, base64Content);
     }
 
 }

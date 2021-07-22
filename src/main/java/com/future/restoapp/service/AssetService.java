@@ -12,12 +12,6 @@ public interface AssetService {
 
     String IMAGE_MENU_DIRECTORY = BASE_IMAGE_DIRECTORY + CONTEXT_MENU;
 
-    byte[] getImageBytes(@NotBlank String filename) throws Exception;
-
-    String getImageBase64(@NotBlank String filename) throws Exception;
-
-    String addImage(@NotBlank String filename, @NotBlank String base64Content) throws Exception;
-
-    boolean deleteImage(@NotBlank String filename) throws Exception;
+    String saveImage(@NotBlank String filename, @NotBlank String mimeType, @NotBlank String base64Content);
 
 }

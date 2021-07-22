@@ -40,6 +40,8 @@ public class MenuCreateRequest implements Serializable {
 
     private String fileExtension;
 
+    private String mimeType;
+
     public Menu toMenu(){
 		return Optional.of(this).map(dto -> {
             Menu menu = new Menu();
