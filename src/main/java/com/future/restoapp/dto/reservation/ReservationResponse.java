@@ -60,7 +60,7 @@ public class ReservationResponse implements Serializable {
                                         .name(menu.getName())
                                         .category(menu.getCategory())
                                         .description(menu.getDescription())
-                                        .imageFilename(menu.getImageFilename())
+                                        .imageUrl(menu.getImageUrl())
                                         .quantity(el.getQuantity())
                                         .build();
                             }).collect(Collectors.toSet())
@@ -85,7 +85,7 @@ public class ReservationResponse implements Serializable {
 
         private String description;
 
-        private String imageFilename;
+        private String imageUrl;
 
         private Integer quantity;
 
