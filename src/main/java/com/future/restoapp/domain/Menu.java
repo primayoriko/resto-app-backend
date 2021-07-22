@@ -25,7 +25,7 @@ public class Menu extends BaseEntity {
     public static final String COLUMN_IS_SOLD = "is_sold";
     public static final String COLUMN_PRICE = "price";
     public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_IMAGE_FILENAME = "image_filename";
+    public static final String COLUMN_IMAGE_URL = "image_url";
 
     @Column(name = Menu.COLUMN_NAME, unique = true, nullable = false, updatable = false)
     private String name;
@@ -37,8 +37,8 @@ public class Menu extends BaseEntity {
     @Column(name = Menu.COLUMN_DESCRIPTION, updatable = false)
     private String description;
 
-    @Column(name = Menu.COLUMN_IMAGE_FILENAME, updatable = false)
-    private String imageFilename;
+    @Column(name = Menu.COLUMN_IMAGE_URL, updatable = false)
+    private String imageUrl;
 
     @Column(name = Menu.COLUMN_PRICE, nullable = false)
     private Float price;

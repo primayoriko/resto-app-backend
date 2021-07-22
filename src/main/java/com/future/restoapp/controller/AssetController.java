@@ -14,21 +14,19 @@ import java.util.Base64;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AssetController extends BaseController {
 
-    @Autowired
-    private AssetService assetService;
-
-    @RequestMapping(value = AssetControllerPath.IMAGE_MENU, method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<String> getImageMenu(@PathVariable String filename) throws Exception {
-        HttpHeaders headers = new HttpHeaders();
-        byte[] media = assetService.getImageBytes(filename);
-        String base64String = Base64.getEncoder().encodeToString(media);
-        // Debug
-//        System.out.println(Arrays.toString(media));
-        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-        headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_OCTET_STREAM_VALUE));
-
-        return new ResponseEntity<>(base64String, headers, HttpStatus.OK);
-    }
+//    @Autowired
+//    private AssetService assetService;
+//
+//    @RequestMapping(value = AssetControllerPath.IMAGE_MENU, method = RequestMethod.GET,
+//            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+//    public ResponseEntity<String> getImageMenu(@PathVariable String filename) throws Exception {
+//        HttpHeaders headers = new HttpHeaders();
+//        byte[] media = assetService.getImageBytes(filename);
+//        String base64String = Base64.getEncoder().encodeToString(media);
+//        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+//        headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_OCTET_STREAM_VALUE));
+//
+//        return new ResponseEntity<>(base64String, headers, HttpStatus.OK);
+//    }
 
 }
