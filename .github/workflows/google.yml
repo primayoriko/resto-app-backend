@@ -33,6 +33,9 @@ env:
   MAIL_PORT: ${{ secrets.MAIL_PORT }}
   MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
   MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+  FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+  FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+  FIREBASE_BUCKET_NAME: ${{ secrets.FIREBASE_BUCKET_NAME }}
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: resto-future-cluster
   GKE_ZONE: asia-southeast1-a
@@ -90,6 +93,9 @@ jobs:
           --build-arg MAIL_PORT_ARG="$MAIL_PORT" \
           --build-arg MAIL_USERNAME_ARG="$MAIL_USERNAME" \
           --build-arg MAIL_PASSWORD_ARG="$MAIL_PASSWORD" \
+          --build-arg FIREBASE_PROJECT_ID_ARG="$FIREBASE_PROJECT_ID" \
+          --build-arg FIREBASE_CREDENTIALS_ARG="$FIREBASE_CREDENTIALS" \
+          --build-arg FIREBASE_BUCKET_NAME_ARG="$FIREBASE_BUCKET_NAME" \
           .
 
     # Push the Docker image to Google Container Registry
