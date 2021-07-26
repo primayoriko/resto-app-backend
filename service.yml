@@ -5,12 +5,14 @@ metadata:
 spec:
 #  type: LoadBalancer
   type: NodePort
+  externalTrafficPolicy: Local
+  selector:
+    app: restoapp
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
-  selector:
-    app: restoapp
+
 
 ---
 
