@@ -83,13 +83,13 @@ jobs:
           --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --env DB_URL=$DB_URL \
-          --env DB_USERNAME=$DB_USERNAME \
-          --env DB_PASSWORD=$DB_PASSWORD \
-          --env MAIL_HOST=$MAIL_HOST \
-          --env MAIL_PORT=$MAIL_PORT \
-          --env MAIL_USERNAME= $MAIL_USERNAME \
-          --env MAIL_PASSWORD=$MAIL_PASSWORD \
+          --build-arg DB_URL_ARG="$DB_URL" \
+          --build-arg DB_USERNAME_ARG="$DB_USERNAME" \
+          --build-arg DB_PASSWORD_ARG="$DB_PASSWORD" \
+          --build-arg MAIL_HOST_ARG="$MAIL_HOST" \
+          --build-arg MAIL_PORT_ARG="$MAIL_PORT" \
+          --build-arg MAIL_USERNAME_ARG="$MAIL_USERNAME" \
+          --build-arg MAIL_PASSWORD_ARG="$MAIL_PASSWORD" \
           .
 
     # Push the Docker image to Google Container Registry
