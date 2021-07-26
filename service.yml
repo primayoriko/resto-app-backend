@@ -27,8 +27,8 @@ spec:
   backend:
     serviceName: restoapp-internal-service
     servicePort: 8080
-  tls:
-    - secretName: resto-app-ssl-cert
+#  tls:
+#    - secretName: resto-app-ssl-cert
 #    - hosts:
 #        - dev-pin-cms-api.a.com
 #  rules:
