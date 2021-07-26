@@ -26,6 +26,13 @@ on:
       - created
 
 env:
+  DB_URL: ${{ secrets.DB_URL }}
+  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  MAIL_HOST: ${{ secrets.MAIL_HOST }}
+  MAIL_PORT: ${{ secrets.MAIL_PORT }}
+  MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+  MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: resto-future-cluster
   GKE_ZONE: asia-southeast1-a
@@ -76,6 +83,13 @@ jobs:
           --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
+          --env DB_URL=$DB_URL \
+          --env DB_USERNAME=$DB_USERNAME \
+          --env DB_PASSWORD=$DB_PASSWORD \
+          --env MAIL_HOST=$MAIL_HOST \
+          --env MAIL_PORT=$MAIL_PORT \
+          --env MAIL_USERNAME= $MAIL_USERNAME \
+          --env MAIL_PASSWORD=$MAIL_PASSWORD \
           .
 
     # Push the Docker image to Google Container Registry

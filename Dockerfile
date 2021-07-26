@@ -1,13 +1,13 @@
 FROM openjdk:8-jdk-alpine
 
-ENV DB_URL=jdbc:postgresql://bdmid7wvnx33jsug41vz-postgresql.services.clever-cloud.com:5432/bdmid7wvnx33jsug41vz
-ENV DB_USERNAME=uqcrcujsixa6a6uhfkha
-ENV DB_PASSWORD=xpc9JRXAfLageF5GHuWY
+#ENV DB_URL=
+#ENV DB_USERNAME=
+#ENV DB_PASSWORD=
 
-ENV MAIL_HOST=smtp.gmail.com
-ENV MAIL_PORT=587
-ENV MAIL_USERNAME=rendrayulizar@gmail.com
-ENV MAIL_PASSWORD=akundummy
+#ENV MAIL_HOST=
+#ENV MAIL_PORT=
+#ENV MAIL_USERNAME=
+#ENV MAIL_PASSWORD=
 
 ARG JAR_FILE=target/*.jar
 
