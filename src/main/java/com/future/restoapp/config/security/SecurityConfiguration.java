@@ -2,8 +2,10 @@ package com.future.restoapp.config.security;
 
 import com.future.restoapp.constant.UrlBasePath;
 import com.future.restoapp.controller.path.UserControllerPath;
+import com.future.restoapp.filter.JwtAuthenticationFilter;
+import com.future.restoapp.filter.JwtAuthorizationFilter;
 import com.future.restoapp.repository.UserRepository;
-import com.future.restoapp.service.security.UserPrincipalDetailsService;
+import com.future.restoapp.service.impl.UserPrincipalDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,10 +25,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final UserPrincipalDetailsService userPrincipalDetailsService;
+    private final UserPrincipalDetailsServiceImpl userPrincipalDetailsService;
     private final UserRepository userRepository;
 
-    public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService, UserRepository userRepository) {
+    public SecurityConfiguration(UserPrincipalDetailsServiceImpl userPrincipalDetailsService, UserRepository userRepository) {
         this.userPrincipalDetailsService = userPrincipalDetailsService;
         this.userRepository = userRepository;
     }
@@ -47,6 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .addFilter(new JwtAuthenticationFilter(authenticationManager()))
             .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
             .authorizeRequests()
+            // configure access rules
+            .antMatchers(HttpMethod.GET, "/").permitAll()
+            .antMatchers(HttpMethod.GET, "/version").permitAll()
             .antMatchers(HttpMethod.GET, "/docs*/**").permitAll()
             .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
             .antMatchers(HttpMethod.GET, UrlBasePath.CURRENT_PUBLIC + "/**").permitAll()

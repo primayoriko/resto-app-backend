@@ -1,10 +1,10 @@
 package com.future.restoapp.controller;
 
-import com.future.restoapp.model.dto.ErrorResponse;
-import com.future.restoapp.model.entity.User;
-import com.future.restoapp.model.exception.AccessPrivilegeNotEnoughException;
-import com.future.restoapp.model.exception.BusinessLogicException;
-import com.future.restoapp.model.security.UserPrincipal;
+import com.future.restoapp.dto.core.ErrorResponse;
+import com.future.restoapp.domain.User;
+import com.future.restoapp.exception.AccessPrivilegeNotEnoughException;
+import com.future.restoapp.exception.BusinessLogicException;
+import com.future.restoapp.domain.UserPrincipal;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

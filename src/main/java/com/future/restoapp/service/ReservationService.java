@@ -1,6 +1,6 @@
 package com.future.restoapp.service;
 
-import com.future.restoapp.model.entity.Reservation;
+import com.future.restoapp.domain.Reservation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,8 +24,8 @@ public interface ReservationService {
             Pageable pageable
     ) throws Exception;
 
-    Reservation update(@NotNull Reservation reservation) throws Exception;
-
     void deleteById(long id) throws Exception;
+
+    Reservation update(@NotNull Reservation reservation) throws Exception;
 
 }

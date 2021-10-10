@@ -1,13 +1,13 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.ReservationControllerPath;
-import com.future.restoapp.model.dto.ReservationAdminUpdateRequest;
-import com.future.restoapp.model.dto.ReservationCreateRequest;
-import com.future.restoapp.model.dto.ReservationResponse;
-import com.future.restoapp.model.dto.SuccessResponse;
-import com.future.restoapp.model.entity.Reservation;
-import com.future.restoapp.model.entity.User;
-import com.future.restoapp.model.exception.AccessPrivilegeNotEnoughException;
+import com.future.restoapp.dto.reservation.ReservationAdminUpdateRequest;
+import com.future.restoapp.dto.reservation.ReservationCreateRequest;
+import com.future.restoapp.dto.reservation.ReservationResponse;
+import com.future.restoapp.dto.core.SuccessResponse;
+import com.future.restoapp.domain.Reservation;
+import com.future.restoapp.domain.User;
+import com.future.restoapp.exception.AccessPrivilegeNotEnoughException;
 import com.future.restoapp.service.ReservationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,19 +86,14 @@ public class ReservationController extends BaseController {
                         .and(Sort.by("endTime").ascending())
         );
 
-        if(!user.getIsAdmin()) isAccepted = false;
+        if (userId==null && !user.getIsAdmin()){
+            userId = user.getId();
+        }
 
         Page<Reservation> reservations = reservationService.findByQuery(userId, boardId, isAccepted,
                 lowerStartTime, upperStartTime, lowerEndTime, upperEndTime, pageable);
         Page<ReservationResponse> responseBody = reservations.map(ReservationResponse::build);
 
-        return ResponseEntity.ok(responseBody);
-    }
-
-    @RequestMapping(value = ReservationControllerPath.UPDATE_ADMIN, method = RequestMethod.PATCH)
-    public ResponseEntity updateAdmin(@Valid @RequestBody ReservationAdminUpdateRequest reservationReq) throws Exception {
-        Reservation reservation = reservationService.update(reservationReq.toReservation());
-        SuccessResponse responseBody = new SuccessResponse(ReservationResponse.build(reservation));
         return ResponseEntity.ok(responseBody);
     }
 
@@ -113,6 +108,13 @@ public class ReservationController extends BaseController {
 
         reservationService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = ReservationControllerPath.UPDATE_ADMIN, method = RequestMethod.PATCH)
+    public ResponseEntity updateAdmin(@Valid @RequestBody ReservationAdminUpdateRequest reservationReq) throws Exception {
+        Reservation reservation = reservationService.update(reservationReq.toReservation());
+        SuccessResponse responseBody = new SuccessResponse(ReservationResponse.build(reservation));
+        return ResponseEntity.ok(responseBody);
     }
 
 }

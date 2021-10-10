@@ -1,12 +1,11 @@
 package com.future.restoapp.controller;
 
-import com.future.restoapp.controller.path.ReservationControllerPath;
 import com.future.restoapp.controller.path.UserControllerPath;
-import com.future.restoapp.model.dto.RegisterRequest;
-import com.future.restoapp.model.dto.SuccessResponse;
-import com.future.restoapp.model.dto.UserResponse;
-import com.future.restoapp.model.dto.UserUpdateRequest;
-import com.future.restoapp.model.entity.User;
+import com.future.restoapp.dto.user.RegisterRequest;
+import com.future.restoapp.dto.core.SuccessResponse;
+import com.future.restoapp.dto.user.UserResponse;
+import com.future.restoapp.dto.user.UserUpdateRequest;
+import com.future.restoapp.domain.User;
 import com.future.restoapp.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.security.Principal;
-import java.util.Collection;
 import java.util.NoSuchElementException;
 
 @Tag(name = "User")
@@ -73,13 +71,6 @@ public class UserController extends BaseController {
         return ResponseEntity.ok(responseBody);
     }
 
-    @RequestMapping(value = UserControllerPath.FETCH_ME, method = RequestMethod.GET)
-    public ResponseEntity fetchMe(Principal principal) throws Exception {
-        User user = getUser(principal);
-        SuccessResponse responseBody = new SuccessResponse(UserResponse.build(user));
-        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
-    }
-
     @RequestMapping(value = UserControllerPath.FETCH, method = RequestMethod.GET)
     public ResponseEntity fetchByQuery(
             @RequestParam(required = false) String username,
@@ -94,6 +85,13 @@ public class UserController extends BaseController {
             );
         Page<User> users = userService.findByQuery(username, email, hpNumber, pageable);
         Page<UserResponse> responseBody = users.map(UserResponse::build);
+        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+    }
+
+    @RequestMapping(value = UserControllerPath.FETCH_ME, method = RequestMethod.GET)
+    public ResponseEntity fetchMe(Principal principal) throws Exception {
+        User user = getUser(principal);
+        SuccessResponse responseBody = new SuccessResponse(UserResponse.build(user));
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 

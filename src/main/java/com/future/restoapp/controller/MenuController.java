@@ -1,11 +1,11 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.MenuControllerPath;
-import com.future.restoapp.model.dto.MenuCreateRequest;
-import com.future.restoapp.model.dto.MenuUpdateRequest;
-import com.future.restoapp.model.dto.SuccessResponse;
-import com.future.restoapp.model.entity.Menu;
-import com.future.restoapp.model.entity.Menu.MenuCategory;
+import com.future.restoapp.dto.menu.MenuCreateRequest;
+import com.future.restoapp.dto.menu.MenuUpdateRequest;
+import com.future.restoapp.dto.core.SuccessResponse;
+import com.future.restoapp.domain.Menu;
+import com.future.restoapp.domain.Menu.MenuCategory;
 import com.future.restoapp.service.AssetService;
 import com.future.restoapp.service.MenuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,43 +38,17 @@ public class MenuController extends BaseController {
         Menu menu = menuReq.toMenu();
 
         if(menuReq.getImage() != null){
-            String filename = addImage(menuReq.getName(), menuReq.getFileExtension(), menuReq.getImage(), false);
-            menu.setImageFilename(filename);
+            String url = addImage(menuReq.getName(), menuReq.getFileExtension(),
+                    menuReq.getMimeType(), menuReq.getImage());
+            menu.setImageUrl(url);
         } else {
-            menu.setImageFilename("default-menu.png");
+            menu.setImageUrl("-");
         }
 
-        menuService.create(menu);
+        menu = menuService.create(menu);
+        String uri = String.format("%s/%d", MenuControllerPath.BASE_PUBLIC, menu.getId());
 
-        return ResponseEntity.created(new URI("/api/v1/client/menus/1")).build();
-    }
-
-    @RequestMapping(value = MenuControllerPath.UPDATE, method = RequestMethod.PATCH)
-    public ResponseEntity update(@Valid @RequestBody MenuUpdateRequest menuReq) throws Exception {
-        Menu menu = new Menu();
-
-        menuReq.inject(menu);
-
-        Menu newMenu = menuService.updateById(menu.getId(), menu);
-        SuccessResponse responseBody = new SuccessResponse(newMenu);
-
-        return ResponseEntity.ok(responseBody);
-    }
-
-    // TODO: Must be delete for future version
-    @RequestMapping(value = MenuControllerPath.DELETE, method = RequestMethod.DELETE)
-    public ResponseEntity delete(@PathVariable Long id) throws Exception {
-        Menu menu = menuService.deleteById(id);
-        String path = menu.getImageFilename();
-
-        if(path != null){
-            String[] splittedPath = path.split("/");
-            String filename = splittedPath[splittedPath.length - 1];
-
-            assetService.deleteImage(filename);
-        }
-        
-        return ResponseEntity.status(HttpStatus.OK).body(menu);
+        return ResponseEntity.created(new URI(uri)).build();
     }
 
     @RequestMapping(
@@ -84,13 +58,13 @@ public class MenuController extends BaseController {
             method = RequestMethod.GET
     )
     public ResponseEntity fetchOne(@PathVariable Long id) throws Exception {
-        Menu menu = menuService.findOneById(id);
+        Menu menu = menuService.findById(id);
 
         if(menu == null) throw new NoSuchElementException("Menu with specified ID not found");
 
         SuccessResponse responseBody = new SuccessResponse(menu);
 
-        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+        return ResponseEntity.ok(responseBody);
     }
 
     @RequestMapping(
@@ -107,28 +81,25 @@ public class MenuController extends BaseController {
             @RequestParam(required = false) Boolean isSold
     ) throws Exception {
         Pageable pageable = PageRequest.of(
-                    page - 1, pageSize,
-                    Sort.by("isSold").descending()
+                page - 1, pageSize,
+                Sort.by("isSold").descending()
                         .and(Sort.by("category").ascending())
                         .and(Sort.by("name").ascending())
-                );
-
+        );
         Page<Menu> result = menuService.findByQuery(name, category, isSold, pageable);
-
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    private String addImage(String rawMenuName, String fileExtension,
-                            String base64Content, boolean deleteExisting) throws Exception {
+    @RequestMapping(value = MenuControllerPath.UPDATE, method = RequestMethod.PATCH)
+    public ResponseEntity update(@Valid @RequestBody MenuUpdateRequest menuReq) throws Exception {
+        Menu menu = menuService.update(menuReq.toMenu());
+        return ResponseEntity.ok(new SuccessResponse(menu));
+    }
+
+    private String addImage(String rawMenuName, String fileExtension, String mimeType,
+                            String base64Content) throws Exception {
         String filename = rawMenuName.replace(" ", "_") + "." + fileExtension;
-
-        if(deleteExisting){
-            assetService.deleteImage(filename);
-        }
-
-        assetService.addImage(filename, base64Content);
-
-        return filename;
+        return assetService.saveImage(filename, mimeType, base64Content);
     }
 
 }

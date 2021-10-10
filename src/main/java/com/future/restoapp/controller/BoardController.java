@@ -1,11 +1,11 @@
 package com.future.restoapp.controller;
 
 import com.future.restoapp.controller.path.BoardControllerPath;
-import com.future.restoapp.model.dto.BoardCreateRequest;
-import com.future.restoapp.model.dto.BoardResponse;
-import com.future.restoapp.model.dto.BoardUpdateRequest;
-import com.future.restoapp.model.dto.SuccessResponse;
-import com.future.restoapp.model.entity.Board;
+import com.future.restoapp.dto.board.BoardCreateRequest;
+import com.future.restoapp.dto.board.BoardResponse;
+import com.future.restoapp.dto.board.BoardUpdateRequest;
+import com.future.restoapp.dto.core.SuccessResponse;
+import com.future.restoapp.domain.Board;
 import com.future.restoapp.service.BoardService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +56,6 @@ public class BoardController extends BaseController {
         return ResponseEntity.ok(new SuccessResponse(responseBody));
     }
 
-    @RequestMapping(value = BoardControllerPath.UPDATE, method = RequestMethod.PATCH)
-    public ResponseEntity update(@Valid @RequestBody BoardUpdateRequest boardReq) throws Exception {
-        boardService.update(boardReq.toBoard());
-        return ResponseEntity.created(new URI(BoardControllerPath.FETCH_ALL)).build();
-    }
-
     @RequestMapping(value = BoardControllerPath.CHECK, method = RequestMethod.GET)
     public ResponseEntity check(@PathVariable Long id,
                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startTime,
@@ -69,6 +63,12 @@ public class BoardController extends BaseController {
     ) throws Exception {
         boolean result = boardService.checkIfAvailable(id, startTime, endTime);
         return ResponseEntity.ok(new SuccessResponse(result));
+    }
+
+    @RequestMapping(value = BoardControllerPath.UPDATE, method = RequestMethod.PATCH)
+    public ResponseEntity update(@Valid @RequestBody BoardUpdateRequest boardReq) throws Exception {
+        boardService.update(boardReq.toBoard());
+        return ResponseEntity.created(new URI(BoardControllerPath.FETCH_ALL)).build();
     }
 
 }

@@ -1,9 +1,9 @@
 package com.future.restoapp.unitTest.service;
 
-import com.future.restoapp.model.entity.Menu;
+import com.future.restoapp.domain.Menu;
 import com.future.restoapp.repository.MenuRepository;
 import com.future.restoapp.service.MenuService;
-import com.future.restoapp.service.MenuServiceImpl;
+import com.future.restoapp.service.impl.MenuServiceImpl;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -150,9 +150,10 @@ public class MenuServiceTest {
             return Optional.of(menu);
         }).when(menuRepository).deleteById(anyLong());
 
-        Menu menu = menuService.deleteById(menu1.getId());
+//        Menu menu = menuService.deleteById(menu1.getId());
+        menuService.deleteById(menu1.getId());
 
-        assertThat(menu).isEqualTo(menu1);
+//        assertThat(menu).isEqualTo(menu1);
         verify(menuRepository, times(1)).findById(menu1.getId());
         verify(menuRepository, times(1)).deleteById(menu1.getId());
     }

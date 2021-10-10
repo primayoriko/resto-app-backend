@@ -1,6 +1,6 @@
 package com.future.restoapp.service;
 
-import com.future.restoapp.model.entity.User;
+import com.future.restoapp.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
