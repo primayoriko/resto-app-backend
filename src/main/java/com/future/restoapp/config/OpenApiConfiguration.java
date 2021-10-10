@@ -17,23 +17,4 @@ import org.springframework.context.annotation.Configuration;
         info = @Info(title = "Resto API", version = "v1"),
         security = @SecurityRequirement(name = "jwtAuth") // references the name defined in the line 3
 )
-public class OpenApiConfiguration {
-//    @Bean
-//    public GroupedOpenApi clientOpenApi() {
-//        String paths[] = {UrlBasePath.CURRENT_CLIENT + "/**"};
-//        return GroupedOpenApi.builder()
-//                .group("client")
-//                .pathsToMatch(paths)
-//                .build();
-//    }
-//
-//    @Bean
-//    public GroupedOpenApi adminOpenApi() {
-//        //        String packagesToscan[] = {"test.org.springdoc.api.app68.api.user"};
-//        String paths[] = {UrlBasePath.CURRENT_CLIENT + "/**"};
-//        return GroupedOpenApi.builder()
-//                .group("admin")
-//                .pathsToMatch(paths)
-//                .build();
-//    }
-}
+public class OpenApiConfiguration { }

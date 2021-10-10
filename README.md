@@ -1,9 +1,9 @@
 # Resto App
 -------
 
-Backend of Resto Application using Java language + Spring Framework (with Spring Boot) and Database with PostgreSQL.
+Backend of Resto Application using *Java* language + *Spring Framework* (with *Spring Boot*) and Database with *PostgreSQL*, and already deployed the app in *GKE Cluster*, with Asset storage in *Firebase Storage*.
 
-## Data Models
+<!-- ## Data Models
 -------
 
 1. sad
@@ -55,7 +55,7 @@ Backend of Resto Application using Java language + Spring Framework (with Spring
 ## Issues
 -------
 
-1. \-
+1. \- -->
 
 ## Contributors
 -------

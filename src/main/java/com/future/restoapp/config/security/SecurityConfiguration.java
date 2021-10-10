@@ -1,4 +1,4 @@
-package com.future.restoapp.config;
+package com.future.restoapp.config.security;
 
 import com.future.restoapp.constant.UrlBasePath;
 import com.future.restoapp.controller.path.UserControllerPath;
@@ -41,13 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            // remove csrf and state in session because in jwt we do not need them
             .csrf().disable()
             .cors().configurationSource(corsConfigurationSource())
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            // add jwt filters (1. authentication, 2. authorization)
             .addFilter(new JwtAuthenticationFilter(authenticationManager()))
             .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
             .authorizeRequests()
@@ -89,8 +87,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        //the below three lines will add the relevant CORS response headers
-//        configuration.setAllowCredentials(true);
         configuration.addAllowedOrigin("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");

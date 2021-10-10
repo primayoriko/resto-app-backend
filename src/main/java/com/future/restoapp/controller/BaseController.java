@@ -48,7 +48,6 @@ public class BaseController{
         List<String> errors = new ArrayList<>();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
-//                String fieldName = ((FieldError) error).getField();
             errors.add(error.getDefaultMessage());
         });
 
@@ -71,7 +70,6 @@ public class BaseController{
     }
 
     @ExceptionHandler(value = {
-//            ResourceNotFoundException.class,
             NoSuchElementException.class,
             FileNotFoundException.class,
     })
