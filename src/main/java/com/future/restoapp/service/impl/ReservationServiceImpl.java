@@ -40,7 +40,6 @@ public class ReservationServiceImpl implements ReservationService {
                 );
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-//                  throw e;
             }
         }
     }

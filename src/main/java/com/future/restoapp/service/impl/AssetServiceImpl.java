@@ -50,44 +50,4 @@ public class AssetServiceImpl implements AssetService {
         return String.format(imageUrlFormat, filename);
     }
 
-//    public byte[] getImageBytes(@NotBlank String filename) throws Exception {
-//        String path = new File(".").getCanonicalPath() + IMAGE_MENU_DIRECTORY + "/" + filename;
-//        return FileUtils.readFileToByteArray(new File(path));
-////        System.out.println(path);
-////        InputStream in = context.getResourceAsStream(path);
-////        InputStream in = getClass().getClassLoader().getResourceAsStream(path);
-////        System.out.println(context.getContextPath());
-////        System.out.println(context.getResource(".").getFile());
-////        System.out.println(context.getResource(".").getPath());
-////        System.out.println(context.getRealPath("."));
-////        System.out.println("sadasd");
-////        System.out.println(context.getClass().getResource(".").getFile());
-////        System.out.println(context.getClass().getResource(".").getPath());
-////        System.out.println("1234sadasd");
-////        System.out.println(context.getClassLoader().getResource(".").getFile());
-////        System.out.println(context.getClassLoader().getResource(".").getPath());
-////        ApplicationContext ctx = new FileSystemXmlApplicationContext
-//    }
-
-//    public String getImageBase64(@NotBlank String filename) throws Exception {
-//        byte[] fileContent = getImageBytes(filename);
-//        return Base64.getEncoder().encodeToString(fileContent);
-//    }
-
-//    public String addImage(@NotBlank String filename, @NotBlank String base64Content) throws Exception {
-//        String path = new File(".").getCanonicalPath() + IMAGE_MENU_DIRECTORY + "/" + filename;
-//        byte[] decodedBytes = Base64.getDecoder().decode(base64Content);
-//
-//        FileUtils.writeByteArrayToFile(new File(path), decodedBytes);
-//
-//        return path;
-//    }
-
-//    public boolean deleteImage(@NotBlank String filename) throws Exception {
-//        String path = new File(".").getCanonicalPath() + IMAGE_MENU_DIRECTORY + "/" + filename;
-//        File imageFile = new File(path);
-//
-//        return imageFile.delete();
-//    }
-
 }

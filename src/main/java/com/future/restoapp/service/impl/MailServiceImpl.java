@@ -31,32 +31,8 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
-//    @Autowired
-//    private SimpleMailMessage template;
-
     @Value("classpath:/mail-logo.png")
     private Resource resourceFile;
-
-//    public void sendSimpleMessage(String to, String subject, String text) {
-//        try {
-//            SimpleMailMessage message = new SimpleMailMessage();
-//            message.setFrom(NOREPLY_ADDRESS);
-//            message.setTo(to);
-//            message.setSubject(subject);
-//            message.setText(text);
-//
-//            emailSender.send(message);
-//        } catch (MailException exception) {
-//            exception.printStackTrace();
-//        }
-//    }
-//
-//    public void sendSimpleMessageWithTemplate(String to,
-//                                               String subject,
-//                                               String ...templateModel) {
-//        String text = String.format(template.getText(), templateModel);
-//        sendSimpleMessage(to, subject, text);
-//    }
 
     @Override
     public void sendMessageWithTemplate(
