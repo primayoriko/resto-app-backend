@@ -39,17 +39,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            // remove csrf and state in session because in jwt we do not need them
             .csrf().disable()
             .cors().configurationSource(corsConfigurationSource())
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            // add jwt filters (1. authentication, 2. authorization)
             .addFilter(new JwtAuthenticationFilter(authenticationManager()))
             .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
             .authorizeRequests()
-            // configure access rules
             .antMatchers(HttpMethod.GET, "/docs*/**").permitAll()
             .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
             .antMatchers(HttpMethod.GET, UrlBasePath.CURRENT_PUBLIC + "/**").permitAll()
@@ -85,8 +82,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        //the below three lines will add the relevant CORS response headers
-//        configuration.setAllowCredentials(true);
         configuration.addAllowedOrigin("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");

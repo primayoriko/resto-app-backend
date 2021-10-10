@@ -46,40 +46,4 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
-//    @Override
-//    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-//            MethodArgumentNotValidException ex,
-//            HttpHeaders headers,
-//            HttpStatus status,
-//            WebRequest request
-//    ){
-//        ErrorResponse message = new ErrorResponse(
-//                status.value(),
-//                status.getReasonPhrase(),
-//                "Argument(s) passed is/are not valid",
-//                ""
-//        );
-//
-//        return ResponseEntity.badRequest().body(message);
-//    }
-
-//    @ExceptionHandler(Exception.class)
-//    @Order(Ordered.LOWEST_PRECEDENCE)
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    public ResponseEntity<Object> handleAllUncaughtException(
-//            RuntimeException exception,
-//            WebRequest request
-//    ){
-//        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-//
-//        ErrorResponse message = new ErrorResponse(
-//                status.value(),
-//                status.getReasonPhrase(),
-//                "Unknown unhandled error, please contact the developer",
-//                ""
-//        );
-//
-//        return ResponseEntity.badRequest().body(message);
-//    }
-
 }

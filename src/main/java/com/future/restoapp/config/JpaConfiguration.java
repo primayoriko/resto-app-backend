@@ -5,6 +5,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"com.future.restoapp"})
-public class JpaConfiguration {
-
-}
+public class JpaConfiguration { }

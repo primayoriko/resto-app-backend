@@ -21,8 +21,6 @@ public class AssetController extends BaseController {
         HttpHeaders headers = new HttpHeaders();
         byte[] media = assetService.getImageBytes(filename);
 
-        // Debug
-//        System.out.println(Arrays.toString(media));
         headers.setCacheControl(CacheControl.noCache().getHeaderValue());
         headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_OCTET_STREAM_VALUE));
 

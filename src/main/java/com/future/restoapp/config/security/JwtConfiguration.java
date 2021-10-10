@@ -7,24 +7,12 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "com.future.restoapp")
 public class JwtConfiguration {
 
-    /**
-     * {@link JwtToken} will expire after this time.
-     */
     private Integer tokenExpirationTime;
 
-    /**
-     * Token issuer.
-     */
     private String tokenIssuer;
 
-    /**
-     * Key is used to sign {@link JwtToken}.
-     */
     private String tokenSigningKey;
 
-    /**
-     * {@link JwtToken} can be refreshed during this timeframe.
-     */
     private Integer refreshTokenExpTime;
 
     public Integer getRefreshTokenExpTime() {

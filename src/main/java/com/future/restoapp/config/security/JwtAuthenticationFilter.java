@@ -33,10 +33,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         setFilterProcessesUrl(LOGIN_PATH);
     }
 
-    /*
-    Trigger when we issue POST request
-    We also need to pass in {"username":"dan", "password":"dan123"} in the request body
-     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
@@ -49,22 +45,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         if(credentials == null) credentials = new Credentials();
 
-        // Create login token
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 credentials.getUsername(),
                 credentials.getPassword(),
                 new ArrayList<>());
 
-        // Authenticate user
         return authenticationManager.authenticate(authenticationToken);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        // Grab principal
         UserPrincipal principal = (UserPrincipal) authResult.getPrincipal();
 
-        // Create JWT Token
         String token = JWT.create()
                 .withSubject(principal.getUsername())
                 .withClaim("username", principal.getUsername())
@@ -74,8 +66,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .sign(HMAC512(JwtProperties.SECRET.getBytes()));
 
-        // Add header with token in response
-//        response.addHeader("Access-Control-Expose-Headers", JwtProperties.HEADER_STRING);
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX +  token);
     }
 }
